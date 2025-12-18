@@ -6,6 +6,9 @@ class LinkedList<T : Any?> constructor() {
     private var tail: Node? = null
     private var length: Int = 0
 
+    val size: Int
+        get() = length
+
     constructor(value: T) : this() {
         append(value)
     }
@@ -49,13 +52,13 @@ class LinkedList<T : Any?> constructor() {
     // O(n) - linear operation since we need to traverse the list to find the second-to-last node
     fun removeLast(): Node? {
         if (length == 0) return null
-        var temp = head
-        var pre = head
-        while (temp?.next != null) {
-            pre = temp
-            temp = temp.next
+        var current = head
+        var previous = head
+        while (current?.next != null) {
+            previous = current
+            current = current.next
         }
-        tail = pre
+        tail = previous
         tail?.next = null
         length--
         if (length == 0) {
@@ -63,29 +66,29 @@ class LinkedList<T : Any?> constructor() {
             tail = null
             return null
         }
-        return temp
+        return current
 
     }
 
     // O(1) - constant operation since we only modify the head pointer
     fun removeFirst(): Node? {
         if (length == 0) return null
-        val lastHead = head
-        head = lastHead?.next
-        lastHead?.next = null
+        val removedNode = head
+        head = removedNode?.next
+        removedNode?.next = null
         length--
         if (length == 0) tail = null
-        return lastHead
+        return removedNode
     }
 
     // O(n) - linear operation since we traverse up to the index position
     fun get(index: Int): Node? {
         if (index < 0 || index >= length) return null
-        var temp = head
+        var currentNode = head
         for (i in 0 until index) {
-            temp = temp?.next
+            currentNode = currentNode?.next
         }
-        return temp
+        return currentNode
     }
 
     // O(n) - linear operation since we traverse up to the index position
@@ -97,12 +100,62 @@ class LinkedList<T : Any?> constructor() {
         return false
     }
 
+    // O(n) - linear operation since we may traverse up to the index position using get()
+    fun insert(index: Int, value: T): Boolean {
+        if (index < 0 || index > length) return false
+        if (index == 0) {
+            prepend(value)
+            return true
+        }
+        if (index == length) {
+            append(value)
+            return true
+        }
+        val newNode = Node(value)
+        val previousNode = get(index - 1)
+        newNode.next = previousNode?.next
+        previousNode?.next = newNode
+        length++
+        return true
+    }
+
+    // O(n) - linear operation since we may traverse up to the index position using get()
+    fun remove(index: Int): Node? {
+        if (index < 0 || index >= length) return null
+        if (index == 0) return removeFirst()
+        if (index == length - 1) return removeLast()
+        val previousNode = get(index - 1)
+        val removedNode = previousNode?.next
+        previousNode?.next = removedNode?.next
+        removedNode?.next = null
+        length--
+        return removedNode
+
+    }
+
+    // O(n) - linear operation since we traverse the entire list once to reverse pointers
+    fun reverse() {
+        var currentNode = head
+        head = tail
+        tail = currentNode
+
+        var nextNode = currentNode?.next
+        var previousNode: Node? = null
+
+        for (i in 0 until length) {
+            nextNode = currentNode?.next
+            currentNode?.next = previousNode
+            previousNode = currentNode
+            currentNode = nextNode
+        }
+    }
+
     fun printList() {
         println("Items:")
-        var temp = head
-        while (temp != null) {
-            println("${temp.value}" + " next value: ${temp.next?.value}")
-            temp = temp.next
+        var currentNode = head
+        while (currentNode != null) {
+            println("${currentNode.value}" + " next value: ${currentNode.next?.value}")
+            currentNode = currentNode.next
         }
     }
 
