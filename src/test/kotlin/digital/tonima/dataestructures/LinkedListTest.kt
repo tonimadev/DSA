@@ -1,5 +1,6 @@
 package digital.tonima.dataestructures
 
+import digital.tonima.dataestructures.linkedlist.LinkedList
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull

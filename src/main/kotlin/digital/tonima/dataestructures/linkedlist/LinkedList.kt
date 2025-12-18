@@ -1,4 +1,4 @@
-package digital.tonima.dataestructures
+package digital.tonima.dataestructures.linkedlist
 
 class LinkedList<T : Any?> constructor() {
 
