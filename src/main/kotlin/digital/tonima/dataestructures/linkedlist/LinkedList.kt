@@ -84,7 +84,7 @@ class LinkedList<T : Any?> constructor() {
     fun get(index: Int): Node? {
         if (index < 0 || index >= length) return null
         var currentNode = head
-        for (i in 0 until index) {
+        repeat(index) {
             currentNode = currentNode?.next
         }
         return currentNode
@@ -138,15 +138,38 @@ class LinkedList<T : Any?> constructor() {
         head = tail
         tail = currentNode
 
-        var nextNode = currentNode?.next
+        var nextNode: LinkedList<T>.Node?
         var previousNode: Node? = null
 
-        for (i in 0 until length) {
+        repeat(length) {
             nextNode = currentNode?.next
             currentNode?.next = previousNode
             previousNode = currentNode
             currentNode = nextNode
         }
+    }
+
+    fun findKthFromEnd(k: Int): Node? {
+        if (head == null || k <= 0) return null
+
+        var slow: Node? = head
+        var fast: Node? = head
+
+        // 1. Move o ponteiro 'fast' k passos à frente
+        repeat(k) {
+            // Se k for maior que o tamanho da lista, retorna null
+            if (fast == null) return null
+            fast = fast.next
+        }
+
+        // 2. Move ambos os ponteiros até que 'fast' chegue ao fim
+        // Quando 'fast' chegar no null, 'slow' estará exatamente no k-ésimo do fim
+        while (fast != null) {
+            slow = slow?.next
+            fast = fast.next
+        }
+
+        return slow
     }
 
     fun printList() {

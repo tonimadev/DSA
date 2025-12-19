@@ -3,11 +3,8 @@ package digital.tonima.algorithms.linkedlist
 /**
  * Definition for singly-linked list node
  */
-class ListNode(var `val`: Int) {
-    var next: ListNode? = null
-}
 
-class FindMiddleNodeSolution {
+class HasCycleSolution {
     /**
      * Find the middle node of a linked list
      * Time Complexity: O(n) - single pass with two pointers
@@ -18,8 +15,8 @@ class FindMiddleNodeSolution {
      * - a Fast pointer moves 2 steps at a time
      * - When fast reaches the end, slow is at the middle
      */
-    fun middleNode(head: ListNode?): ListNode? {
-        if (head == null) return null
+    fun hasCycle(head: ListNode?): Boolean? {
+        if (head == null) return false
 
         var slow: ListNode? = head
         var fast: ListNode? = head
@@ -28,8 +25,9 @@ class FindMiddleNodeSolution {
         while (fast != null && fast.next != null) {
             slow = slow?.next                // Move 1 step
             fast = fast.next?.next           // Move 2 steps
+            if (slow == fast) return true
         }
 
-        return slow
+return false
     }
 }
