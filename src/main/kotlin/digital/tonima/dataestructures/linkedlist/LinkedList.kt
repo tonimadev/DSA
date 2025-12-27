@@ -1,6 +1,6 @@
 package digital.tonima.dataestructures.linkedlist
 
-class LinkedList<T : Any?> constructor() {
+class LinkedList<T : Any?>() {
 
     private var head: Node? = null
     private var tail: Node? = null
@@ -52,19 +52,28 @@ class LinkedList<T : Any?> constructor() {
     // O(n) - linear operation since we need to traverse the list to find the second-to-last node
     fun removeLast(): Node? {
         if (length == 0) return null
+
+        // Special case: single element in the list
+        if (length == 1) {
+            val removed = head
+            head = null
+            tail = null
+            length--
+            return removed
+        }
+
+        // Traverse to find second-to-last node
         var current = head
-        var previous = head
+        var previous: Node? = null
         while (current?.next != null) {
             previous = current
             current = current.next
         }
+
+        // Remove the last node
         tail = previous
         tail?.next = null
         length--
-        if (length == 0) {
-            head = null
-            tail = null
-        }
         return current
 
     }

@@ -119,8 +119,105 @@ class LinkedListTest {
         assertEquals(0, list.size)
     }
 
-    // ===== REMOVE FIRST TESTS =====
     @Test
+    fun `removeLast should decrement length correctly on multiple calls`() {
+        val list = LinkedList<Int>()
+        list.append(1)
+        list.append(2)
+        list.append(3)
+        assertEquals(3, list.size)
+
+        list.removeLast()
+        assertEquals(2, list.size)
+
+        list.removeLast()
+        assertEquals(1, list.size)
+
+        list.removeLast()
+        assertEquals(0, list.size)
+    }
+
+    @Test
+    fun `removeLast should maintain list integrity after removal`() {
+        val list = LinkedList<Int>()
+        list.append(10)
+        list.append(20)
+        list.append(30)
+
+        list.removeLast()
+
+        assertEquals(2, list.size)
+        assertEquals(10, list.get(0)?.value)
+        assertEquals(20, list.get(1)?.value)
+    }
+
+    @Test
+    fun `removeLast followed by append should work correctly`() {
+        val list = LinkedList<Int>()
+        list.append(10)
+        list.append(20)
+        list.append(30)
+
+        list.removeLast()
+        assertEquals(2, list.size)
+
+        list.append(40)
+        assertEquals(3, list.size)
+        assertEquals(40, list.get(2)?.value)
+    }
+
+    @Test
+    fun `removeLast should handle large list correctly`() {
+        val list = LinkedList<Int>()
+        repeat(50) { i ->
+            list.append(i)
+        }
+
+        assertEquals(50, list.size)
+        repeat(30) {
+            list.removeLast()
+        }
+
+        assertEquals(20, list.size)
+        assertEquals(19, list.get(19)?.value)
+    }
+
+    @Test
+    fun `removeLast all elements one by one should reset list`() {
+        val list = LinkedList<Int>()
+        list.append(1)
+        list.append(2)
+        list.append(3)
+
+        list.removeLast()
+        list.removeLast()
+        list.removeLast()
+
+        assertEquals(0, list.size)
+        assertNull(list.get(0))
+
+        // Should be able to append again
+        list.append(99)
+        assertEquals(1, list.size)
+        assertEquals(99, list.get(0)?.value)
+    }
+
+    @Test
+    fun `removeLast after prepend should work correctly`() {
+        val list = LinkedList<Int>()
+        list.prepend(30)
+        list.prepend(20)
+        list.prepend(10)
+
+        val removed = list.removeLast()
+
+        assertEquals(30, removed?.value)
+        assertEquals(2, list.size)
+        assertEquals(10, list.get(0)?.value)
+        assertEquals(20, list.get(1)?.value)
+    }
+
+
     fun `removeFirst should return null on empty list`() {
         val list = LinkedList<Int>()
         val removed = list.removeFirst()
