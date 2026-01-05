@@ -215,6 +215,7 @@ list.set(0, 100)  // Changes first element to 100
 | Find Middle | O(n) | O(1) | Two pointers |
 | Has Cycle | O(n) | O(1) | Floyd algorithm |
 | Remove Nth | O(n) | O(1) | Two pointers |
+| Palindrome Linked List | O(n) | O(1) | Two pointers + reversal |
 | LinkedList Append | O(1) | O(1) | Tail reference |
 | **DoublyLinkedList Operations** | | | |
 | DLL Append | O(1) | O(1) | Direct tail reference |
