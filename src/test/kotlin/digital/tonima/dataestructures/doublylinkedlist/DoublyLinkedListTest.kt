@@ -2262,6 +2262,345 @@ class DoublyLinkedListTest {
         assertEquals(50, list.get(1)?.value)
     }
 
+    // ============ Reverse Tests ============
+
+    @Test
+    @DisplayName("reverse - Reverse empty list should do nothing")
+    fun testReverseEmptyList() {
+        list.reverse()
+
+        assertEquals(0, getLength(list))
+        assertNull(getHeadValue(list))
+        assertNull(getTailValue(list))
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse single element list should not change")
+    fun testReverseSingleElementList() {
+        list.append(1)
+
+        list.reverse()
+
+        assertEquals(1, getLength(list))
+        assertEquals(1, getHeadValue(list))
+        assertEquals(1, getTailValue(list))
+        assertNull(getPreviousOfHead(list))
+        assertNull(getNextOfTail(list))
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse two element list should swap head and tail")
+    fun testReverseTwoElementList() {
+        list.append(1)
+        list.append(2)
+
+        list.reverse()
+
+        assertEquals(2, getLength(list))
+        assertEquals(2, getHeadValue(list))
+        assertEquals(1, getTailValue(list))
+        assertNull(getPreviousOfHead(list))
+        assertNull(getNextOfTail(list))
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse three element list should reverse order")
+    fun testReverseThreeElementList() {
+        list.append(1)
+        list.append(2)
+        list.append(3)
+
+        list.reverse()
+
+        assertEquals(3, getLength(list))
+        assertEquals(3, getHeadValue(list))
+        assertEquals(1, getTailValue(list))
+
+        // Verify order: 3 -> 2 -> 1
+        assertEquals(3, list.get(0)?.value)
+        assertEquals(2, list.get(1)?.value)
+        assertEquals(1, list.get(2)?.value)
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse should maintain proper forward links")
+    fun testReverseForwardLinks() {
+        list.append(10)
+        list.append(20)
+        list.append(30)
+        list.append(40)
+
+        list.reverse()
+
+        // Check forward links: 40 -> 30 -> 20 -> 10
+        assertEquals(30, getNextValue(list, 40))
+        assertEquals(20, getNextValue(list, 30))
+        assertEquals(10, getNextValue(list, 20))
+        assertNull(getNextValue(list, 10))
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse should maintain proper backward links")
+    fun testReverseBackwardLinks() {
+        list.append(10)
+        list.append(20)
+        list.append(30)
+        list.append(40)
+
+        list.reverse()
+
+        // Check backward links: 40 <- 30 <- 20 <- 10
+        assertNull(getPreviousValue(list, 40))
+        assertEquals(40, getPreviousValue(list, 30))
+        assertEquals(30, getPreviousValue(list, 20))
+        assertEquals(20, getPreviousValue(list, 10))
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse should update head correctly")
+    fun testReverseUpdatesHead() {
+        list.append(1)
+        list.append(2)
+        list.append(3)
+        list.append(4)
+        list.append(5)
+
+        assertEquals(1, getHeadValue(list))
+
+        list.reverse()
+
+        assertEquals(5, getHeadValue(list))
+        assertNull(getPreviousOfHead(list))
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse should update tail correctly")
+    fun testReverseUpdatesTail() {
+        list.append(1)
+        list.append(2)
+        list.append(3)
+        list.append(4)
+        list.append(5)
+
+        assertEquals(5, getTailValue(list))
+
+        list.reverse()
+
+        assertEquals(1, getTailValue(list))
+        assertNull(getNextOfTail(list))
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse should not change length")
+    fun testReverseDoesNotChangeLength() {
+        list.append(1)
+        list.append(2)
+        list.append(3)
+        list.append(4)
+        list.append(5)
+
+        assertEquals(5, getLength(list))
+
+        list.reverse()
+
+        assertEquals(5, getLength(list))
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse twice should restore original order")
+    fun testReverseTwiceRestoresOriginal() {
+        list.append(10)
+        list.append(20)
+        list.append(30)
+        list.append(40)
+
+        list.reverse()
+        list.reverse()
+
+        assertEquals(4, getLength(list))
+        assertEquals(10, getHeadValue(list))
+        assertEquals(40, getTailValue(list))
+        assertEquals(10, list.get(0)?.value)
+        assertEquals(20, list.get(1)?.value)
+        assertEquals(30, list.get(2)?.value)
+        assertEquals(40, list.get(3)?.value)
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse should work with large list")
+    fun testReverseLargeList() {
+        val count = 100
+        repeat(count) { i -> list.append(i) }
+
+        list.reverse()
+
+        assertEquals(count, getLength(list))
+        assertEquals(99, getHeadValue(list))
+        assertEquals(0, getTailValue(list))
+
+        // Check first few and last few elements
+        assertEquals(99, list.get(0)?.value)
+        assertEquals(98, list.get(1)?.value)
+        assertEquals(97, list.get(2)?.value)
+        assertEquals(2, list.get(97)?.value)
+        assertEquals(1, list.get(98)?.value)
+        assertEquals(0, list.get(99)?.value)
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse should work correctly with all nodes")
+    fun testReverseAllNodesOrder() {
+        list.append(5)
+        list.append(4)
+        list.append(3)
+        list.append(2)
+        list.append(1)
+
+        list.reverse()
+
+        // Should now be: 1 -> 2 -> 3 -> 4 -> 5
+        for (i in 0 until 5) {
+            assertEquals(i + 1, list.get(i)?.value)
+        }
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse should maintain bidirectional integrity")
+    fun testReverseMaintainsBidirectionalIntegrity() {
+        list.append(1)
+        list.append(2)
+        list.append(3)
+        list.append(4)
+
+        list.reverse()
+
+        // Verify each node's links are properly reversed
+        // 4 <-> 3 <-> 2 <-> 1
+
+        // Node with value 4 (now head)
+        assertNull(getPreviousValue(list, 4))
+        assertEquals(3, getNextValue(list, 4))
+
+        // Node with value 3
+        assertEquals(4, getPreviousValue(list, 3))
+        assertEquals(2, getNextValue(list, 3))
+
+        // Node with value 2
+        assertEquals(3, getPreviousValue(list, 2))
+        assertEquals(1, getNextValue(list, 2))
+
+        // Node with value 1 (now tail)
+        assertEquals(2, getPreviousValue(list, 1))
+        assertNull(getNextValue(list, 1))
+    }
+
+    @Test
+    @DisplayName("reverse - Operations after reverse should work correctly")
+    fun testOperationsAfterReverse() {
+        list.append(1)
+        list.append(2)
+        list.append(3)
+
+        list.reverse()
+
+        // Now list is: 3 -> 2 -> 1
+
+        // Try append
+        list.append(0)
+        assertEquals(0, getTailValue(list))
+        assertEquals(4, getLength(list))
+
+        // Try prepend
+        list.prepend(4)
+        assertEquals(4, getHeadValue(list))
+        assertEquals(5, getLength(list))
+
+        // Try get
+        assertEquals(4, list.get(0)?.value)
+        assertEquals(3, list.get(1)?.value)
+        assertEquals(2, list.get(2)?.value)
+        assertEquals(1, list.get(3)?.value)
+        assertEquals(0, list.get(4)?.value)
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse with duplicate values should work")
+    fun testReverseWithDuplicateValues() {
+        list.append(5)
+        list.append(3)
+        list.append(3)
+        list.append(5)
+
+        list.reverse()
+
+        assertEquals(4, getLength(list))
+        assertEquals(5, list.get(0)?.value)
+        assertEquals(3, list.get(1)?.value)
+        assertEquals(3, list.get(2)?.value)
+        assertEquals(5, list.get(3)?.value)
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse should work with nullable types")
+    fun testReverseWithNullableTypes() {
+        val nullableList = DoublyLinkedList<Int?>()
+        nullableList.append(1)
+        nullableList.append(null)
+        nullableList.append(3)
+        nullableList.append(null)
+        nullableList.append(5)
+
+        nullableList.reverse()
+
+        assertEquals(5, getLength(nullableList))
+        assertEquals(5, nullableList.get(0)?.value)
+        assertEquals(null, nullableList.get(1)?.value)
+        assertEquals(3, nullableList.get(2)?.value)
+        assertEquals(null, nullableList.get(3)?.value)
+        assertEquals(1, nullableList.get(4)?.value)
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse even length list should work")
+    fun testReverseEvenLengthList() {
+        list.append(1)
+        list.append(2)
+        list.append(3)
+        list.append(4)
+        list.append(5)
+        list.append(6)
+
+        list.reverse()
+
+        assertEquals(6, getLength(list))
+        assertEquals(6, getHeadValue(list))
+        assertEquals(1, getTailValue(list))
+
+        for (i in 0 until 6) {
+            assertEquals(6 - i, list.get(i)?.value)
+        }
+    }
+
+    @Test
+    @DisplayName("reverse - Reverse odd length list should work")
+    fun testReverseOddLengthList() {
+        list.append(1)
+        list.append(2)
+        list.append(3)
+        list.append(4)
+        list.append(5)
+
+        list.reverse()
+
+        assertEquals(5, getLength(list))
+        assertEquals(5, getHeadValue(list))
+        assertEquals(1, getTailValue(list))
+
+        for (i in 0 until 5) {
+            assertEquals(5 - i, list.get(i)?.value)
+        }
+    }
+
     // ============ Helper Methods ============
 
     private fun <T> getLength(list: DoublyLinkedList<T>): Int {

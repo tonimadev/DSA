@@ -160,6 +160,23 @@ class DoublyLinkedList<T>() {
         }
     }
 
+    fun reverse() {
+        if (length <= 1) return
+        var previous: Node? = null
+        var current = head
+
+        while (current != null) {
+            val next = current.next
+            current.next = previous
+            current.previous = next
+            previous = current
+            current = next
+        }
+        val temp = head
+        head = tail
+        tail = temp
+    }
+
 
     fun set(index: Int, value: T): Boolean {
         get(index)?.let {
