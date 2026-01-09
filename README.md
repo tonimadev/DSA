@@ -38,6 +38,28 @@ This project implements fundamental data structures and algorithms with emphasis
   - Direct references to head and tail for O(1) operations
   - Specialized methods for edge cases
 
+#### Queue
+- Generic Queue implementation (FIFO - First In, First Out)
+- Support for any data type (`<T>`)
+- **Operations**:
+  - `enqueue(value)` - O(1) - Add element to the end
+  - `dequeue()` - O(1) - Remove and return the first element
+- **Characteristics**:
+  - FIFO order
+  - Implemented with linked list for efficient O(1) operations
+  - Supports generic data types
+
+#### Stack
+- Generic Stack implementation (LIFO - Last In, First Out)
+- Support for any data type (`<T>`)
+- **Operations**:
+  - `push(value)` - O(1) - Add element to the top
+  - `pop()` - O(1) - Remove and return the top element
+- **Characteristics**:
+  - LIFO order
+  - Efficiently implemented with a top pointer
+  - Supports generic data types
+
 ### Algorithms (`algorithms/`)
 
 #### Arrays
@@ -118,6 +140,8 @@ open build/reports/tests/test/index.html
 - `RemoveNthFromEndTest`: Tests removal of nth element
 - `LinkedListTest`: General tests for LinkedList structure
 - `DoublyLinkedListTest`: Tests for DoublyLinkedList operations
+- `QueueTest`: Tests for Queue operations
+- `StackTest`: Tests for Stack operations
 
 ## 🔄 CI/CD Pipeline
 
@@ -206,6 +230,32 @@ list.removeLast()   // Removes 30
 list.set(0, 100)  // Changes first element to 100
 ```
 
+### Queue
+
+```kotlin
+val queue = Queue<Int>()
+queue.enqueue(1)
+queue.enqueue(2)
+queue.enqueue(3)
+
+// Remove elements
+println(queue.dequeue()) // 1
+println(queue.dequeue()) // 2
+```
+
+### Stack
+
+```kotlin
+val stack = Stack<Int>()
+stack.push(1)
+stack.push(2)
+stack.push(3)
+
+// Remove elements
+println(stack.pop()) // 3
+println(stack.pop()) // 2
+```
+
 ## 📊 Complexity Analysis
 
 | Algorithm/Operation | Time | Space | Details |
@@ -226,6 +276,12 @@ list.set(0, 100)  // Changes first element to 100
 | DLL Insert | O(n) | O(1) | O(1) for index 0 |
 | DLL Remove | O(n) | O(1) | O(1) for first/last |
 | DLL Set | O(n) | O(1) | Uses get() internally |
+| **Queue Operations** | | | |
+| Enqueue | O(1) | O(1) | Add to tail |
+| Dequeue | O(1) | O(1) | Remove from head |
+| **Stack Operations** | | | |
+| Push | O(1) | O(1) | Add to top |
+| Pop | O(1) | O(1) | Remove from top |
 
 ## 📚 References and Concepts
 
@@ -237,6 +293,9 @@ list.set(0, 100)  // Changes first element to 100
   - Enables O(1) operations at both ends
   - Optimized traversal from closest end (head or tail)
 - **Generic Types**: Reusable implementations in Kotlin
+- **Queue and Stack**: Fundamental data structures for managing collections of elements
+  - Queue: FIFO (First In, First Out) - elements added to the end and removed from the front
+  - Stack: LIFO (Last In, First Out) - elements added and removed from the top
 
 ## 🔗 LeetCode Problems
 
@@ -255,6 +314,3 @@ This project is open source and can be freely used for educational purposes.
 ---
 
 **Last Updated**: December 2025
-
-
-

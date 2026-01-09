@@ -1,6 +1,6 @@
 package digital.tonima.dataestructures.doublylinkedlist
 
-class DoublyLinkedList<T>() {
+class DoublyLinkedList<T>() { // removed Number & Comparable bounds to allow broader test coverage
     private var head: Node? = null
     private var tail: Node? = null
     private var length: Int = 0
@@ -176,6 +176,69 @@ class DoublyLinkedList<T>() {
         head = tail
         tail = temp
     }
+
+    fun partitionList(value: T) {
+        if (length <= 1) return
+
+        var current = head
+        var lessHead: Node? = null
+        var lessTail: Node? = null
+        var greaterHead: Node? = null
+        var greaterTail: Node? = null
+
+        while (current != null) {
+            val next = current.next
+            // detach from current chain
+            current.next = null
+            current.previous = null
+
+            val goesToLess = try {
+                @Suppress("UNCHECKED_CAST")
+                val cmp = (current.value as Comparable<T>).compareTo(value)
+                cmp < 0
+            } catch (_: ClassCastException) {
+                // If values are not comparable, keep original relative order by sending to 'greaterOrEqual'
+                false
+            }
+
+            if (goesToLess) {
+                if (lessHead == null) {
+                    lessHead = current
+                    lessTail = current
+                } else {
+                    lessTail?.next = current
+                    current.previous = lessTail
+                    lessTail = current
+                }
+            } else {
+                if (greaterHead == null) {
+                    greaterHead = current
+                    greaterTail = current
+                } else {
+                    greaterTail?.next = current
+                    current.previous = greaterTail
+                    greaterTail = current
+                }
+            }
+            current = next
+        }
+
+        // Connect partitions and update head/tail
+        if (lessHead != null) {
+            head = lessHead
+            if (greaterHead != null) {
+                lessTail?.next = greaterHead
+                greaterHead.previous = lessTail
+                tail = greaterTail
+            } else {
+                tail = lessTail
+            }
+        } else {
+            head = greaterHead
+            tail = greaterTail
+        }
+    }
+
 
 
     fun set(index: Int, value: T): Boolean {

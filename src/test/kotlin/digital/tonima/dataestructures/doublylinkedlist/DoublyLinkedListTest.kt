@@ -2601,133 +2601,140 @@ class DoublyLinkedListTest {
         }
     }
 
-    // ============ Helper Methods ============
+    // ============ PartitionList Tests ============
 
-    private fun <T> getLength(list: DoublyLinkedList<T>): Int {
-        val field = list.javaClass.getDeclaredField("length")
-        field.isAccessible = true
-        return field.getInt(list)
-    }
+    @Test
+    @DisplayName("partitionList - Example 1: mixed values with x=5")
+    fun testPartitionListMixedValues() {
+        // Input: 3 <-> 8 <-> 5 <-> 10 <-> 2 <-> 1, x = 5
+        list.append(3)
+        list.append(8)
+        list.append(5)
+        list.append(10)
+        list.append(2)
+        list.append(1)
 
-    private fun <T> getHeadValue(list: DoublyLinkedList<T>): T? {
-        val field = list.javaClass.getDeclaredField("head")
-        field.isAccessible = true
-        val head = field.get(list)
-        return if (head != null) {
-            val valueField = head.javaClass.getDeclaredField("value")
-            valueField.isAccessible = true
-            valueField.get(head) as T
-        } else null
-    }
+        list.partitionList(5)
 
-    private fun <T> getTailValue(list: DoublyLinkedList<T>): T? {
-        val field = list.javaClass.getDeclaredField("tail")
-        field.isAccessible = true
-        val tail = field.get(list)
-        return if (tail != null) {
-            val valueField = tail.javaClass.getDeclaredField("value")
-            valueField.isAccessible = true
-            valueField.get(tail) as T
-        } else null
-    }
-
-    private fun <T> getNodeValue(node: Any?): T? {
-        return if (node != null) {
-            val valueField = node.javaClass.getDeclaredField("value")
-            valueField.isAccessible = true
-            valueField.get(node) as T
-        } else null
-    }
-
-    private fun getPreviousOfHead(list: DoublyLinkedList<Int>): Int? {
-        val field = list.javaClass.getDeclaredField("head")
-        field.isAccessible = true
-        val head = field.get(list)
-        return if (head != null) {
-            val previousField = head.javaClass.getDeclaredField("previous")
-            previousField.isAccessible = true
-            previousField.get(head) as Int?
-        } else null
-    }
-
-    private fun getNextOfTail(list: DoublyLinkedList<Int>): Int? {
-        val field = list.javaClass.getDeclaredField("tail")
-        field.isAccessible = true
-        val tail = field.get(list)
-        return if (tail != null) {
-            val nextField = tail.javaClass.getDeclaredField("next")
-            nextField.isAccessible = true
-            nextField.get(tail) as Int?
-        } else null
-    }
-
-    private fun getNextValue(list: DoublyLinkedList<Int>, value: Int): Int? {
-        val field = list.javaClass.getDeclaredField("head")
-        field.isAccessible = true
-        var current = field.get(list)
-
-        while (current != null) {
-            val valueField = current.javaClass.getDeclaredField("value")
-            valueField.isAccessible = true
-            if (valueField.get(current) == value) {
-                val nextField = current.javaClass.getDeclaredField("next")
-                nextField.isAccessible = true
-                val next = nextField.get(current)
-                return if (next != null) {
-                    valueField.get(next) as Int
-                } else null
-            }
-            val nextField = current.javaClass.getDeclaredField("next")
-            nextField.isAccessible = true
-            current = nextField.get(current)
+        // Expected output order: 3 <-> 2 <-> 1 <-> 8 <-> 5 <-> 10
+        val expected = listOf(3, 2, 1, 8, 5, 10)
+        assertEquals(expected.size, getLength(list))
+        expected.forEachIndexed { i, v ->
+            assertEquals(v, list.get(i)?.value, "Value at index $i should be $v")
         }
-        return null
+        // Check .previous correctness for internal nodes
+        assertNull(getPreviousOfHead(list))
+        assertEquals(2, list.get(1)?.value)
+        assertEquals(3, list.get(1)?.previous?.value)
+        assertEquals(1, list.get(2)?.value)
+        assertEquals(2, list.get(2)?.previous?.value)
+        assertEquals(8, list.get(3)?.value)
+        assertEquals(1, list.get(3)?.previous?.value)
     }
 
-    private fun getPreviousValue(list: DoublyLinkedList<Int>, value: Int): Int? {
-        val field = list.javaClass.getDeclaredField("head")
-        field.isAccessible = true
-        var current = field.get(list)
+    @Test
+    @DisplayName("partitionList - Example 2: all less than x stays same order")
+    fun testPartitionListAllLessThanX() {
+        // Input: 1 <-> 2 <-> 3, x = 5 -> Output: 1 <-> 2 <-> 3
+        list.append(1)
+        list.append(2)
+        list.append(3)
 
-        while (current != null) {
-            val valueField = current.javaClass.getDeclaredField("value")
-            valueField.isAccessible = true
-            if (valueField.get(current) == value) {
-                val previousField = current.javaClass.getDeclaredField("previous")
-                previousField.isAccessible = true
-                val previous = previousField.get(current)
-                return if (previous != null) {
-                    valueField.get(previous) as Int
-                } else null
-            }
-            val nextField = current.javaClass.getDeclaredField("next")
-            nextField.isAccessible = true
-            current = nextField.get(current)
+        list.partitionList(5)
+
+        val expected = listOf(1, 2, 3)
+        assertEquals(expected.size, getLength(list))
+        expected.forEachIndexed { i, v ->
+            assertEquals(v, list.get(i)?.value)
         }
-        return null
+        // Head/tail and pointer sanity
+        assertEquals(1, getHeadValue(list))
+        assertEquals(3, getTailValue(list))
+        assertNull(getPreviousOfHead(list))
+        assertNull(getNextOfTail(list))
+        assertEquals(2, list.get(0)?.next?.value)
+        assertEquals(3, list.get(1)?.next?.value)
+        assertEquals(2, list.get(2)?.previous?.value)
     }
 
-    private fun getNextStringValue(list: DoublyLinkedList<String>, value: String): String? {
-        val field = list.javaClass.getDeclaredField("head")
-        field.isAccessible = true
-        var current = field.get(list)
+    @Test
+    @DisplayName("partitionList - Example 3: all greater or equal than x stays same order")
+    fun testPartitionListAllGreaterOrEqualX() {
+        // Input: 6 <-> 7 <-> 8, x = 5 -> Output: 6 <-> 7 <-> 8
+        list.append(6)
+        list.append(7)
+        list.append(8)
 
-        while (current != null) {
-            val valueField = current.javaClass.getDeclaredField("value")
-            valueField.isAccessible = true
-            if (valueField.get(current) == value) {
-                val nextField = current.javaClass.getDeclaredField("next")
-                nextField.isAccessible = true
-                val next = nextField.get(current)
-                return if (next != null) {
-                    valueField.get(next) as String
-                } else null
-            }
-            val nextField = current.javaClass.getDeclaredField("next")
-            nextField.isAccessible = true
-            current = nextField.get(current)
+        list.partitionList(5)
+
+        val expected = listOf(6, 7, 8)
+        assertEquals(expected.size, getLength(list))
+        expected.forEachIndexed { i, v ->
+            assertEquals(v, list.get(i)?.value)
         }
-        return null
+        // Head/tail and pointer sanity
+        assertEquals(6, getHeadValue(list))
+        assertEquals(8, getTailValue(list))
+        assertNull(getPreviousOfHead(list))
+        assertNull(getNextOfTail(list))
+        assertEquals(7, list.get(0)?.next?.value)
+        assertEquals(8, list.get(1)?.next?.value)
+        assertEquals(7, list.get(2)?.previous?.value)
+    }
+
+    @Test
+    @DisplayName("partitionList - Stability: preserve relative order within each partition")
+    fun testPartitionListStability() {
+        // Values with duplicates across partitions: < x and >= x
+        // Input: 4, 1, 5, 2, 5, 3, 6 with x = 5
+        list.append(4)
+        list.append(1)
+        list.append(5)
+        list.append(2)
+        list.append(5)
+        list.append(3)
+        list.append(6)
+
+        list.partitionList(5)
+
+        // Expected: (<5 in original order) 4,1,2,3 then (>=5 in original order) 5,5,6
+        val expected = listOf(4, 1, 2, 3, 5, 5, 6)
+        assertEquals(expected.size, getLength(list))
+        expected.forEachIndexed { i, v ->
+            assertEquals(v, list.get(i)?.value)
+        }
+        // Check a few prev pointers around the boundary
+        assertEquals(3, list.get(3)?.value)
+        assertEquals(2, list.get(3)?.previous?.value)
+        assertEquals(5, list.get(4)?.value)
+        assertEquals(3, list.get(4)?.previous?.value)
+    }
+
+    @Test
+    @DisplayName("partitionList - Edge cases: empty and single-element lists")
+    fun testPartitionListEdgeCases() {
+        // Empty list
+        val empty = DoublyLinkedList<Int>()
+        empty.partitionList(5)
+        assertEquals(0, getLength(empty))
+        assertNull(getHeadValue<Int>(empty))
+        assertNull(getTailValue<Int>(empty))
+
+        // Single element list (< x)
+        val oneLt = DoublyLinkedList<Int>()
+        oneLt.append(1)
+        oneLt.partitionList(5)
+        assertEquals(1, getLength(oneLt))
+        assertEquals(1, getHeadValue(oneLt))
+        assertEquals(1, getTailValue(oneLt))
+
+        // Single element list (>= x)
+        val oneGe = DoublyLinkedList<Int>()
+        oneGe.append(7)
+        oneGe.partitionList(5)
+        assertEquals(1, getLength(oneGe))
+        assertEquals(7, getHeadValue(oneGe))
+        assertEquals(7, getTailValue(oneGe))
     }
 }
 
