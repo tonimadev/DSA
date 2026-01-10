@@ -68,6 +68,11 @@ This project implements fundamental data structures and algorithms with emphasis
   - Uses HashMap for constant-time lookup
   - LeetCode #1
 
+- **[Reverse String](https://leetcode.com/problems/reverse-string/)** - Reverse a string in-place
+  - Time: O(n), Space: O(1)
+  - Uses two-pointers technique (swap from both ends)
+  - LeetCode #344
+
 #### Linked List
 - **[Binary Number to Decimal](https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/)** - Convert binary number in a linked list to integer
   - Time: O(n), Space: O(1)
@@ -102,6 +107,7 @@ This project implements fundamental data structures and algorithms with emphasis
 | Algorithm/Operation | Time | Space | Details |
 |-----------|------|-------|---------|
 | Two Sum | O(n) | O(n) | HashMap lookup |
+| Reverse String | O(n) | O(1) | Two pointers swap |
 | Binary to Decimal | O(n) | O(1) | Bit manipulation |
 | Find Middle | O(n) | O(1) | Two pointers |
 | Has Cycle | O(n) | O(1) | Floyd algorithm |
@@ -145,6 +151,7 @@ All algorithms in this project are based on classic LeetCode problems:
 - **#1**: [Two Sum](https://leetcode.com/problems/two-sum/) - Easy
 - **#19**: [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) - Medium
 - **#141**: [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) - Easy
+- **#344**: [Reverse String](https://leetcode.com/problems/reverse-string/) - Easy
 - **#876**: [Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/) - Easy
 - **#1290**: [Convert Binary Number in a Linked List to Integer](https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/) - Easy
 
