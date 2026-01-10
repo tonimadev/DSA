@@ -94,6 +94,13 @@ This project implements fundamental data structures and algorithms with emphasis
   - Uses two-pointers with defined distance
   - LeetCode #19
 
+#### Stack
+- **[Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)** - Determine if a string containing parentheses is valid
+  - Time: O(n), Space: O(n)
+  - Uses stack data structure for bracket matching
+  - HashMap for O(1) lookups
+  - LeetCode #20
+
 ## 🛠️ Technologies
 
 - **Language**: Kotlin 2.1.20
@@ -129,6 +136,7 @@ This project implements fundamental data structures and algorithms with emphasis
 | **Stack Operations** | | | |
 | Push | O(1) | O(1) | Add to top |
 | Pop | O(1) | O(1) | Remove from top |
+| Valid Parentheses | O(n) | O(n) | Stack + HashMap lookup |
 
 ## 📚 References and Concepts
 
@@ -150,6 +158,7 @@ All algorithms in this project are based on classic LeetCode problems:
 
 - **#1**: [Two Sum](https://leetcode.com/problems/two-sum/) - Easy
 - **#19**: [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) - Medium
+- **#20**: [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) - Easy
 - **#141**: [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) - Easy
 - **#344**: [Reverse String](https://leetcode.com/problems/reverse-string/) - Easy
 - **#876**: [Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/) - Easy

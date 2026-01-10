@@ -1,0 +1,50 @@
+package digital.tonima.algorithms.stack
+
+/**
+ * Valid Parentheses
+ *
+ * Determines if a string containing parentheses '()', braces '{}', and brackets '[]' is valid.
+ * An input string is valid if:
+ * - Open brackets must be closed by the same type of brackets
+ * - Open brackets must be closed in the correct order
+ * - Every close bracket has a corresponding open bracket of the same type
+ *
+ * Problem: https://leetcode.com/problems/valid-parentheses/
+ *
+ * Time Complexity: O(n) - where n is the length of the string
+ * Space Complexity: O(n) - in the worst case, the stack can contain all characters
+ */
+class ValidParenthesesSolution {
+    fun isValid(s: String): Boolean {
+        // Stack to store opening brackets
+        val stack = ArrayDeque<Char>()
+
+        // Map closing brackets to their corresponding opening brackets
+        // Lookup time: O(1)
+        val closingToOpening = mutableMapOf(
+            ')' to '(',
+            '}' to '{',
+            ']' to '['
+        )
+
+        // Time: O(n) - iterate through each character once
+        s.forEach { char ->
+            // Check if current character is a closing bracket
+            // Lookup in map: O(1)
+            if (char in closingToOpening) {
+                // If stack is empty or top doesn't match, invalid
+                // removeLast(): O(1) operation
+                if (stack.isEmpty() || stack.removeLast() != closingToOpening[char]) {
+                    return false
+                }
+            } else {
+                // Current character is an opening bracket
+                // add(): O(1) operation
+                stack.add(char)
+            }
+        }
+
+        // Valid if all brackets were matched (stack is empty)
+        return stack.isEmpty()
+    }
+}
