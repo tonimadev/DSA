@@ -1,6 +1,6 @@
 package digital.tonima.dataestructures.stack
 
-class Stack<T>(val value: T) {
+class Stack<T>(val value: T? = null) {
     private var top: Node? = null
     private var height: Int = 0
 
@@ -10,11 +10,11 @@ class Stack<T>(val value: T) {
         height = 1
     }
 
-    inner class Node(val value: T) {
+    inner class Node(val value: T?) {
         var next: Node? = null
     }
 
-    fun push(value: T) {
+    fun push(value: T?) {
         val newNode = Node(value)
         newNode.next = top
         top = newNode
@@ -29,6 +29,8 @@ class Stack<T>(val value: T) {
         height--
         return temp
     }
+
+    fun peek(): T? = top?.value
 
     fun printStack() {
         var temp = top
@@ -46,5 +48,5 @@ class Stack<T>(val value: T) {
         println("Height: $height")
     }
 
-
+    fun isEmpty() = height == 0
 }
