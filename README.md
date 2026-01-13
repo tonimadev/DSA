@@ -68,6 +68,11 @@ This project implements fundamental data structures and algorithms with emphasis
   - Uses HashMap for constant-time lookup
   - LeetCode #1
 
+- **[Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)** - Check if any value appears at least twice in an array
+  - Time: O(n), Space: O(n)
+  - Uses HashSet for O(1) lookups and insertions
+  - LeetCode #217
+
 - **[Reverse String](https://leetcode.com/problems/reverse-string/)** - Reverse a string in-place
   - Time: O(n), Space: O(1)
   - Uses two-pointers technique (swap from both ends)
