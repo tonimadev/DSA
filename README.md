@@ -81,6 +81,12 @@ This project implements fundamental data structures and algorithms with emphasis
   - Uses two-pointers technique (swap from both ends)
   - LeetCode #344
 
+- **[Group Anagrams](https://leetcode.com/problems/group-anagrams/)** - Group strings that are anagrams of each other
+  - Time: O(n * k), Space: O(n * k)
+  - Uses HashMap with character frequency array as key
+  - Optimized approach: counts character frequencies instead of sorting
+  - LeetCode #49
+
 #### Strings
 - **[Valid Anagram](https://leetcode.com/problems/valid-anagram/)** - Check if two strings are anagrams
   - Time: O(n), Space: O(1)
@@ -129,6 +135,7 @@ This project implements fundamental data structures and algorithms with emphasis
 |-----------|------|-------|---------|
 | Two Sum | O(n) | O(n) | HashMap lookup |
 | Reverse String | O(n) | O(1) | Two pointers swap |
+| Group Anagrams | O(n * k) | O(n * k) | Character frequency array |
 | Binary to Decimal | O(n) | O(1) | Bit manipulation |
 | Find Middle | O(n) | O(1) | Two pointers |
 | Has Cycle | O(n) | O(1) | Floyd algorithm |
@@ -173,6 +180,7 @@ All algorithms in this project are based on classic LeetCode problems:
 - **#1**: [Two Sum](https://leetcode.com/problems/two-sum/) - Easy
 - **#19**: [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) - Medium
 - **#20**: [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) - Easy
+- **#49**: [Group Anagrams](https://leetcode.com/problems/group-anagrams/) - Medium
 - **#141**: [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) - Easy
 - **#217**: [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) - Easy
 - **#242**: [Valid Anagram](https://leetcode.com/problems/valid-anagram/) - Easy
