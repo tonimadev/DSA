@@ -67,6 +67,9 @@ This project implements fundamental data structures and algorithms with emphasis
   - Time: O(n), Space: O(n)
   - Uses HashMap for constant-time lookup
   - LeetCode #1
+  - **Complexity Details**:
+    - **Time O(n)**: Single pass through array with O(1) HashMap lookups
+    - **Space O(n)**: HashMap stores up to n numbers in worst case
 
 - **[Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)** - Check if any value appears at least twice in an array
   - Time: O(n), Space: O(n)
@@ -77,6 +80,12 @@ This project implements fundamental data structures and algorithms with emphasis
   - Time: O(n), Space: O(1)
   - Uses two-pointers technique (swap from both ends)
   - LeetCode #344
+
+#### Strings
+- **[Valid Anagram](https://leetcode.com/problems/valid-anagram/)** - Check if two strings are anagrams
+  - Time: O(n), Space: O(1)
+  - Uses HashMap for character frequency count
+  - LeetCode #242
 
 #### Linked List
 - **[Binary Number to Decimal](https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/)** - Convert binary number in a linked list to integer
@@ -165,6 +174,8 @@ All algorithms in this project are based on classic LeetCode problems:
 - **#19**: [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) - Medium
 - **#20**: [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) - Easy
 - **#141**: [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) - Easy
+- **#217**: [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) - Easy
+- **#242**: [Valid Anagram](https://leetcode.com/problems/valid-anagram/) - Easy
 - **#344**: [Reverse String](https://leetcode.com/problems/reverse-string/) - Easy
 - **#876**: [Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/) - Easy
 - **#1290**: [Convert Binary Number in a Linked List to Integer](https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/) - Easy
