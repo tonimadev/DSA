@@ -21,8 +21,10 @@ class GroupAnagramsSolution {
 
             // Count frequency of each character
             wrd.forEach { char ->
+                // Convert to lowercase first to handle uppercase letters
+                val lowerChar = char.lowercaseChar()
                 // Get index: 'a' = 0, 'b' = 1, ..., 'z' = 25
-                charList[char.code - 'a'.code] += 1
+                charList[lowerChar.code - 'a'.code] += 1
             }
 
             // Use frequency array as key (anagrams have same frequency)
