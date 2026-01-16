@@ -121,6 +121,184 @@ This project implements fundamental data structures and algorithms with emphasis
   - HashMap for O(1) lookups
   - LeetCode #20
 
+### Search Algorithms (`search/`)
+
+A complete framework for implementing and benchmarking search algorithms, organized with professional design patterns.
+
+#### 📦 Package Structure
+
+```
+search/
+├── algorithms/          # Algorithm implementations
+│   ├── LinearSearch     # O(n) - Sequential search
+│   └── BinarySearch     # O(log n) - Binary search (requires sorted list)
+├── core/                # Framework components
+│   ├── SearchStrategy   # Interface for all search algorithms
+│   ├── SearchType       # Enum of available algorithms
+│   ├── SearchFactory    # Factory pattern for creating strategies
+│   └── SearchableList   # Facade for easy searching
+└── benchmark/           # Performance testing system
+    ├── SearchBenchmark       # Benchmark execution and analysis
+    ├── BenchmarkDataGenerator # Test data generation
+    ├── BenchmarkDemo         # Automated benchmark demos
+    └── BenchmarkInteractive  # Interactive CLI application
+```
+
+#### 🔍 Implemented Algorithms
+
+**Linear Search**
+- **Complexity**: O(n) time, O(1) space
+- **Use Case**: Unsorted lists, small datasets, single searches
+- **Characteristics**:
+  - Best case: O(1) - element at the beginning
+  - Average case: O(n/2) ≈ O(n)
+  - Worst case: O(n) - element at the end or not found
+  - Works with any list (sorted or unsorted)
+
+**Binary Search**
+- **Complexity**: O(log n) time, O(1) space
+- **Use Case**: Sorted lists, large datasets, multiple searches
+- **Requirements**: List must be sorted
+- **Characteristics**:
+  - Best case: O(1) - element in the middle
+  - Average case: O(log n)
+  - Worst case: O(log n)
+  - Divides search space by half each iteration
+
+#### 🎯 Design Patterns
+
+**Strategy Pattern**
+```kotlin
+interface SearchStrategy<T : Comparable<T>> {
+    fun search(collection: List<T>, target: T): Int
+    fun name(): String
+}
+```
+
+**Factory Pattern**
+```kotlin
+val strategy = SearchFactory.create<Int>(SearchType.BINARY)
+val index = strategy.search(sortedList, target)
+```
+
+**Facade Pattern**
+```kotlin
+val list = SearchableList(listOf(1, 2, 3, 4, 5))
+val index = list.find(3)  // Returns 2
+```
+
+#### 💡 Usage Examples
+
+**Basic Usage with Facade**
+```kotlin
+import digital.tonima.search.core.SearchableList
+
+val list = SearchableList(listOf(5, 2, 8, 1, 9, 3))
+val index = list.find(8)  // Returns 2 (uses LINEAR by default)
+```
+
+**Using Specific Algorithm**
+```kotlin
+import digital.tonima.search.core.SearchType
+
+val sortedList = SearchableList(listOf(1, 2, 3, 5, 8, 9))
+sortedList.sort()  // Ensure list is sorted for binary search
+val index = sortedList.find(5, SearchType.BINARY)  // O(log n)
+```
+
+**Direct Algorithm Usage**
+```kotlin
+import digital.tonima.search.algorithms.LinearSearch
+
+val search = LinearSearch<Int>()
+val index = search.search(listOf(1, 2, 3), 2)  // Returns 1
+```
+
+#### 📊 Benchmark System
+
+Complete performance testing framework with:
+- Precise measurements (nanoseconds and milliseconds)
+- Automatic comparison between algorithms
+- Scalability analysis (different data sizes)
+- Visual reports (comparative and table formats)
+- Statistics (fastest, slowest, average)
+
+**Running Benchmarks**
+```kotlin
+import digital.tonima.search.benchmark.SearchBenchmark
+import digital.tonima.search.algorithms.LinearSearch
+import digital.tonima.search.algorithms.BinarySearch
+
+val benchmark = SearchBenchmark()
+val list = (1..1_000_000).toList()
+
+benchmark.benchmark(LinearSearch<Int>(), list, 500_000)
+benchmark.benchmark(BinarySearch<Int>(), list, 500_000)
+
+benchmark.printComparativeReport()
+```
+
+**Interactive Benchmark Application**
+```bash
+# Execute BenchmarkInteractive.kt main() function
+# Provides interactive menu with 6 testing options:
+# 1. Quick Test (1,000 elements)
+# 2. Medium Test (100,000 elements)
+# 3. Large Test (1,000,000 elements)
+# 4. Custom Test (user-defined size)
+# 5. Scalability Test (multiple sizes)
+# 6. Extreme Cases Analysis (best/worst/average)
+```
+
+**Expected Performance**
+
+| Dataset Size | Linear Search | Binary Search | Speed-up |
+|--------------|---------------|---------------|----------|
+| 1,000        | ~0.001 ms     | ~0.0001 ms    | 10x      |
+| 10,000       | ~0.01 ms      | ~0.0002 ms    | 50x      |
+| 100,000      | ~0.1 ms       | ~0.0003 ms    | 333x     |
+| 1,000,000    | ~1.0 ms       | ~0.0005 ms    | **2000x** |
+
+#### 🔧 Features
+
+- **Generic Implementation**: Works with any `Comparable<T>` type
+- **Type-Safe**: Full Kotlin type system support
+- **Well-Documented**: KDoc comments on all public APIs
+- **Tested**: Comprehensive test suite included
+- **Extensible**: Easy to add new search algorithms
+- **Production-Ready**: Clean architecture and error handling
+
+#### 📚 Adding New Algorithms
+
+```kotlin
+// 1. Create new algorithm class
+package digital.tonima.search.algorithms
+
+class InterpolationSearch<T : Comparable<T>> : SearchStrategy<T> {
+    override fun search(collection: List<T>, target: T): Int {
+        // Your implementation here
+        return -1
+    }
+    override fun name(): String = "Interpolation Search"
+}
+
+// 2. Add to SearchType enum
+enum class SearchType {
+    LINEAR,
+    BINARY,
+    INTERPOLATION  // New!
+}
+
+// 3. Update SearchFactory
+fun <T : Comparable<T>> create(type: SearchType): SearchStrategy<T> {
+    return when (type) {
+        SearchType.LINEAR -> LinearSearch()
+        SearchType.BINARY -> BinarySearch()
+        SearchType.INTERPOLATION -> InterpolationSearch()  // New!
+    }
+}
+```
+
 ## 🛠️ Technologies
 
 - **Language**: Kotlin 2.1.20
@@ -158,6 +336,10 @@ This project implements fundamental data structures and algorithms with emphasis
 | Push | O(1) | O(1) | Add to top |
 | Pop | O(1) | O(1) | Remove from top |
 | Valid Parentheses | O(n) | O(n) | Stack + HashMap lookup |
+| **Search Algorithms** | | | |
+| Linear Search | O(n) | O(1) | Sequential traversal |
+| Binary Search | O(log n) | O(1) | Divide and conquer (requires sorted list) |
+| Search Benchmark | O(1) | O(k) | k = number of results stored |
 
 ## 📚 References and Concepts
 
@@ -172,6 +354,18 @@ This project implements fundamental data structures and algorithms with emphasis
 - **Queue and Stack**: Fundamental data structures for managing collections of elements
   - Queue: FIFO (First In, First Out) - elements added to the end and removed from the front
   - Stack: LIFO (Last In, First Out) - elements added and removed from the top
+- **Search Algorithms**: Techniques for finding elements in collections
+  - **Linear Search**: Sequential traversal, works on any list, O(n)
+  - **Binary Search**: Divide and conquer, requires sorted list, O(log n)
+  - **Scalability**: Binary search is exponentially faster for large datasets
+- **Design Patterns**: Applied patterns in search module
+  - **Strategy Pattern**: Defines a family of interchangeable algorithms
+  - **Factory Pattern**: Centralizes object creation logic
+  - **Facade Pattern**: Provides simplified interface to complex subsystems
+- **Performance Benchmarking**: Empirical analysis of algorithm efficiency
+  - Measure execution time (nanoseconds precision)
+  - Compare multiple algorithms on same dataset
+  - Analyze scalability with varying input sizes
 
 ## 🔗 LeetCode Problems
 
@@ -194,4 +388,4 @@ This project is open source and can be freely used for educational purposes.
 
 ---
 
-**Last Updated**: December 2025
+**Last Updated**: January 2026
