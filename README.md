@@ -531,15 +531,6 @@ fun <T : Comparable<T>> create(type: SortType): SortStrategy<T> {
 - Radix Sort - O(nk)
 - Bucket Sort - O(n + k)
 
-#### 📖 Documentation
-
-Complete documentation available:
-- **SORT_INDEX.md** - Navigation guide and quick reference
-- **SORT_QUICKSTART.md** - 30-second quick start guide
-- **SORT_STRUCTURE.md** - Complete architecture and usage
-- **SORT_SUMMARY.md** - Implementation details and statistics
-- **SORT_COMPLETE.md** - Final status and checklist
-
 ## 🛠️ Technologies
 
 - **Language**: Kotlin 2.1.20
