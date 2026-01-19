@@ -299,6 +299,247 @@ fun <T : Comparable<T>> create(type: SearchType): SearchStrategy<T> {
 }
 ```
 
+### Sorting Algorithms (`sort/`)
+
+A complete framework for implementing and benchmarking sorting algorithms, organized with professional design patterns (identical architecture to search algorithms).
+
+#### 📦 Package Structure
+
+```
+sort/
+├── algorithms/          # Algorithm implementations
+│   ├── SelectionSort    # O(n²) - Simple comparison sort
+│   └── QuickSort        # O(n log n) - Divide and conquer sort
+├── core/                # Framework components
+│   ├── SortStrategy     # Interface for all sorting algorithms
+│   ├── SortType         # Enum of available algorithms
+│   ├── SortFactory      # Factory pattern for creating strategies
+│   └── SortableList     # Facade for easy sorting
+└── benchmark/           # Performance testing system
+    ├── SortBenchmark         # Benchmark execution and analysis
+    ├── BenchmarkDataGenerator # Test data generation (multiple patterns)
+    ├── BenchmarkDemo         # Automated benchmark demos
+    ├── BenchmarkInteractive  # Interactive CLI application
+    └── BenchmarkExample      # Simple usage examples
+```
+
+#### 🔄 Implemented Algorithms
+
+**Selection Sort**
+- **Complexity**: O(n²) time, O(1) space
+- **Use Case**: Small datasets, minimal memory usage
+- **Characteristics**:
+  - Best/Average/Worst case: O(n²)
+  - In-place sorting (no extra space)
+  - Not stable (relative order of equal elements may change)
+  - Minimal number of swaps (n-1 at most)
+  - Simple and easy to understand
+
+**Quick Sort**
+- **Complexity**: O(n log n) average, O(n²) worst case, O(log n) space
+- **Use Case**: Large datasets, general purpose sorting
+- **Characteristics**:
+  - Best/Average case: O(n log n)
+  - Worst case: O(n²) (when pivot is always min/max)
+  - Space: O(log n) for recursion stack
+  - Not stable
+  - Fast in practice, cache-friendly
+  - Uses divide and conquer strategy
+
+#### 🎯 Design Patterns
+
+**Strategy Pattern**
+```kotlin
+interface SortStrategy<T : Comparable<T>> {
+    fun sort(collection: List<T>): List<T>
+    fun name(): String
+    fun timeComplexity(): String
+    fun spaceComplexity(): String
+    fun isStable(): Boolean
+}
+```
+
+**Factory Pattern**
+```kotlin
+val strategy = SortFactory.create<Int>(SortType.QUICK)
+val sorted = strategy.sort(unsortedList)
+```
+
+**Facade Pattern**
+```kotlin
+val list = SortableList(listOf(5, 2, 8, 1, 9))
+val sorted = list.sort()  // Uses QUICK by default
+```
+
+#### 💡 Usage Examples
+
+**Basic Usage with Facade**
+```kotlin
+import digital.tonima.sort.core.SortableList
+
+val list = SortableList(listOf(5, 2, 8, 1, 9, 3))
+val sorted = list.sort()  // Returns [1, 2, 3, 5, 8, 9] (uses QUICK by default)
+```
+
+**Using Specific Algorithm**
+```kotlin
+import digital.tonima.sort.core.SortType
+
+val list = SortableList(listOf(5, 2, 8, 1, 9))
+val sorted = list.sort(SortType.SELECTION)  // Use Selection Sort
+val sorted2 = list.sort(SortType.QUICK)     // Use Quick Sort
+```
+
+**Direct Algorithm Usage**
+```kotlin
+import digital.tonima.sort.algorithms.QuickSort
+
+val sorter = QuickSort<Int>()
+val sorted = sorter.sort(listOf(5, 2, 8, 1, 9))  // Returns [1, 2, 5, 8, 9]
+println(sorter.name())             // "Quick Sort"
+println(sorter.timeComplexity())   // "O(n log n) average, O(n²) worst"
+println(sorter.spaceComplexity())  // "O(log n)"
+println(sorter.isStable())         // false
+```
+
+#### 📊 Benchmark System
+
+Complete performance testing framework with:
+- Precise measurements (nanoseconds and milliseconds)
+- Automatic comparison between algorithms
+- Multiple data patterns (random, sorted, reverse, nearly sorted, etc.)
+- Scalability analysis (different data sizes)
+- Visual reports (comparative, table, and comparison charts)
+- Statistics (fastest, slowest, average)
+
+**Data Patterns Available**
+- **Random**: Unordered random data
+- **Sorted**: Already sorted (best case for some algorithms)
+- **Reverse Sorted**: Worst case for many algorithms
+- **Nearly Sorted**: Few elements out of order
+- **Many Duplicates**: Tests handling of equal elements
+- **Uniform**: All elements the same
+
+**Running Benchmarks**
+```kotlin
+import digital.tonima.sort.benchmark.SortBenchmark
+import digital.tonima.sort.benchmark.BenchmarkDataGenerator
+import digital.tonima.sort.algorithms.SelectionSort
+import digital.tonima.sort.algorithms.QuickSort
+
+val benchmark = SortBenchmark()
+val data = BenchmarkDataGenerator.generateRandomList(1000)
+
+benchmark.benchmark(SelectionSort<Int>(), data)
+benchmark.benchmark(QuickSort<Int>(), data)
+
+benchmark.printComparativeReport()
+```
+
+**Benchmark by Size**
+```kotlin
+val benchmark = SortBenchmark()
+val quickSort = QuickSort<Int>()
+
+benchmark.benchmarkBySize(
+    quickSort,
+    1000..10000 step 1000
+) { size -> BenchmarkDataGenerator.generateRandomList(size) }
+
+benchmark.printComparativeReport()
+```
+
+**Pattern Analysis**
+```kotlin
+val patterns = mapOf<String, (Int) -> List<Int>>(
+    "Random" to { size -> BenchmarkDataGenerator.generateRandomList(size) },
+    "Sorted" to { size -> BenchmarkDataGenerator.generateSortedList(size) },
+    "Reverse" to { size -> BenchmarkDataGenerator.generateReverseSortedList(size) }
+)
+
+benchmark.benchmarkByPattern(strategy, 1000, patterns)
+```
+
+**Expected Performance**
+
+| Dataset Size | Selection Sort | Quick Sort | Speed-up |
+|--------------|----------------|------------|----------|
+| 100          | ~0.01 ms       | ~0.005 ms  | 2x       |
+| 1,000        | ~1.0 ms        | ~0.05 ms   | 20x      |
+| 10,000       | ~100 ms        | ~0.5 ms    | 200x     |
+| 100,000      | ~10,000 ms     | ~5 ms      | **2000x** |
+
+#### 🔧 Features
+
+- **Generic Implementation**: Works with any `Comparable<T>` type
+- **Type-Safe**: Full Kotlin type system support
+- **Well-Documented**: KDoc comments on all public APIs
+- **Tested**: 61 comprehensive unit tests (all passing ✅)
+- **Immutable**: Original lists are never modified
+- **Extensible**: Easy to add new sorting algorithms
+- **Production-Ready**: Clean architecture and error handling
+- **Rich Metadata**: Each algorithm reports complexity and stability
+
+#### 📚 Adding New Algorithms
+
+The framework is ready for 8 additional algorithms:
+
+```kotlin
+// 1. Create new algorithm class
+package digital.tonima.sort.algorithms
+
+class MergeSort<T : Comparable<T>> : SortStrategy<T> {
+    override fun sort(collection: List<T>): List<T> {
+        // Your implementation here
+        return collection
+    }
+    override fun name(): String = "Merge Sort"
+    override fun timeComplexity(): String = "O(n log n)"
+    override fun spaceComplexity(): String = "O(n)"
+    override fun isStable(): Boolean = true
+}
+
+// 2. Add to SortType enum
+enum class SortType {
+    BUBBLE,
+    SELECTION,
+    INSERTION,
+    MERGE,      // New!
+    QUICK,
+    HEAP,
+    // ... etc
+}
+
+// 3. Update SortFactory
+fun <T : Comparable<T>> create(type: SortType): SortStrategy<T> {
+    return when (type) {
+        SortType.SELECTION -> SelectionSort()
+        SortType.QUICK -> QuickSort()
+        SortType.MERGE -> MergeSort()  // New!
+        // ...
+    }
+}
+```
+
+**Ready to Implement**:
+- Bubble Sort - O(n²)
+- Insertion Sort - O(n²)
+- Merge Sort - O(n log n)
+- Heap Sort - O(n log n)
+- Shell Sort - O(n log n) or O(n^1.25)
+- Counting Sort - O(n + k)
+- Radix Sort - O(nk)
+- Bucket Sort - O(n + k)
+
+#### 📖 Documentation
+
+Complete documentation available:
+- **SORT_INDEX.md** - Navigation guide and quick reference
+- **SORT_QUICKSTART.md** - 30-second quick start guide
+- **SORT_STRUCTURE.md** - Complete architecture and usage
+- **SORT_SUMMARY.md** - Implementation details and statistics
+- **SORT_COMPLETE.md** - Final status and checklist
+
 ## 🛠️ Technologies
 
 - **Language**: Kotlin 2.1.20
@@ -340,6 +581,10 @@ fun <T : Comparable<T>> create(type: SearchType): SearchStrategy<T> {
 | Linear Search | O(n) | O(1) | Sequential traversal |
 | Binary Search | O(log n) | O(1) | Divide and conquer (requires sorted list) |
 | Search Benchmark | O(1) | O(k) | k = number of results stored |
+| **Sorting Algorithms** | | | |
+| Selection Sort | O(n²) | O(1) | In-place, minimal swaps, not stable |
+| Quick Sort | O(n log n) avg, O(n²) worst | O(log n) | Divide and conquer, not stable, fast in practice |
+| Sort Benchmark | O(1) | O(k) | k = number of results stored |
 
 ## 📚 References and Concepts
 
@@ -366,6 +611,17 @@ fun <T : Comparable<T>> create(type: SearchType): SearchStrategy<T> {
   - Measure execution time (nanoseconds precision)
   - Compare multiple algorithms on same dataset
   - Analyze scalability with varying input sizes
+- **Sorting Algorithms**: Techniques for ordering elements in collections
+  - **Selection Sort**: Simple O(n²) algorithm, finds minimum and places it at the beginning
+  - **Quick Sort**: Efficient O(n log n) average, uses divide and conquer with pivot partitioning
+  - **Stability**: Whether algorithm maintains relative order of equal elements
+  - **In-place Sorting**: Algorithms that use O(1) extra space
+  - **Comparison Sorting**: Algorithms that sort by comparing elements
+- **Algorithm Analysis**: Understanding performance characteristics
+  - **Best/Average/Worst Case**: Different scenarios affect algorithm performance
+  - **Time-Space Tradeoff**: Balancing execution speed vs memory usage
+  - **Scalability**: How algorithm performs as input size grows
+  - **Data Patterns**: Random, sorted, reverse-sorted, nearly-sorted affect performance
 
 ## 🔗 LeetCode Problems
 
