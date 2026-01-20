@@ -60,6 +60,20 @@ This project implements fundamental data structures and algorithms with emphasis
   - Efficiently implemented with a top pointer
   - Supports generic data types
 
+#### Graph
+- Generic Graph implementation with adjacency list representation
+- Support for any data type (`<T>`)
+- **Operations**:
+  - `addEdge(source, destination, bidirectional)` - O(1) - Add edge between vertices
+  - `breadthFirstSearch(startNode)` - O(V + E) - Traverse graph level by level
+  - `printGraph()` - O(V + E) - Display graph structure
+- **Characteristics**:
+  - Supports both directed and undirected graphs
+  - Efficient adjacency list representation using HashMap
+  - BFS uses queue for level-order traversal
+  - Cycle detection with visited set
+  - Generic type support for vertices
+
 ### Algorithms (`algorithms/`)
 
 #### Arrays
@@ -568,6 +582,10 @@ fun <T : Comparable<T>> create(type: SortType): SortStrategy<T> {
 | Push | O(1) | O(1) | Add to top |
 | Pop | O(1) | O(1) | Remove from top |
 | Valid Parentheses | O(n) | O(n) | Stack + HashMap lookup |
+| **Graph Operations** | | | |
+| Add Edge | O(1) | O(1) | Add to adjacency list |
+| Breadth First Search | O(V + E) | O(V) | V = vertices, E = edges, space for visited set and queue |
+| Print Graph | O(V + E) | O(1) | Iterate through adjacency list |
 | **Search Algorithms** | | | |
 | Linear Search | O(n) | O(1) | Sequential traversal |
 | Binary Search | O(log n) | O(1) | Divide and conquer (requires sorted list) |
@@ -590,6 +608,18 @@ fun <T : Comparable<T>> create(type: SortType): SortStrategy<T> {
 - **Queue and Stack**: Fundamental data structures for managing collections of elements
   - Queue: FIFO (First In, First Out) - elements added to the end and removed from the front
   - Stack: LIFO (Last In, First Out) - elements added and removed from the top
+- **Graph**: Non-linear data structure representing relationships between objects
+  - **Adjacency List**: Space-efficient representation using HashMap (O(V + E) space)
+  - **Directed vs Undirected**: Edges can be one-way or bidirectional
+  - **Breadth-First Search (BFS)**: Level-order traversal using queue
+    - Explores all neighbors before moving to next level
+    - Uses visited set to prevent cycles and duplicate visits
+    - Applications: shortest path, level-order traversal, connected components
+  - **Graph Terminology**:
+    - Vertices (V): Nodes in the graph
+    - Edges (E): Connections between vertices
+    - Cycle: Path that starts and ends at same vertex
+    - Connected Component: Set of vertices where each vertex is reachable from any other
 - **Search Algorithms**: Techniques for finding elements in collections
   - **Linear Search**: Sequential traversal, works on any list, O(n)
   - **Binary Search**: Divide and conquer, requires sorted list, O(log n)
