@@ -64,15 +64,61 @@ This project implements fundamental data structures and algorithms with emphasis
 - Generic Graph implementation with adjacency list representation
 - Support for any data type (`<T>`)
 - **Operations**:
-  - `addEdge(source, destination, bidirectional)` - O(1) - Add edge between vertices
+  - `addEdge(source, destination, weight, bidirectional)` - O(1) - Add weighted edge between vertices
   - `breadthFirstSearch(startNode)` - O(V + E) - Traverse graph level by level
+  - `dijkstra(startNode, endNode)` - O((V + E) log V) - Find shortest path in weighted graph
   - `printGraph()` - O(V + E) - Display graph structure
 - **Characteristics**:
   - Supports both directed and undirected graphs
+  - Supports weighted edges for shortest path algorithms
   - Efficient adjacency list representation using HashMap
   - BFS uses queue for level-order traversal
   - Cycle detection with visited set
   - Generic type support for vertices
+
+##### Dijkstra's Shortest Path Algorithm
+**Implementation**: Finds the shortest path between two nodes in a weighted graph
+
+**Algorithm Steps**:
+1. Initialize distances to all nodes as infinite, except start node (0)
+2. Use a priority queue to always process the node with minimum distance first
+3. For each node, explore all neighbors and update their costs if a shorter path is found
+4. Track parent nodes to reconstruct the shortest path
+
+**Complexity Analysis**:
+- **Time**: O((V + E) log V) where V = vertices, E = edges
+  - Each vertex is processed once: O(V)
+  - Each edge is relaxed once: O(E)
+  - Priority queue operations: O(log V)
+- **Space**: O(V) for costs, parents, visited set, and priority queue
+
+**Use Cases**:
+- GPS navigation and routing systems
+- Network routing protocols
+- Social network analysis (shortest connection path)
+- Game pathfinding with weighted terrain
+
+**Example**:
+```kotlin
+val graph = Graph<String>()
+graph.addEdge("A", "B", weight = 4)
+graph.addEdge("A", "C", weight = 2)
+graph.addEdge("B", "D", weight = 5)
+graph.addEdge("C", "D", weight = 8)
+graph.addEdge("C", "E", weight = 10)
+graph.addEdge("D", "E", weight = 2)
+
+graph.dijkstra("A", "E")
+// Output:
+// Custo Mínimo: 11
+// Caminho: A -> B -> D -> E
+```
+
+**Key Features**:
+- Greedy algorithm that always selects the node with minimum cost
+- Guarantees optimal solution for graphs with non-negative weights
+- Early termination when destination is reached
+- Path reconstruction using parent tracking
 
 ### Algorithms (`algorithms/`)
 
@@ -585,6 +631,7 @@ fun <T : Comparable<T>> create(type: SortType): SortStrategy<T> {
 | **Graph Operations** | | | |
 | Add Edge | O(1) | O(1) | Add to adjacency list |
 | Breadth First Search | O(V + E) | O(V) | V = vertices, E = edges, space for visited set and queue |
+| Dijkstra's Algorithm | O((V + E) log V) | O(V) | Shortest path with priority queue, space for costs/parents/visited |
 | Print Graph | O(V + E) | O(1) | Iterate through adjacency list |
 | **Search Algorithms** | | | |
 | Linear Search | O(n) | O(1) | Sequential traversal |
@@ -611,13 +658,23 @@ fun <T : Comparable<T>> create(type: SortType): SortStrategy<T> {
 - **Graph**: Non-linear data structure representing relationships between objects
   - **Adjacency List**: Space-efficient representation using HashMap (O(V + E) space)
   - **Directed vs Undirected**: Edges can be one-way or bidirectional
+  - **Weighted Graphs**: Edges have associated costs/weights for shortest path problems
   - **Breadth-First Search (BFS)**: Level-order traversal using queue
     - Explores all neighbors before moving to next level
     - Uses visited set to prevent cycles and duplicate visits
     - Applications: shortest path, level-order traversal, connected components
+  - **Dijkstra's Shortest Path Algorithm**: Greedy algorithm for finding shortest path in weighted graphs
+    - Uses priority queue to always process minimum-cost node first
+    - Maintains costs map to track minimum distance to each node
+    - Parent tracking enables path reconstruction
+    - Guarantees optimal solution for non-negative weights
+    - Applications: GPS navigation, network routing, game pathfinding
+    - Time: O((V + E) log V), Space: O(V)
   - **Graph Terminology**:
     - Vertices (V): Nodes in the graph
     - Edges (E): Connections between vertices
+    - Weight: Cost associated with an edge
+    - Path: Sequence of vertices connected by edges
     - Cycle: Path that starts and ends at same vertex
     - Connected Component: Set of vertices where each vertex is reachable from any other
 - **Search Algorithms**: Techniques for finding elements in collections

@@ -258,8 +258,8 @@ class GraphTest {
             graph.printGraph()
         }
 
-        assertTrue(output.contains("A: [B]"))
-        assertFalse(output.contains("B: [A]"))
+        assertTrue(output.contains("A: [Edge(node=B, weight=1)]"))
+        assertFalse(output.contains("B: [Edge(node=A, weight=1)]"))
     }
 
     @Test
@@ -271,8 +271,8 @@ class GraphTest {
             graph.printGraph()
         }
 
-        assertTrue(output.contains("A: [B]"))
-        assertTrue(output.contains("B: [A]"))
+        assertTrue(output.contains("A: [Edge(node=B, weight=1)]"))
+        assertTrue(output.contains("B: [Edge(node=A, weight=1)]"))
     }
 
     @Test
@@ -286,7 +286,217 @@ class GraphTest {
             graph.printGraph()
         }
 
-        assertTrue(output.contains("1: [2, 3]"))
-        assertTrue(output.contains("2: [4]"))
+        println(output)
+
+        assertTrue(output.contains("1: [Edge(node=2, weight=1), Edge(node=3, weight=1)]"))
+        assertTrue(output.contains("2: [Edge(node=4, weight=1)]"))
+    }
+
+    // Dijkstra's Algorithm Tests
+
+    @Test
+    fun `dijkstra should find shortest path in simple linear graph`() {
+        val graph = Graph<String>()
+        graph.addEdge("A", "B", weight = 5)
+        graph.addEdge("B", "C", weight = 3)
+        graph.addEdge("C", "D", weight = 2)
+
+        val output = captureStdOut {
+            graph.dijkstra("A", "D")
+        }
+
+        assertTrue(output.contains("Custo Mínimo: 10"))
+        assertTrue(output.contains("Caminho: A -> B -> C -> D"))
+    }
+
+    @Test
+    fun `dijkstra should find shortest path when multiple routes exist`() {
+        val graph = Graph<String>()
+        // Route 1: A -> B -> D (cost: 5 + 10 = 15)
+        graph.addEdge("A", "B", weight = 5)
+        graph.addEdge("B", "D", weight = 10)
+
+        // Route 2: A -> C -> D (cost: 2 + 3 = 5) - SHORTER
+        graph.addEdge("A", "C", weight = 2)
+        graph.addEdge("C", "D", weight = 3)
+
+        val output = captureStdOut {
+            graph.dijkstra("A", "D")
+        }
+
+        assertTrue(output.contains("Custo Mínimo: 5"))
+        assertTrue(output.contains("Caminho: A -> C -> D"))
+    }
+
+    @Test
+    fun `dijkstra should handle graph with single node path`() {
+        val graph = Graph<Int>()
+        graph.addEdge(1, 2, weight = 10)
+
+        val output = captureStdOut {
+            graph.dijkstra(1, 2)
+        }
+
+        assertTrue(output.contains("Custo Mínimo: 10"))
+        assertTrue(output.contains("Caminho: 1 -> 2"))
+    }
+
+    @Test
+    fun `dijkstra should find optimal path in complex graph`() {
+        val graph = Graph<String>()
+        // Complex graph with multiple paths
+        graph.addEdge("A", "B", weight = 4)
+        graph.addEdge("A", "C", weight = 2)
+        graph.addEdge("B", "C", weight = 1)
+        graph.addEdge("B", "D", weight = 5)
+        graph.addEdge("C", "D", weight = 8)
+        graph.addEdge("C", "E", weight = 10)
+        graph.addEdge("D", "E", weight = 2)
+
+        // Shortest path: A -> B -> D -> E (cost: 4 + 5 + 2 = 11)
+        // Alternative: A -> C -> D -> E (cost: 2 + 8 + 2 = 12)
+        // Alternative: A -> C -> E (cost: 2 + 10 = 12)
+
+        val output = captureStdOut {
+            graph.dijkstra("A", "E")
+        }
+
+        assertTrue(output.contains("Custo Mínimo: 11"))
+        assertTrue(output.contains("Caminho: A -> B -> D -> E"))
+    }
+
+    @Test
+    fun `dijkstra should handle start and end being the same node`() {
+        val graph = Graph<String>()
+        graph.addEdge("A", "B", weight = 5)
+        graph.addEdge("B", "C", weight = 3)
+
+        val output = captureStdOut {
+            graph.dijkstra("A", "A")
+        }
+
+        assertTrue(output.contains("Custo Mínimo: 0"))
+        assertTrue(output.contains("Caminho: A"))
+    }
+
+    @Test
+    fun `dijkstra should handle no path between nodes`() {
+        val graph = Graph<String>()
+        // Component 1
+        graph.addEdge("A", "B", weight = 5)
+        graph.addEdge("B", "C", weight = 3)
+
+        // Component 2 (disconnected)
+        graph.addEdge("X", "Y", weight = 2)
+
+        val output = captureStdOut {
+            graph.dijkstra("A", "X")
+        }
+
+        assertTrue(output.contains("Não há caminho entre A e X"))
+    }
+
+    @Test
+    fun `dijkstra should work with integer node types`() {
+        val graph = Graph<Int>()
+        graph.addEdge(1, 2, weight = 7)
+        graph.addEdge(1, 3, weight = 9)
+        graph.addEdge(1, 6, weight = 14)
+        graph.addEdge(2, 3, weight = 10)
+        graph.addEdge(2, 4, weight = 15)
+        graph.addEdge(3, 4, weight = 11)
+        graph.addEdge(3, 6, weight = 2)
+        graph.addEdge(4, 5, weight = 6)
+        graph.addEdge(5, 6, weight = 9)
+
+        val output = captureStdOut {
+            graph.dijkstra(1, 5)
+        }
+
+
+        assertTrue(output.contains("Custo Mínimo: 26"))
+        // Shortest path: 1 -> 3 -> 4 -> 5 (cost: 9 + 11 + 6 = 26)
+    }
+
+    @Test
+    fun `dijkstra should handle weighted undirected graph`() {
+        val graph = Graph<String>()
+        graph.addEdge("A", "B", weight = 4, bidirectional = true)
+        graph.addEdge("A", "C", weight = 2, bidirectional = true)
+        graph.addEdge("B", "D", weight = 5, bidirectional = true)
+        graph.addEdge("C", "D", weight = 1, bidirectional = true)
+
+        val output = captureStdOut {
+            graph.dijkstra("A", "D")
+        }
+
+        assertTrue(output.contains("Custo Mínimo: 3"))
+        assertTrue(output.contains("Caminho: A -> C -> D"))
+    }
+
+    @Test
+    fun `dijkstra should find path with varying edge weights`() {
+        val graph = Graph<Char>()
+        graph.addEdge('A', 'B', weight = 1)
+        graph.addEdge('A', 'C', weight = 100)
+        graph.addEdge('B', 'C', weight = 1)
+
+        val output = captureStdOut {
+            graph.dijkstra('A', 'C')
+        }
+
+        assertTrue(output.contains("Custo Mínimo: 2"))
+        assertTrue(output.contains("Caminho: A -> B -> C"))
+    }
+
+    @Test
+    fun `dijkstra should handle graph with cycles correctly`() {
+        val graph = Graph<String>()
+        // Create a cycle: A -> B -> C -> A
+        graph.addEdge("A", "B", weight = 1)
+        graph.addEdge("B", "C", weight = 2)
+        graph.addEdge("C", "A", weight = 3)
+        graph.addEdge("B", "D", weight = 5)
+
+        val output = captureStdOut {
+            graph.dijkstra("A", "D")
+        }
+
+        assertTrue(output.contains("Custo Mínimo: 6"))
+        assertTrue(output.contains("Caminho: A -> B -> D"))
+    }
+
+    @Test
+    fun `dijkstra should prefer shorter path over more hops`() {
+        val graph = Graph<Int>()
+        // Direct path with high cost
+        graph.addEdge(1, 5, weight = 100)
+
+        // Longer path with lower total cost
+        graph.addEdge(1, 2, weight = 1)
+        graph.addEdge(2, 3, weight = 1)
+        graph.addEdge(3, 4, weight = 1)
+        graph.addEdge(4, 5, weight = 1)
+
+        val output = captureStdOut {
+            graph.dijkstra(1, 5)
+        }
+
+        assertTrue(output.contains("Custo Mínimo: 4"))
+        assertTrue(output.contains("Caminho: 1 -> 2 -> 3 -> 4 -> 5"))
+    }
+
+    @Test
+    fun `dijkstra should work with large weight values`() {
+        val graph = Graph<String>()
+        graph.addEdge("Start", "Mid", weight = 1000)
+        graph.addEdge("Mid", "End", weight = 2000)
+
+        val output = captureStdOut {
+            graph.dijkstra("Start", "End")
+        }
+
+        assertTrue(output.contains("Custo Mínimo: 3000"))
+        assertTrue(output.contains("Caminho: Start -> Mid -> End"))
     }
 }
