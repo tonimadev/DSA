@@ -1,6 +1,6 @@
 package digital.tonima.dataestructures.linkedlist
 
-class LinkedList<T : Any?>() {
+class LinkedList<T>() {
 
     private var head: Node? = null
     private var tail: Node? = null
@@ -91,7 +91,7 @@ class LinkedList<T : Any?>() {
 
     // O(n) - linear operation since we traverse up to the index position
     fun get(index: Int): Node? {
-        if (index < 0 || index >= length) return null
+        if (index !in 0..<length) return null
         var currentNode = head
         repeat(index) {
             currentNode = currentNode?.next
@@ -110,7 +110,7 @@ class LinkedList<T : Any?>() {
 
     // O(n) - linear operation since we may traverse up to the index position using get()
     fun insert(index: Int, value: T): Boolean {
-        if (index < 0 || index > length) return false
+        if (index !in 0..length) return false
         if (index == 0) {
             prepend(value)
             return true
@@ -129,7 +129,7 @@ class LinkedList<T : Any?>() {
 
     // O(n) - linear operation since we may traverse up to the index position using get()
     fun remove(index: Int): Node? {
-        if (index < 0 || index >= length) return null
+        if (index !in 0..<length) return null
         if (index == 0) return removeFirst()
         if (index == length - 1) return removeLast()
         val previousNode = get(index - 1)

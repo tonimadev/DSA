@@ -1,7 +1,7 @@
 package digital.tonima.dataestructures.array
 
 class UnsortedArray<T>(
-    val maxSize: Int,
+    maxSize: Int,
 
     ) {
 
