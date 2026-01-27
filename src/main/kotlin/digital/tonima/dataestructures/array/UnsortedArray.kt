@@ -15,6 +15,11 @@ class UnsortedArray<T>(
         private set
     var array = arrayOfNulls<Any?>(maxSize)
 
+    /**
+     * Insert value at the end
+     * Time Complexity: O(1) - direct insertion at end
+     * Space Complexity: O(1)
+     */
     fun insert(value: T) {
         if (size >= array.size) {
             throw IllegalStateException("Array está cheio")
@@ -24,6 +29,11 @@ class UnsortedArray<T>(
         }
     }
 
+    /**
+     * Remove element at index (replaces with last element)
+     * Time Complexity: O(1) - no shifting needed
+     * Space Complexity: O(1)
+     */
     fun remove(index: Int): T? {
         require(index in 0 until size) {
             "index não pode ser maior que o tamanho da lista nem negativo"
@@ -35,6 +45,11 @@ class UnsortedArray<T>(
         return value as T?
     }
 
+    /**
+     * Find element and return its index
+     * Time Complexity: O(n) - linear search
+     * Space Complexity: O(1)
+     */
     fun get(target: T): Int? {
         for (i in 0 until size) {
             if (array[i] == target) return i
@@ -43,6 +58,11 @@ class UnsortedArray<T>(
         return null
     }
 
+    /**
+     * Traverse all elements applying operation
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     */
     fun traverse(op: (T?) -> Unit) {
         array.forEach {
             op(it as? T?)
@@ -50,6 +70,11 @@ class UnsortedArray<T>(
 
     }
 
+    /**
+     * Print all elements
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     */
     fun printIt() {
         traverse { println(it) }
     }

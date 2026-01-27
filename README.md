@@ -14,6 +14,140 @@ This project implements fundamental data structures and algorithms with emphasis
 
 ### Data Structures (`dataestructures/`)
 
+#### Arrays
+
+The project implements three distinct array structures, each optimized for different use cases:
+
+##### SortedArray
+- **Fixed-size array that maintains sorted order on insertion**
+- Generic implementation with `Comparable<T>` constraint
+- Support for any comparable data type (`Int`, `String`, etc.)
+
+**Operations**:
+- `insert(value)` - **O(n)** - Inserts value maintaining sorted order (requires shifting elements)
+- `delete(value)` - **O(n)** - Removes value using binary search + shifting
+- `deleteByIndex(index)` - **O(n)** - Removes element at index (requires shifting)
+- `binarySearch(value)` - **O(log n)** - Efficient search on sorted array
+- `get(index)` - **O(1)** - Direct access by index
+
+**Characteristics**:
+- Fixed capacity set at initialization
+- Always maintains sorted order
+- Optimized for search operations (binary search)
+- Slower insertions due to maintaining order
+- Space Complexity: O(n)
+
+**Use Cases**:
+- When data must be kept sorted at all times
+- Frequent search operations with fewer insertions
+- Small to medium datasets with known maximum size
+- Priority-based systems requiring ordered access
+
+**Example**:
+```kotlin
+val sortedArray = SortedArray<Int>(10)
+sortedArray.insert(5)
+sortedArray.insert(2)
+sortedArray.insert(8)
+println(sortedArray) // Output: [2, 5, 8]
+sortedArray.binarySearch(5) // Returns index 1
+```
+
+##### UnsortedArray
+- **Fixed-size array with fast insertions and removals**
+- Generic implementation supporting any data type (`<T>`)
+- Optimized for speed over order
+
+**Operations**:
+- `insert(value)` - **O(1)** - Appends to end of array
+- `remove(index)` - **O(1)** - Removes by replacing with last element (doesn't maintain order)
+- `get(target)` - **O(n)** - Linear search for element
+- `traverse(operation)` - **O(n)** - Applies operation to all elements
+
+**Characteristics**:
+- Fixed capacity set at initialization
+- No ordering guarantees
+- Removal replaces deleted element with last element (very fast)
+- Simple and efficient for basic operations
+- Space Complexity: O(n)
+
+**Use Cases**:
+- When order doesn't matter
+- Frequent insertions and deletions needed
+- Simple collection without search requirements
+- Temporary storage or buffers
+
+**Example**:
+```kotlin
+val unsortedArray = UnsortedArray<Int>(10)
+unsortedArray.insert(10)
+unsortedArray.insert(20)
+unsortedArray.insert(30)
+unsortedArray.remove(1) // Replaces 20 with 30, size becomes 2
+println(unsortedArray) // Output:  10 30
+```
+
+##### UnsortedDynamicArray
+- **Self-resizing array that grows and shrinks automatically**
+- Generic implementation supporting any data type (`<T>`)
+- Combines flexibility of dynamic sizing with array performance
+
+**Operations**:
+- `insert(value)` - **O(1) amortized** - Appends to end, doubles capacity when full
+- `remove(target)` - **O(n)** - Finds and removes element, halves capacity when size ≤ capacity/4
+- `find(target)` - **O(n)** - Linear search for element
+
+**Resizing Strategy**:
+- **Doubling**: When `size == capacity`, doubles capacity to `capacity * 2`
+- **Halving**: When `size ≤ capacity / 4`, halves capacity to `capacity / 2`
+- **Amortized O(1) insertions**: While individual resize operations cost O(n), they happen infrequently enough that average cost per insertion is constant
+- **Space efficiency**: Shrinks to avoid wasting memory with sparse arrays
+
+**Complexity Analysis**:
+- `insert(value)` - **O(1) amortized**, O(n) worst case when resizing
+- `remove(target)` - **O(n)** for search + shift, O(n) for potential resize
+- `find(target)` - **O(n)** linear search
+- Space Complexity: O(n), with capacity bounded by 2n
+
+**Characteristics**:
+- Automatic capacity management
+- No fixed size limit
+- Memory efficient with dynamic shrinking
+- Maintains insertion order
+- Prevents overflow errors
+
+**Use Cases**:
+- When size is unknown or highly variable
+- Need array performance without capacity planning
+- Long-lived collections that grow and shrink
+- General-purpose dynamic collections
+
+**Example**:
+```kotlin
+val dynamicArray = UnsortedDynamicArray<Int>(initialCapacity = 2)
+dynamicArray.insert(10)
+dynamicArray.insert(20)
+// capacity = 2, size = 2
+
+dynamicArray.insert(30) // Triggers doubling
+// capacity = 4, size = 3
+
+dynamicArray.remove(10)
+dynamicArray.remove(20) // Triggers halving when size ≤ capacity/4
+// capacity = 2, size = 1
+```
+
+**Performance Comparison**:
+
+| Operation | SortedArray | UnsortedArray | UnsortedDynamicArray |
+|-----------|-------------|---------------|----------------------|
+| Insert | O(n) | O(1) | O(1) amortized |
+| Remove | O(n) | O(1) | O(n) |
+| Search | O(log n) | O(n) | O(n) |
+| Access by index | O(1) | O(1) | N/A |
+| Space | O(n) fixed | O(n) fixed | O(n) dynamic |
+| Resizing | ❌ No | ❌ No | ✅ Yes |
+
 #### Linked List
 - Generic Linked List implementation
 - Support for any data type (`<T>`)
