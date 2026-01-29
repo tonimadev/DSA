@@ -13,9 +13,6 @@ fun main() {
     println("╚══════════════════════════════════════════════════════════════╝")
     println()
 
-    // Criar um grafo simples
-    val graph = Graph<String>()
-
     println("Criando o grafo:")
     println()
     println("        4         5")
@@ -30,12 +27,16 @@ fun main() {
     println("           └-- 10 --> E")
     println()
 
-    graph.addEdge("A", "B", weight = 4)
-    graph.addEdge("A", "C", weight = 2)
-    graph.addEdge("B", "D", weight = 5)
-    graph.addEdge("C", "D", weight = 8)
-    graph.addEdge("C", "E", weight = 10)
-    graph.addEdge("D", "E", weight = 2)
+    // Criar um grafo simples
+    val graph = Graph<String>().apply {
+
+        addEdge("A", "B", weight = 4)
+        addEdge("A", "C", weight = 2)
+        addEdge("B", "D", weight = 5)
+        addEdge("C", "D", weight = 8)
+        addEdge("C", "E", weight = 10)
+        addEdge("D", "E", weight = 2)
+    }
 
     println("═══════════════════════════════════════════════════════════════")
     println("PARTE 1: Execução NORMAL (sem verbose)")

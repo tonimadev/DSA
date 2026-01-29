@@ -16,7 +16,7 @@ fun main() {
     while (true) {
         println("\n${"─".repeat(80)}")
         println("MAIN MENU")
-        println("${"─".repeat(80)}")
+        println("─".repeat(80))
         println("1. Quick Test (1,000 elements)")
         println("2. Medium Test (100,000 elements)")
         println("3. Large Test (1,000,000 elements)")
@@ -24,7 +24,7 @@ fun main() {
         println("5. Scalability Test")
         println("6. Compare Worst and Best Case")
         println("7. Exit")
-        println("${"─".repeat(80)}")
+        println("─".repeat(80))
         print("Choose an option (1-7): ")
 
         when (readLine()?.toIntOrNull()) {
