@@ -194,6 +194,86 @@ dynamicArray.remove(20) // Triggers halving when size ≤ capacity/4
   - Efficiently implemented with a top pointer
   - Supports generic data types
 
+#### Heap (Priority Queue)
+- **Generic binary heap implementation maintaining priority order**
+- Support for any comparable data type (`<T>`)
+- Implemented as a complete binary tree using array representation
+- Customizable priority function for flexible ordering
+
+**Operations**:
+- `insert(element)` - **O(log n)** - Add element and maintain heap property via bubble-up
+- `heapify(elements)` - **O(n)** - Convert arbitrary list into valid heap (more efficient than n insertions)
+
+**Helper Methods**:
+- `hasHigherPriority(e1, e2)` - **O(1)** - Compare priorities of two elements
+- `hasLowerPriority(e1, e2)` - **O(1)** - Compare priorities of two elements
+- `parentIndex(i)` - **O(1)** - Calculate parent index: `(i - 1) / 2`
+- `leftChildIndex(i)` - **O(1)** - Calculate left child index: `2 * i + 1`
+
+**Characteristics**:
+- **Heap Property**: Parent nodes always have higher priority than their children
+- **Complete Binary Tree**: All levels filled except possibly the last, which fills left-to-right
+- **Array Representation**: Efficient memory usage, no need for node objects
+  - Parent of index `i` is at `(i - 1) / 2`
+  - Left child of index `i` is at `2 * i + 1`
+  - Right child of index `i` is at `2 * i + 2`
+- **Flexible Priority**: Custom `elementPriority` function allows min-heap, max-heap, or complex priorities
+- **Space Complexity**: O(n) for storing elements
+
+**Complexity Analysis**:
+- **Constructor**: 
+  - Empty: O(1)
+  - With elements: O(n) via heapify (better than O(n log n) for n insertions)
+- **Insert**: O(log n) - bubble up at most the height of the tree
+- **Space**: O(n) - stores all elements in array
+
+**Use Cases**:
+- Priority queues (task scheduling, event simulation)
+- Dijkstra's shortest path algorithm
+- Heap sort algorithm
+- Finding k largest/smallest elements
+- Median maintenance in streaming data
+- Job scheduling systems
+- A* pathfinding algorithm
+
+**Example**:
+```kotlin
+// Max heap (default - higher values have higher priority)
+val maxHeap = Heap<Int>()
+maxHeap.insert(5)
+maxHeap.insert(10)
+maxHeap.insert(3)
+maxHeap.insert(8)
+// Internal structure maintains: 10 at root (highest priority)
+
+// Min heap (custom priority - negate values)
+val minHeap = Heap<Int>(elementPriority = { -it })
+minHeap.insert(5)
+minHeap.insert(10)
+minHeap.insert(3)
+minHeap.insert(8)
+// Internal structure maintains: 3 at root (highest priority due to negation)
+
+// Custom priority (e.g., task scheduling by deadline)
+data class Task(val name: String, val deadline: Int)
+val taskHeap = Heap<Task>(elementPriority = { it.deadline })
+taskHeap.insert(Task("Task A", 5))
+taskHeap.insert(Task("Task B", 2))
+taskHeap.insert(Task("Task C", 8))
+// Task B has highest priority (earliest deadline)
+
+// Initialize with existing elements (heapify)
+val elements = mutableListOf(5, 10, 3, 8, 15, 1)
+val heap = Heap(elements) // O(n) heapify
+```
+
+**Implementation Notes**:
+- Uses `bubbleUp` to restore heap property after insertion
+- Generic type `T` allows any data type
+- `elementPriority` function extracts comparable value from elements
+- Default priority is the element itself (for `Int`, `String`, etc.)
+- Heap property: `priority(parent) > priority(children)` for max-heap
+
 #### Graph
 - Generic Graph implementation with adjacency list representation
 - Support for any data type (`<T>`)
