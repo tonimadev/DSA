@@ -167,10 +167,10 @@ class Heap<T>(
      * Time Complexity: O(1) - single comparison operation
      */
     @Suppress("UNCHECKED_CAST")
-    private fun hasLowerPriority(element: T, element2: T): Boolean {
+    private fun hasHigherPriority(element: T, element2: T): Boolean { // O(1)
         val priority1 = elementPriority(element) as Comparable<Any>
         val priority2 = elementPriority(element2)
-        return priority1.compareTo(priority2) < 0
+        return priority1.compareTo(priority2) > 0
     }
 
     /**
@@ -178,10 +178,10 @@ class Heap<T>(
      * Time Complexity: O(1) - single comparison operation
      */
     @Suppress("UNCHECKED_CAST")
-    private fun hasHigherPriority(element: T, element2: T): Boolean {
+    private fun hasLowerPriority(element: T, element2: T): Boolean { // O(1)
         val priority1 = elementPriority(element) as Comparable<Any>
         val priority2 = elementPriority(element2)
-        return priority1.compareTo(priority2) > 0
+        return priority1.compareTo(priority2) < 0
     }
 
     /**
@@ -202,7 +202,7 @@ class Heap<T>(
      */
     fun parentIndex(index: Int) = (index - 1).floorDiv(2)
 
-    private fun highestPriorityChildIndex(index: Int): Int? {
+    private fun highestPriorityChildIndex(index: Int): Int? { // O(1)
         val firstIndex = leftChildIndex(index)
 
         if (firstIndex >= size()) {
@@ -217,4 +217,45 @@ class Heap<T>(
             return firstIndex + 1
         }
     }
+
+    fun kLargestElements(k: Int): List<T> { // O(k log n)
+        if (k <= 0) return emptyList()
+        if (isEmpty()) return emptyList()
+
+        val result = mutableListOf<T>()
+        val tempElements = mElements.toMutableList()
+        val actualK = minOf(k, size())
+
+        repeat(actualK) {
+            val largest = top()
+            if (largest != null) {
+                result.add(largest)
+            }
+        }
+
+        mElements.clear()
+        mElements.addAll(tempElements)
+
+        return result
+    }
+
+    fun allElementsDescending(): List<T> { // O(n log n)
+        if (isEmpty()) return emptyList()
+
+        val result = mutableListOf<T>()
+        val tempElements = mElements.toMutableList()
+
+        while (!isEmpty()) {
+            val largest = top()
+            if (largest != null) {
+                result.add(largest)
+            }
+        }
+
+        mElements.clear()
+        mElements.addAll(tempElements)
+
+        return result
+    }
+
 }

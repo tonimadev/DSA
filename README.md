@@ -202,6 +202,12 @@ dynamicArray.remove(20) // Triggers halving when size ≤ capacity/4
 
 **Operations**:
 - `insert(element)` - **O(log n)** - Add element and maintain heap property via bubble-up
+- `top()` - **O(log n)** - Remove and return highest priority element (root), bubble-down to restore heap property
+- `peek()` - **O(1)** - View highest priority element without removing it
+- `size()` - **O(1)** - Return number of elements in the heap
+- `isEmpty()` - **O(1)** - Check if heap contains no elements
+- `kLargestElements(k)` - **O(k log n)** - Get k largest elements in descending order (non-destructive)
+- `allElementsDescending()` - **O(n log n)** - Get all elements in descending order (non-destructive)
 - `heapify(elements)` - **O(n)** - Convert arbitrary list into valid heap (more efficient than n insertions)
 
 **Helper Methods**:
@@ -209,6 +215,7 @@ dynamicArray.remove(20) // Triggers halving when size ≤ capacity/4
 - `hasLowerPriority(e1, e2)` - **O(1)** - Compare priorities of two elements
 - `parentIndex(i)` - **O(1)** - Calculate parent index: `(i - 1) / 2`
 - `leftChildIndex(i)` - **O(1)** - Calculate left child index: `2 * i + 1`
+- `rightChildIndex(i)` - **O(1)** - Calculate right child index: `2 * i + 2`
 
 **Characteristics**:
 - **Heap Property**: Parent nodes always have higher priority than their children
@@ -228,6 +235,8 @@ dynamicArray.remove(20) // Triggers halving when size ≤ capacity/4
 - **Top (Remove)**: O(log n) - remove root and bubble down to restore heap property
 - **Peek**: O(1) - just returns the root element
 - **Size/isEmpty**: O(1) - simple property access
+- **kLargestElements(k)**: O(k log n) - removes k elements, each removal is O(log n), then restores original heap
+- **allElementsDescending()**: O(n log n) - removes all n elements, each removal is O(log n), then restores original heap
 - **BubbleUp/BubbleDown**: O(log n) - traverse at most the height of the tree (log n levels)
 - **Heapify**: O(n) - bottom-up approach more efficient than n insertions
 - **Space**: O(n) - stores all elements in array
@@ -270,14 +279,24 @@ taskHeap.insert(Task("Task C", 8))
 // Initialize with existing elements (heapify)
 val elements = mutableListOf(5, 10, 3, 8, 15, 1)
 val heap = Heap(elements) // O(n) heapify
+
+// Get k largest elements without modifying heap
+val top3 = heap.kLargestElements(3)  // Returns [15, 10, 8]
+println(heap.peek()) // Still 15, heap unchanged
+
+// Get all elements in descending order
+val all = heap.allElementsDescending()  // Returns [15, 10, 8, 5, 3, 1]
+println(heap.size()) // Still 6, heap unchanged
 ```
 
 **Implementation Notes**:
 - Uses `bubbleUp` to restore heap property after insertion
+- Uses `bubbleDown` to restore heap property after removal
 - Generic type `T` allows any data type
 - `elementPriority` function extracts comparable value from elements
 - Default priority is the element itself (for `Int`, `String`, etc.)
 - Heap property: `priority(parent) > priority(children)` for max-heap
+- `kLargestElements` and `allElementsDescending` are non-destructive (preserve original heap)
 
 #### Graph
 - Generic Graph implementation with adjacency list representation

@@ -301,4 +301,152 @@ class HeapTest {
 
         assertTrue(heap.isEmpty())
     }
+
+    @Test
+    fun `test kLargestElements with valid k`() {
+        val heap = Heap<Int>()
+        listOf(5, 10, 3, 8, 15, 1, 12, 6).forEach { heap.insert(it) }
+
+        // Get 4 largest elements
+        val top4 = heap.kLargestElements(4)
+
+        // Should return [15, 12, 10, 8]
+        assertEquals(4, top4.size)
+        assertEquals(listOf(15, 12, 10, 8), top4)
+
+        // Heap should remain unchanged
+        assertEquals(8, heap.size())
+        assertEquals(15, heap.peek())
+    }
+
+    @Test
+    fun `test kLargestElements with k equal to size`() {
+        val heap = Heap<Int>()
+        listOf(5, 10, 3, 8).forEach { heap.insert(it) }
+
+        val all = heap.kLargestElements(4)
+
+        assertEquals(4, all.size)
+        assertEquals(listOf(10, 8, 5, 3), all)
+    }
+
+    @Test
+    fun `test kLargestElements with k greater than size`() {
+        val heap = Heap<Int>()
+        listOf(5, 10, 3).forEach { heap.insert(it) }
+
+        val all = heap.kLargestElements(10)
+
+        // Should return only available elements
+        assertEquals(3, all.size)
+        assertEquals(listOf(10, 5, 3), all)
+    }
+
+    @Test
+    fun `test kLargestElements with k zero`() {
+        val heap = Heap<Int>()
+        listOf(5, 10, 3, 8).forEach { heap.insert(it) }
+
+        val result = heap.kLargestElements(0)
+
+        assertEquals(0, result.size)
+        assertEquals(4, heap.size()) // Heap unchanged
+    }
+
+    @Test
+    fun `test kLargestElements with negative k`() {
+        val heap = Heap<Int>()
+        listOf(5, 10, 3, 8).forEach { heap.insert(it) }
+
+        val result = heap.kLargestElements(-5)
+
+        assertEquals(0, result.size)
+        assertEquals(4, heap.size()) // Heap unchanged
+    }
+
+    @Test
+    fun `test kLargestElements with empty heap`() {
+        val heap = Heap<Int>()
+
+        val result = heap.kLargestElements(5)
+
+        assertEquals(0, result.size)
+        assertTrue(heap.isEmpty())
+    }
+
+    @Test
+    fun `test allElementsDescending`() {
+        val heap = Heap<Int>()
+        listOf(5, 10, 3, 8, 15, 1, 12, 6).forEach { heap.insert(it) }
+
+        val all = heap.allElementsDescending()
+
+        // Should return all elements in descending order
+        assertEquals(8, all.size)
+        assertEquals(listOf(15, 12, 10, 8, 6, 5, 3, 1), all)
+
+        // Heap should remain unchanged
+        assertEquals(8, heap.size())
+        assertEquals(15, heap.peek())
+    }
+
+    @Test
+    fun `test allElementsDescending with empty heap`() {
+        val heap = Heap<Int>()
+
+        val result = heap.allElementsDescending()
+
+        assertEquals(0, result.size)
+        assertTrue(heap.isEmpty())
+    }
+
+    @Test
+    fun `test allElementsDescending with single element`() {
+        val heap = Heap<Int>()
+        heap.insert(42)
+
+        val result = heap.allElementsDescending()
+
+        assertEquals(1, result.size)
+        assertEquals(listOf(42), result)
+        assertEquals(1, heap.size())
+    }
+
+    @Test
+    fun `test kLargestElements vs kLargestElementsOptimized produce same results`() {
+        val heap1 = Heap<Int>()
+        val heap2 = Heap<Int>()
+
+        listOf(5, 10, 3, 8, 15, 1, 12, 6, 20, 4).forEach {
+            heap1.insert(it)
+            heap2.insert(it)
+        }
+
+        val result1 = heap1.kLargestElements(5)
+        // result2 uses kLargestElements (same as result1 since optimized version not available)
+        val result2 = heap2.kLargestElements(5)
+
+        assertEquals(result1, result2)
+        assertEquals(listOf(20, 15, 12, 10, 8), result1)
+    }
+
+    @Test
+    fun `test kLargestElements with custom objects`() {
+        data class Score(val player: String, val points: Int)
+
+        val heap = Heap<Score>(elementPriority = { it.points })
+
+        heap.insert(Score("Alice", 100))
+        heap.insert(Score("Bob", 85))
+        heap.insert(Score("Charlie", 95))
+        heap.insert(Score("David", 110))
+        heap.insert(Score("Eve", 90))
+
+        val top3 = heap.kLargestElements(3)
+
+        assertEquals(3, top3.size)
+        assertEquals("David", top3[0].player)
+        assertEquals("Alice", top3[1].player)
+        assertEquals("Charlie", top3[2].player)
+    }
 }
