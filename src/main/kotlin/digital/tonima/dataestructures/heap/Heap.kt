@@ -16,15 +16,15 @@ class Heap<T>(
     elements: MutableList<T>? = null,
     private val elementPriority: (T) -> Comparable<*> = { it as Comparable<*> }
 ) {
-    private var mElements: MutableList<T>
+    private val mElements: ArrayList<T>
 
     init {
         // O(n) if elements provided (heapify), O(1) if empty
         if (!elements.isNullOrEmpty()) {
-            mElements = elements.toMutableList()
+            mElements = ArrayList(elements)
             heapify(mElements)
         } else {
-            mElements = mutableListOf()
+            mElements = ArrayList()
         }
     }
 
@@ -61,14 +61,105 @@ class Heap<T>(
     }
 
     /**
+     * Bubbles down an element from given index to maintain heap property
+     * Moves element down the tree while it has lower priority than its children
+     * Time Complexity: O(log n) - worst case travels from root to leaf (height of tree)
+     * Space Complexity: O(1) - only uses local variables
+     */
+    private fun bubbleDown(index: Int) {
+        var currentIndex = index
+        val element = mElements[currentIndex]
+
+        while (true) {
+            val leftIndex = leftChildIndex(currentIndex) // O(1)
+            val rightIndex = rightChildIndex(currentIndex) // O(1)
+            var highestPriorityIndex = currentIndex
+
+            // Check if left child has higher priority than current element
+            if (leftIndex < size() &&
+                hasHigherPriority(mElements[leftIndex], element)
+            ) {
+                highestPriorityIndex = leftIndex
+            }
+
+            // Check if right child has higher priority than the highest so far
+            if (rightIndex < size() &&
+                hasHigherPriority(
+                    mElements[rightIndex],
+                    if (highestPriorityIndex == currentIndex) element else mElements[highestPriorityIndex]
+                )
+            ) {
+                highestPriorityIndex = rightIndex
+            }
+
+            // If current element is already in correct position, stop
+            if (highestPriorityIndex == currentIndex) {
+                break
+            }
+
+            // Move highest priority child up
+            mElements[currentIndex] = mElements[highestPriorityIndex]
+            currentIndex = highestPriorityIndex
+        }
+
+        mElements[currentIndex] = element
+    }
+
+    /**
+     * Removes and returns the highest priority element (root of heap)
+     * Time Complexity: O(log n) - bubbles down at most the height of the tree
+     * Space Complexity: O(1) - only uses a constant amount of extra space
+     */
+    fun top(): T? {
+        if (isEmpty()) return null
+
+        if (size() == 1) {
+            return mElements.removeLast() // O(1) - equivalent to pop()
+        }
+
+        val top = mElements[0] // Save the root element
+        val last = mElements.removeLast() // Remove last element (equivalent to pop())
+        mElements[0] = last // Move last element to root
+        bubbleDown(0) // Restore heap property
+
+        return top
+    }
+
+    /**
+     * Returns the highest priority element without removing it
+     * Time Complexity: O(1)
+     */
+    fun peek(): T? {
+        return if (isEmpty()) null else mElements[0]
+    }
+
+    /**
+     * Returns the number of elements in the heap
+     * Time Complexity: O(1)
+     */
+    fun size() = mElements.size
+
+    /**
+     * Checks if the heap is empty
+     * Time Complexity: O(1)
+     */
+    fun isEmpty() = mElements.isEmpty()
+
+    /**
      * Converts an arbitrary list into a valid heap in-place
      * Time Complexity: O(n) - more efficient than n insertions
      * Space Complexity: O(1) - in-place operation
-     * TODO: Implement bottom-up heapify starting from last non-leaf node
+     * Starts from last non-leaf node and bubbles down each element
      */
-    private fun heapify(elements: MutableList<T>) {
-        // TODO: Implement heapify algorithm
-        // This will convert an arbitrary list into a valid heap
+    private fun heapify(elements: ArrayList<T>) {
+        if (size()<= 1) return
+
+        // Start from last non-leaf node and work backwards to root
+        // Last non-leaf node is at index (size/2 - 1)
+        val startIndex = (elements.size / 2) - 1
+        for (i in startIndex downTo 0) {
+            bubbleDown(i)
+        }
     }
 
     /**
@@ -100,8 +191,30 @@ class Heap<T>(
     private fun leftChildIndex(index: Int) = index * 2 + 1
 
     /**
+     * Calculates right child index in the heap array
+     * Time Complexity: O(1)
+     */
+    private fun rightChildIndex(index: Int) = index * 2 + 2
+
+    /**
      * Calculates parent index in the heap array
      * Time Complexity: O(1)
      */
     fun parentIndex(index: Int) = (index - 1).floorDiv(2)
+
+    private fun highestPriorityChildIndex(index: Int): Int? {
+        val firstIndex = leftChildIndex(index)
+
+        if (firstIndex >= size()) {
+            return null
+        }
+        if (firstIndex + 1 >= size()) {
+            return firstIndex
+        }
+        if (hasHigherPriority(mElements[firstIndex], mElements[firstIndex + 1])) {
+            return firstIndex
+        } else {
+            return firstIndex + 1
+        }
+    }
 }

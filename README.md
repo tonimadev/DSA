@@ -225,6 +225,11 @@ dynamicArray.remove(20) // Triggers halving when size ≤ capacity/4
   - Empty: O(1)
   - With elements: O(n) via heapify (better than O(n log n) for n insertions)
 - **Insert**: O(log n) - bubble up at most the height of the tree
+- **Top (Remove)**: O(log n) - remove root and bubble down to restore heap property
+- **Peek**: O(1) - just returns the root element
+- **Size/isEmpty**: O(1) - simple property access
+- **BubbleUp/BubbleDown**: O(log n) - traverse at most the height of the tree (log n levels)
+- **Heapify**: O(n) - bottom-up approach more efficient than n insertions
 - **Space**: O(n) - stores all elements in array
 
 **Use Cases**:
