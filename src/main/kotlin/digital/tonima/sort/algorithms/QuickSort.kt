@@ -46,18 +46,61 @@ class QuickSort<T : Comparable<T>> : SortStrategy<T> {
         }
     }
 
+    /**
+     * Partitions array around pivot (Lomuto partition scheme)
+     *
+     * Visual representation:
+     * ┌─────────────────────────────────────────┐
+     * │ ≤ pivot │ pivot │ > pivot              │
+     * └─────────────────────────────────────────┘
+     *           ^
+     *    returns this index
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     */
     private fun partition(list: MutableList<T>, low: Int, high: Int): Int {
         val pivot = list[high]
-        var i = low - 1
+        val partitionIndex = moveElementsAroundPivot(list, low, high, pivot)
+        placePivotInCorrectPosition(list, partitionIndex, high)
+        return partitionIndex + 1  // Return pivot's final position
+    }
 
-        for (j in low until high) {
-            if (list[j] <= pivot) {
-                i++
-                list.swap(i, j)
+    /**
+     * Moves elements <= pivot to left, others to right
+     * Returns the index where pivot should be placed
+     *
+     * Time Complexity: O(n)
+     */
+    private fun moveElementsAroundPivot(
+        list: MutableList<T>,
+        low: Int,
+        high: Int,
+        pivot: T
+    ): Int {
+        var lastSmallElementIndex = low - 1
+
+        for (currentIndex in low until high) {
+            if (list[currentIndex] <= pivot) {
+                lastSmallElementIndex++
+                list.swap(lastSmallElementIndex, currentIndex)
             }
         }
-        list.swap(i + 1, high)
-        return i + 1
+
+        return lastSmallElementIndex
+    }
+
+    /**
+     * Places pivot in its final sorted position
+     *
+     * Time Complexity: O(1)
+     */
+    private fun placePivotInCorrectPosition(
+        list: MutableList<T>,
+        partitionIndex: Int,
+        pivotPosition: Int
+    ) {
+        list.swap(partitionIndex + 1, pivotPosition)
     }
 
     private fun MutableList<T>.swap(i: Int, j: Int) {

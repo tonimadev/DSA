@@ -298,6 +298,83 @@ println(heap.size()) // Still 6, heap unchanged
 - Heap property: `priority(parent) > priority(children)` for max-heap
 - `kLargestElements` and `allElementsDescending` are non-destructive (preserve original heap)
 
+#### HashTable
+- **Generic hash table with chaining collision resolution**
+- Uses Knuth's multiplicative hashing with golden ratio
+- Support for any data type (`<T>`) with custom key extraction
+- Adapted from Python implementation for Kotlin
+
+**Operations**:
+- `insert(value)` - **O(1) average**, O(n) worst case - Add element to hash table
+- `search(key)` - **O(1) average**, O(n) worst case - Find element by key
+- `contains(value)` - **O(1) average**, O(n) worst case - Check if value exists
+- `delete(value)` - **O(1) average**, O(n) worst case - Remove element
+- `isEmpty()` - **O(1)** - Check if hash table is empty
+- `size` - **O(n)** - Get number of elements
+
+**Characteristics**:
+- Hash function: `h(k) = floor(m * ((k * φ) mod 1))` where `φ = (√5 - 1) / 2`
+- Collision resolution: Chaining with LinkedList
+- Generic type `<T>` for any data type
+- Custom key extraction via lambda: `(T) -> Int`
+- Load factor: Unlimited (no resizing)
+- Dynamic scaling: Buckets count fixed at initialization
+
+**Use Cases**:
+- Fast lookup tables
+- Symbol tables in compilers
+- Caching systems
+- Database indexing
+- Associative arrays / Dictionaries
+- Remove duplicates from large datasets
+
+**Example**:
+```kotlin
+// Simple integer hash table
+val hashTable = HashTable<Int>(16)
+hashTable.insert(10)
+hashTable.insert(20)
+hashTable.insert(30)
+
+val value = hashTable.search(10)  // Returns 10
+hashTable.delete(20)
+
+// Custom objects with key extraction
+data class Person(val id: Int, val name: String)
+val peopleTable = HashTable<Person>(16) { it.id }
+peopleTable.insert(Person(1, "Alice"))
+peopleTable.insert(Person(2, "Bob"))
+
+val person = peopleTable.search(1)  // Returns Person(1, "Alice")
+if (peopleTable.contains(Person(2, "Bob"))) {
+    peopleTable.delete(Person(2, "Bob"))
+}
+
+// Handling collisions (automatic chaining)
+val smallTable = HashTable<String>(2)  // Small table forces collisions
+smallTable.insert("key1")
+smallTable.insert("key2")
+smallTable.insert("key3")  // Will chain with key1 or key2
+```
+
+**Time and Space Complexity**:
+
+| Operation | Average | Worst Case |
+|-----------|---------|-----------|
+| Insert | O(1) | O(n) |
+| Search | O(1) | O(n) |
+| Delete | O(1) | O(n) |
+| Iteration | O(n) | O(n) |
+
+**Space Complexity**: O(n + m) where n = elements, m = bucket count
+
+**Implementation Notes**:
+- Uses `BigDecimal` for precise golden ratio calculations
+- Chaining allows unlimited elements regardless of bucket count
+- Worst case (all collisions) degrades to O(n), but rare in practice
+- Custom `extractKey` lambda enables flexible key definition
+- Thread-unsafe (needs synchronization for concurrent access)
+
 #### Graph
 - Generic Graph implementation with adjacency list representation
 - Support for any data type (`<T>`)
@@ -861,7 +938,7 @@ fun <T : Comparable<T>> create(type: SortType): SortStrategy<T> {
 | DLL Set | O(n) | O(1) | Uses get() internally |
 | **Queue Operations** | | | |
 | Enqueue | O(1) | O(1) | Add to tail |
-| Dequeue | O(1) | O(1) | Remove from head |
+| Dequeue | O(1) | O(1) | Remove from top |
 | **Stack Operations** | | | |
 | Push | O(1) | O(1) | Add to top |
 | Pop | O(1) | O(1) | Remove from top |

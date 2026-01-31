@@ -70,40 +70,64 @@ class Heap<T>(
         var currentIndex = index
         val element = mElements[currentIndex]
 
-        while (true) {
-            val leftIndex = leftChildIndex(currentIndex) // O(1)
-            val rightIndex = rightChildIndex(currentIndex) // O(1)
-            var highestPriorityIndex = currentIndex
-
-            // Check if left child has higher priority than current element
-            if (leftIndex < size() &&
-                hasHigherPriority(mElements[leftIndex], element)
-            ) {
-                highestPriorityIndex = leftIndex
-            }
-
-            // Check if right child has higher priority than the highest so far
-            if (rightIndex < size() &&
-                hasHigherPriority(
-                    mElements[rightIndex],
-                    if (highestPriorityIndex == currentIndex) element else mElements[highestPriorityIndex]
-                )
-            ) {
-                highestPriorityIndex = rightIndex
-            }
-
-            // If current element is already in correct position, stop
-            if (highestPriorityIndex == currentIndex) {
-                break
-            }
-
-            // Move highest priority child up
-            mElements[currentIndex] = mElements[highestPriorityIndex]
-            currentIndex = highestPriorityIndex
+        while (hasChildrenWithHigherPriority(currentIndex, element)) {
+            val highestPriorityChildIndex = findHighestPriorityChildIndex(currentIndex)
+            moveChildUp(currentIndex, highestPriorityChildIndex)
+            currentIndex = highestPriorityChildIndex
         }
 
         mElements[currentIndex] = element
     }
+
+    /**
+     * Checks if there are children with higher priority than the parent
+     * Time Complexity: O(1)
+     */
+    private fun hasChildrenWithHigherPriority(parentIndex: Int, parent: T): Boolean {
+        val leftIndex = leftChildIndex(parentIndex)
+        if (isValidIndex(leftIndex) && hasHigherPriority(mElements[leftIndex], parent)) {
+            return true
+        }
+
+        val rightIndex = rightChildIndex(parentIndex)
+        return isValidIndex(rightIndex) && hasHigherPriority(mElements[rightIndex], parent)
+    }
+
+    /**
+     * Finds which child (left or right) has the highest priority
+     * Returns: index of the child with highest priority
+     * Time Complexity: O(1)
+     */
+    private fun findHighestPriorityChildIndex(parentIndex: Int): Int {
+        val leftIndex = leftChildIndex(parentIndex)
+        val rightIndex = rightChildIndex(parentIndex)
+
+        // If no right child, return left
+        if (!isValidIndex(rightIndex)) {
+            return leftIndex
+        }
+
+        // Return the child with highest priority
+        return if (hasHigherPriority(mElements[leftIndex], mElements[rightIndex])) {
+            leftIndex
+        } else {
+            rightIndex
+        }
+    }
+
+    /**
+     * Moves a child element up to replace its parent
+     * Time Complexity: O(1)
+     */
+    private fun moveChildUp(parentIndex: Int, childIndex: Int) {
+        mElements[parentIndex] = mElements[childIndex]
+    }
+
+    /**
+     * Checks if an index is valid within the heap
+     * Time Complexity: O(1)
+     */
+    private fun isValidIndex(index: Int): Boolean = index < size()
 
     /**
      * Removes and returns the highest priority element (root of heap)

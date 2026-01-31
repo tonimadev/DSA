@@ -10,28 +10,47 @@ package digital.tonima.algorithms.arrays
  * Space Complexity: O(n * k) for storing all strings in the result
  */
 class GroupAnagramsSolution {
+    /**
+     * Groups anagrams together based on character frequency
+     * Time Complexity: O(n * k) where n = number of strings, k = max string length
+     */
     fun groupAnagrams(strs: Array<String>): List<List<String>> {
-        // Map to store anagram groups: key = character frequency array, value = list of words
-        val resultMap = mutableMapOf<List<Int>, MutableList<String>>()
+        val anagramGroups = mutableMapOf<List<Int>, MutableList<String>>()
 
-        // Process each word
-        for (wrd in strs) {
-            // Create frequency array for 26 letters (a-z)
-            val charList = IntArray(26)
-
-            // Count frequency of each character
-            wrd.forEach { char ->
-                // Convert to lowercase first to handle uppercase letters
-                val lowerChar = char.lowercaseChar()
-                // Get index: 'a' = 0, 'b' = 1, ..., 'z' = 25
-                charList[lowerChar.code - 'a'.code] += 1
-            }
-
-            // Use frequency array as key (anagrams have same frequency)
-            val key = charList.toList()
-            resultMap.getOrPut(key) { mutableListOf() }.add(wrd)
+        for (word in strs) {
+            val frequencyKey = createFrequencyKey(word)
+            anagramGroups.getOrPut(frequencyKey) { mutableListOf() }.add(word)
         }
 
-        return resultMap.values.toList()
+        return anagramGroups.values.toList()
     }
+
+    /**
+     * Creates a frequency key for a word where anagrams produce the same key
+     *
+     * Example: "eat" -> [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+     *          "tea" -> [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+     *
+     * Time Complexity: O(k) where k is the length of the word
+     * Space Complexity: O(1) - always 26 letters
+     */
+    private fun createFrequencyKey(word: String): List<Int> {
+        val frequencies = IntArray(26)
+
+        word.forEach { char ->
+            frequencies[charToIndex(char)] += 1
+        }
+
+        return frequencies.toList()
+    }
+
+    /**
+     * Converts a character to its index in the alphabet [0-25]
+     *
+     * Example: 'a' or 'A' -> 0, 'z' or 'Z' -> 25
+     *
+     * Time Complexity: O(1)
+     */
+    private fun charToIndex(char: Char): Int =
+        char.lowercaseChar().code - 'a'.code
 }

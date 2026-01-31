@@ -167,6 +167,39 @@ class LinkedList<T>() {
 
     }
 
+    /**
+     * Remove element by value (not index)
+     * Time Complexity: O(n) - may traverse entire list
+     * Space Complexity: O(1)
+     */
+    fun removeByValue(value: T): Boolean {
+        // Case 1: First element
+        if (head?.value == value) {
+            removeFirst()
+            return true
+        }
+
+        // Case 2: Search in middle or end
+        var current = head
+        var previous: Node? = null
+
+        while (current != null) {
+            if (current.value == value) {
+                // Found it, unlink from chain
+                previous?.next = current.next
+                if (current == tail) {
+                    tail = previous
+                }
+                length--
+                return true
+            }
+            previous = current
+            current = current.next
+        }
+
+        return false  // Not found
+    }
+
     // O(n) - linear operation since we traverse the entire list once to reverse pointers
     fun reverse() {
         var currentNode = head
