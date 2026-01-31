@@ -2,6 +2,11 @@ package digital.tonima.dataestructures.graph
 
 import java.util.PriorityQueue
 
+/**
+ * Immutable Edge following Data-Oriented Programming principles.
+ * Represents a connection between nodes with an associated weight.
+ * All properties are immutable (val) for predictable behavior in graph algorithms.
+ */
 data class Edge<T>(val node: T, val weight: Int = 1)
 
 class Graph<T> {

@@ -10,8 +10,13 @@ class Stack<T>(val value: T? = null) {
         height = 1
     }
 
-    inner class Node(val value: T?) {
-        var next: Node? = null
+    /**
+     * Node with immutable value following Data-Oriented Programming principles.
+     * The value is immutable (val) for better reasoning about data.
+     * The next pointer remains mutable (var) for efficient stack operations.
+     */
+    inner class Node(val value: T?) {  // Immutable data
+        var next: Node? = null  // Mutable structure pointer
     }
 
     fun push(value: T?) {

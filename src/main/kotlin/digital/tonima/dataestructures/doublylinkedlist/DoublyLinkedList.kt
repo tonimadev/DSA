@@ -9,11 +9,17 @@ class DoublyLinkedList<T>() { // removed Number & Comparable bounds to allow bro
         append(value)
     }
 
+    /**
+     * Node with immutable value following Data-Oriented Programming principles.
+     * The value is immutable (val) for better reasoning about data.
+     * The next and previous pointers remain mutable (var) for efficient list operations.
+     * This is a pragmatic balance between immutability and performance.
+     */
     inner class Node(
-        var value: T,
+        val value: T,  // Immutable data
     ) {
-        var next: Node? = null
-        var previous: Node? = null
+        var next: Node? = null      // Mutable structure pointer
+        var previous: Node? = null  // Mutable structure pointer
 
         override fun toString(): String {
             return "Value $value"
@@ -241,12 +247,32 @@ class DoublyLinkedList<T>() { // removed Number & Comparable bounds to allow bro
 
 
 
+    // O(n) - linear operation since we traverse up to the index position
+    // Note: Since Node.value is immutable, we need to replace the entire node
     fun set(index: Int, value: T): Boolean {
-        get(index)?.let {
-            it.value = value
-            return true
+        if (index !in 0..<length) return false
+
+        val oldNode = get(index) ?: return false
+        val newNode = Node(value)
+
+        // Update links
+        newNode.next = oldNode.next
+        newNode.previous = oldNode.previous
+
+        // Update neighbors
+        if (oldNode.previous != null) {
+            oldNode.previous!!.next = newNode
+        } else {
+            head = newNode
         }
-        return false
+
+        if (oldNode.next != null) {
+            oldNode.next!!.previous = newNode
+        } else {
+            tail = newNode
+        }
+
+        return true
     }
 
     fun getHead() {

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.DisplayName
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -1426,25 +1427,30 @@ class DoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("set - Set does not create new nodes")
-    fun testSetDoesNotCreateNewNodes() {
+    @DisplayName("set - Set creates new node with immutable value (DOP)")
+    fun testSetCreatesNewNodeDueToImmutability() {
         list.append(10)
         list.append(20)
         list.append(30)
 
         val originalLength = getLength(list)
-        val node = list.get(1)
+        val originalNode = list.get(1)
 
         list.set(1, 200)
 
-        val sameNode = list.get(1)
+        val newNode = list.get(1)
 
         // Length should not change
         assertEquals(originalLength, getLength(list))
 
-        // Should be the same node object, just with different value
-        assertEquals(node, sameNode)
-        assertEquals(200, sameNode?.value)
+        // Since value is immutable (DOP), set() creates a new node
+        assertNotEquals(originalNode, newNode, "set() should create new node due to immutable value")
+
+        // Original node keeps its original value (immutability)
+        assertEquals(20, originalNode?.value, "Original node value should remain unchanged")
+
+        // New node has the updated value
+        assertEquals(200, newNode?.value, "New node should have the updated value")
     }
 
     // ============ Insert Tests ============

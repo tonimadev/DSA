@@ -13,10 +13,16 @@ class LinkedList<T>() {
         append(value)
     }
 
+    /**
+     * Node with immutable value following Data-Oriented Programming principles.
+     * The value is immutable (val) for better reasoning about data.
+     * The next pointer remains mutable (var) for efficient list operations.
+     * This is a pragmatic balance between immutability and performance.
+     */
     inner class Node(
-        var value: T,
+        val value: T,  // Immutable data
     ) {
-        var next: Node? = null
+        var next: Node? = null  // Mutable structure pointer
 
         override fun toString(): String {
             return "Value $value - Next ${next?.value}"
@@ -100,12 +106,32 @@ class LinkedList<T>() {
     }
 
     // O(n) - linear operation since we traverse up to the index position
+    // Note: Since Node.value is immutable, we need to replace the entire node
     fun set(index: Int, value: T): Boolean {
-        get(index)?.let {
-            it.value = value
+        if (index !in 0..<length) return false
+
+        if (index == 0) {
+            val oldHead = head
+            val newHead = Node(value)
+            newHead.next = oldHead?.next
+            head = newHead
+            if (length == 1) {
+                tail = head
+            }
             return true
         }
-        return false
+
+        val previous = get(index - 1) ?: return false
+        val oldNode = previous.next ?: return false
+        val newNode = Node(value)
+        newNode.next = oldNode.next
+        previous.next = newNode
+
+        if (index == length - 1) {
+            tail = newNode
+        }
+
+        return true
     }
 
     // O(n) - linear operation since we may traverse up to the index position using get()
