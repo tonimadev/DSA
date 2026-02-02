@@ -477,6 +477,15 @@ graph.dijkstra("A", "E")
   - More efficient than heap-based approach for large datasets
   - LeetCode #347
 
+- **[Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/)** - Design an algorithm to encode a list of strings to a single string and decode it back
+  - Time: O(n) for both encode and decode, Space: O(n)
+  - Uses length prefix protocol: "{length}#{string}{length}#{string}..."
+  - Works with any string content including special characters and delimiters
+  - Encode: Prepends each string with its length followed by '#' delimiter
+  - Decode: Reads length, skips delimiter, extracts exact number of characters
+  - Handles edge cases: empty strings, strings with '#', special characters
+  - LeetCode #271 (Premium) / NeetCode
+
 #### Strings
 - **[Valid Anagram](https://leetcode.com/problems/valid-anagram/)** - Check if two strings are anagrams
   - Time: O(n), Space: O(1)
