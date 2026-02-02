@@ -469,6 +469,14 @@ graph.dijkstra("A", "E")
   - Single pass through array with constant space
   - LeetCode #169
 
+- **[Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)** - Return the k most frequent elements
+  - Time: O(n), Space: O(n)
+  - Uses bucket sort approach where index represents frequency
+  - Builds frequency map in O(n), then distributes elements into frequency buckets
+  - Traverses buckets from highest to lowest frequency to collect k elements
+  - More efficient than heap-based approach for large datasets
+  - LeetCode #347
+
 #### Strings
 - **[Valid Anagram](https://leetcode.com/problems/valid-anagram/)** - Check if two strings are anagrams
   - Time: O(n), Space: O(1)
@@ -929,6 +937,7 @@ fun <T : Comparable<T>> create(type: SortType): SortStrategy<T> {
 | Reverse String | O(n) | O(1) | Two pointers swap |
 | Group Anagrams | O(n * k) | O(n * k) | Character frequency array |
 | Majority Element | O(n) worst, O(n/2) best | O(1) | Boyer-Moore with early return |
+| Top K Frequent Elements | O(n) | O(n) | Bucket sort by frequency |
 | Binary to Decimal | O(n) | O(1) | Bit manipulation |
 | Find Middle | O(n) | O(1) | Two pointers |
 | Has Cycle | O(n) | O(1) | Floyd algorithm |
@@ -1037,6 +1046,7 @@ All algorithms in this project are based on classic LeetCode problems:
 - **#217**: [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) - Easy
 - **#242**: [Valid Anagram](https://leetcode.com/problems/valid-anagram/) - Easy
 - **#344**: [Reverse String](https://leetcode.com/problems/reverse-string/) - Easy
+- **#347**: [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) - Medium
 - **#876**: [Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/) - Easy
 - **#1290**: [Convert Binary Number in a Linked List to Integer](https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/) - Easy
 
