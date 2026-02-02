@@ -462,6 +462,12 @@ graph.dijkstra("A", "E")
   - Optimized approach: counts character frequencies instead of sorting
   - LeetCode #49
 
+- **[Majority Element](https://leetcode.com/problems/majority-element/)** - Find the element that appears more than ⌊n/2⌋ times
+  - Time: O(n), Space: O(1)
+  - Uses Boyer-Moore Voting Algorithm
+  - Single pass through array with constant space
+  - LeetCode #169
+
 #### Strings
 - **[Valid Anagram](https://leetcode.com/problems/valid-anagram/)** - Check if two strings are anagrams
   - Time: O(n), Space: O(1)
@@ -921,6 +927,7 @@ fun <T : Comparable<T>> create(type: SortType): SortStrategy<T> {
 | Two Sum | O(n) | O(n) | HashMap lookup |
 | Reverse String | O(n) | O(1) | Two pointers swap |
 | Group Anagrams | O(n * k) | O(n * k) | Character frequency array |
+| Majority Element | O(n) | O(1) | Boyer-Moore Voting Algorithm |
 | Binary to Decimal | O(n) | O(1) | Bit manipulation |
 | Find Middle | O(n) | O(1) | Two pointers |
 | Has Cycle | O(n) | O(1) | Floyd algorithm |
@@ -1025,6 +1032,7 @@ All algorithms in this project are based on classic LeetCode problems:
 - **#20**: [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) - Easy
 - **#49**: [Group Anagrams](https://leetcode.com/problems/group-anagrams/) - Medium
 - **#141**: [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) - Easy
+- **#169**: [Majority Element](https://leetcode.com/problems/majority-element/) - Easy
 - **#217**: [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) - Easy
 - **#242**: [Valid Anagram](https://leetcode.com/problems/valid-anagram/) - Easy
 - **#344**: [Reverse String](https://leetcode.com/problems/reverse-string/) - Easy
