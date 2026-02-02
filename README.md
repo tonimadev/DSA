@@ -463,8 +463,9 @@ graph.dijkstra("A", "E")
   - LeetCode #49
 
 - **[Majority Element](https://leetcode.com/problems/majority-element/)** - Find the element that appears more than ⌊n/2⌋ times
-  - Time: O(n), Space: O(1)
-  - Uses Boyer-Moore Voting Algorithm
+  - Time: O(n) worst case, O(n/2) best case, Space: O(1)
+  - Uses Boyer-Moore Voting Algorithm with early return optimization
+  - Can exit early when count reaches ⌊n/2⌋ + 1
   - Single pass through array with constant space
   - LeetCode #169
 
@@ -927,7 +928,7 @@ fun <T : Comparable<T>> create(type: SortType): SortStrategy<T> {
 | Two Sum | O(n) | O(n) | HashMap lookup |
 | Reverse String | O(n) | O(1) | Two pointers swap |
 | Group Anagrams | O(n * k) | O(n * k) | Character frequency array |
-| Majority Element | O(n) | O(1) | Boyer-Moore Voting Algorithm |
+| Majority Element | O(n) worst, O(n/2) best | O(1) | Boyer-Moore with early return |
 | Binary to Decimal | O(n) | O(1) | Bit manipulation |
 | Find Middle | O(n) | O(1) | Two pointers |
 | Has Cycle | O(n) | O(1) | Floyd algorithm |
