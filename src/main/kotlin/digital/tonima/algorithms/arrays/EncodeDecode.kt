@@ -18,9 +18,7 @@ class EncodeDecodeSolution() {
      * Time Complexity: O(n) where n is the total number of characters in all strings
      * Space Complexity: O(n) for the resulting encoded string
      */
-    fun encode(strs: List<String>): String {
-        return strs.joinToString("") { "${it.length}#$it" }
-    }
+    fun encode(strs: List<String>) = strs.joinToString("") { "${it.length}#$it" }
 
     /**
      * Decodes a single string back to a list of strings using length prefix protocol.
