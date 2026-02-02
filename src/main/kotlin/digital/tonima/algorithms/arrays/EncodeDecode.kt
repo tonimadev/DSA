@@ -15,6 +15,17 @@ class EncodeDecodeSolution() {
      * Encodes a list of strings to a single string using length prefix protocol.
      * Format: "{length}#{string}{length}#{string}..."
      *
+     * Example:
+     * Input: ["neet", "code", "love", "you"]
+     * Output: "4#neet4#code4#love3#you"
+     *
+     * Process:
+     * - "neet" (length=4) -> "4#neet"
+     * - "code" (length=4) -> "4#code"
+     * - "love" (length=4) -> "4#love"
+     * - "you" (length=3) -> "3#you"
+     * - Concatenate all: "4#neet4#code4#love3#you"
+     *
      * Time Complexity: O(n) where n is the total number of characters in all strings
      * Space Complexity: O(n) for the resulting encoded string
      */

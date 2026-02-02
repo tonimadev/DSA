@@ -36,6 +36,12 @@ package digital.tonima.algorithms.linkedlist
 class RemoveNthFromEndSolution {
     /**
      * Find the kth node from the end of a linked list
+     *
+     * Example process for head=[1,2,3,4,5], k=2:
+     * - Move fast 2 steps: fast at node 3
+     * - Move both until fast=null: slow at node 4, fast at null
+     * - Return slow (node 4, which is 2nd from end)
+     *
      * Time Complexity: O(n) - single pass with two pointers
      * Space Complexity: O(1) - only using two pointers
      *
@@ -74,6 +80,13 @@ class RemoveNthFromEndSolution {
     /**
      * Remove the nth node from the end of the list
      * This is the actual LeetCode #19 solution
+     *
+     * Example process for head=[1,2,3,4,5], n=2:
+     * - Create dummy node: dummy->1->2->3->4->5
+     * - Move fast 3 steps (n+1): fast at node 3
+     * - Move both until fast=null: slow at node 3, fast at null
+     * - Remove node: 3->next = 3->next->next (removes node 4)
+     * - Result: [1,2,3,5]
      *
      * @param head The head of the linked list
      * @param n The position from the end to remove (1-indexed)

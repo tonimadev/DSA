@@ -18,9 +18,14 @@ package digital.tonima.algorithms.arrays
  * Constraints:
  * - 1 <= s.length <= 10^5
  * - s[i] is a printable ascii character.
+ *
+ * Time Complexity: O(n) - where n is the length of the array
+ *   - We iterate through half of the array, swapping elements
+ *
+ * Space Complexity: O(1) - only uses constant extra space (two pointers and one temp variable)
  */
 class ReverseStringSolution {
-    fun reverseString(s: CharArray): Unit {
+    fun reverseString(s: CharArray) {
         if (s.isEmpty()) return
         var forwardIndex = 0
         var backwardIndex = s.size - 1

@@ -7,6 +7,20 @@ package digital.tonima.algorithms.arrays
  * Problem: Given two strings s and t, return true if t is an anagram of s, and false otherwise.
  * An anagram is a word or phrase formed by rearranging the letters of another.
  *
+ * Example 1:
+ * Input: s = "anagram", t = "nagaram"
+ * Output: true
+ * Explanation: Both have same character frequencies: a=3, n=1, g=1, r=1, m=1
+ *
+ * Example 2:
+ * Input: s = "rat", t = "car"
+ * Output: false
+ * Explanation: Different character frequencies
+ *
+ * Example 3:
+ * Input: s = "listen", t = "silent"
+ * Output: true
+ *
  * Approach: HashMap (Character Frequency Count)
  * - Time Complexity: O(n) - Two passes through strings
  * - Space Complexity: O(1) - At most 26 lowercase English letters in HashMap

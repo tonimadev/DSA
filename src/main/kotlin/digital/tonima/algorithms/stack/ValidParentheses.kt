@@ -9,6 +9,28 @@ package digital.tonima.algorithms.stack
  * - Open brackets must be closed in the correct order
  * - Every close bracket has a corresponding open bracket of the same type
  *
+ * Example 1:
+ * Input: s = "()"
+ * Output: true
+ *
+ * Example 2:
+ * Input: s = "()[]{}"
+ * Output: true
+ *
+ * Example 3:
+ * Input: s = "(]"
+ * Output: false
+ * Explanation: Opening '(' does not match closing ']'
+ *
+ * Example 4:
+ * Input: s = "([)]"
+ * Output: false
+ * Explanation: Brackets are not closed in correct order
+ *
+ * Example 5:
+ * Input: s = "{[]}"
+ * Output: true
+ *
  * Problem: https://leetcode.com/problems/valid-parentheses/
  *
  * Time Complexity: O(n) - where n is the length of the string

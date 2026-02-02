@@ -6,6 +6,22 @@ package digital.tonima.algorithms.arrays
  *
  * Given an array of strings strs, group the anagrams together.
  *
+ * Example 1:
+ * Input: strs = ["eat","tea","tan","ate","nat","bat"]
+ * Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+ * Explanation:
+ * - "eat", "tea", "ate" are anagrams (same character frequencies)
+ * - "tan", "nat" are anagrams
+ * - "bat" is unique
+ *
+ * Example 2:
+ * Input: strs = [""]
+ * Output: [[""]]
+ *
+ * Example 3:
+ * Input: strs = ["a"]
+ * Output: [["a"]]
+ *
  * Time Complexity: O(n * k) where n is the number of strings and k is the maximum length of a string
  * Space Complexity: O(n * k) for storing all strings in the result
  */

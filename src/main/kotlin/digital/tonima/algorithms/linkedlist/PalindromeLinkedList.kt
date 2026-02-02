@@ -37,17 +37,23 @@ class PalindromeLinkedListSolution {
     /**
      * Determine if a singly linked list is a palindrome
      *
-     * TODO: Implement this method
+     * Example process for head=[1,2,2,1]:
+     * - Find middle: slow at node 2 (first 2)
+     * - Reverse second half: [2,1] becomes [1,2]
+     * - Compare: 1==1, 2==2 -> true
      *
-     * Time Complexity: O(n)
-     * Space Complexity: O(1) - can be achieved using two-pointer technique
-     * or O(n) - if using a stack/recursive approach
+     * Example process for head=[1,2,3]:
+     * - Find middle: slow at node 2
+     * - Reverse second half: [3] stays [3]
+     * - Compare: 1≠3 -> false
      *
-     * Hints:
-     * 1. You can use the slow and fast pointer technique to find the middle
-     * 2. You can reverse the second half of the list
+     * Time Complexity: O(n) - Three passes: find middle O(n/2), reverse O(n/2), compare O(n/2)
+     * Space Complexity: O(1) - Only using pointers, no additional data structures
+     *
+     * Algorithm:
+     * 1. Use slow and fast pointer technique to find the middle
+     * 2. Reverse the second half of the list
      * 3. Compare values from both halves
-     * 4. Restore the list structure if needed
      *
      * @param head the head of the singly linked list
      * @return true if the list is a palindrome, false otherwise
@@ -83,6 +89,8 @@ class PalindromeLinkedListSolution {
 
     /**
      * Helper function to reverse a linked list
+     * Time Complexity: O(n) - single pass through the list
+     * Space Complexity: O(1) - only using pointers
      */
     private fun reverseList(head: ListNode?): ListNode? {
         var prev: ListNode? = null
