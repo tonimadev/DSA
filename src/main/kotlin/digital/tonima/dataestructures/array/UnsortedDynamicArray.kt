@@ -7,7 +7,7 @@ class UnsortedDynamicArray<T>(
 
     init {
         require(initialCapacity > 0) {
-            "maxSize deve ser maior que 0"
+            "initialCapacity must be greater than 0"
         }
     }
 

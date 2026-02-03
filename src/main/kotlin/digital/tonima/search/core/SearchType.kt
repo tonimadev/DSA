@@ -1,29 +1,35 @@
 package digital.tonima.search.core
 
 /**
- * Enumeração que especifica os tipos de algoritmos de busca disponíveis.
+ * Enumeration that specifies the available search algorithm types.
  *
- * Tipos disponíveis:
- * - LINEAR: Busca sequencial, funciona em qualquer lista
- * - BINARY: Busca binária, requer lista ordenada
+ * Available types:
+ * - LINEAR: Sequential search, works with any list
+ * - BINARY: Binary search, requires sorted list
+ * - INTERPOLATION: Interpolation search, requires sorted list with uniform distribution
  */
 internal enum class SearchType {
     /**
-     * Busca Linear - O(n)
-     * Funciona com listas ordenadas ou não ordenadas.
+     * Linear Search - O(n)
+     * Works with sorted or unsorted lists.
      */
     LINEAR,
 
     /**
-     * Busca Binária - O(log n)
-     * Requer lista ordenada.
+     * Binary Search - O(log n)
+     * Requires sorted list.
      */
     BINARY,
 
-    // Adicione outros tipos de busca conforme necessário:
-    // INTERPOLATION,  // Busca por interpolação
+    /**
+     * Interpolation Search - O(log log n) average
+     * Requires sorted list with uniform distribution.
+     */
+    INTERPOLATION,
+
+    // Add other search types as needed:
     // JUMP_SEARCH,    // Jump search
-    // EXPONENTIAL,    // Busca exponencial
-    // FIBONACCI,      // Busca fibonacci
+    // EXPONENTIAL,    // Exponential search
+    // FIBONACCI,      // Fibonacci search
 }
 

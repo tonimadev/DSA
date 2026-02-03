@@ -7,6 +7,7 @@ package digital.tonima.search.core
  * Available types:
  * - LINEAR: Sequential search, works with any list
  * - BINARY: Binary search, requires sorted list
+ * - INTERPOLATION: Interpolation search, requires sorted list with uniform distribution
  */
 enum class SearchAlgorithm {
     /**
@@ -21,8 +22,15 @@ enum class SearchAlgorithm {
      */
     BINARY,
 
+    /**
+     * Interpolation Search - O(log log n) average
+     * Requires sorted list with uniform distribution.
+     * Better than binary search for uniformly distributed data.
+     * Worse than binary search for random data.
+     */
+    INTERPOLATION,
+
     // Add other search types as needed:
-    // INTERPOLATION,  // Interpolation search
     // JUMP_SEARCH,    // Jump search
     // EXPONENTIAL,    // Exponential search
     // FIBONACCI,      // Fibonacci search

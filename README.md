@@ -496,6 +496,19 @@ Key Features:
   - HashMap for O(1) lookups
   - LeetCode #20
 
+#### Dynamic Programming
+- [Fibonacci Number](https://leetcode.com/problems/fibonacci-number/) - Calculate the nth Fibonacci number
+  - Time: O(n), Space: O(n)
+  - Uses Bottom-Up Dynamic Programming (Tabulation)
+  - Builds solution iteratively from base cases
+  - Avoids recursion overhead
+  - Alternative approaches:
+    - Recursive (naive): O(2^n) time, O(n) space
+    - Memoization: O(n) time, O(n) space
+    - Space-optimized: O(n) time, O(1) space
+    - Matrix exponentiation: O(log n) time, O(1) space
+  - LeetCode #509
+
 ### Search Algorithms
 
 Framework for implementing and benchmarking search algorithms with design patterns.
@@ -505,8 +518,9 @@ Framework for implementing and benchmarking search algorithms with design patter
 ```
 search/
 ├── algorithms/          # Algorithm implementations
-│   ├── LinearSearch     # O(n) - Sequential search
-│   └── BinarySearch     # O(log n) - Binary search (requires sorted list)
+│   ├── LinearSearch          # O(n) - Sequential search
+│   ├── BinarySearch          # O(log n) - Binary search (requires sorted list)
+│   └── InterpolationSearch   # O(log log n) avg - Interpolation search (requires sorted, uniform data)
 ├── core/                # Framework components
 │   ├── SearchStrategy   # Interface for all search algorithms
 │   ├── SearchType       # Enum of available algorithms
@@ -539,6 +553,22 @@ Binary Search
   - Average case: O(log n)
   - Worst case: O(log n)
   - Divides search space by half each iteration
+
+Interpolation Search
+- Complexity: O(log log n) average time, O(n) worst case, O(1) space
+- Use Case: Sorted lists with uniform distribution, very large datasets
+- Requirements: List must be sorted with uniform distribution
+- Characteristics:
+  - Best case: O(1) - element at first estimated position
+  - Average case: O(log log n) - with uniformly distributed data
+  - Worst case: O(n) - with non-uniformly distributed data
+  - Estimates position based on value distribution (like searching in a phone book)
+  - More efficient than binary search for uniform data
+  - Uses interpolation formula: `pos = low + ((target - arr[low]) / (arr[high] - arr[low])) * (high - low)`
+- When to use:
+  - Data is uniformly distributed (e.g., phone books, dictionaries, sequential IDs)
+  - Very large datasets where log log n makes a difference
+  - NOT recommended for random or clustered data (degrades to O(n))
 
 #### Design Patterns
 
@@ -574,19 +604,31 @@ val index = list.find(8)  // Returns 2 (uses LINEAR by default)
 
 Using Specific Algorithm
 ```kotlin
-import digital.tonima.search.core.SearchType
+import digital.tonima.search.core.SearchAlgorithm
 
 val sortedList = SearchableList(listOf(1, 2, 3, 5, 8, 9))
-sortedList.sort()  // Ensure list is sorted for binary search
-val index = sortedList.find(5, SearchType.BINARY)  // O(log n)
+sortedList.sort()  // Ensure list is sorted
+
+// Use binary search
+val index = sortedList.find(5, SearchAlgorithm.BINARY)  // O(log n)
+
+// Use interpolation search (best for uniform data)
+val index2 = sortedList.find(5, SearchAlgorithm.INTERPOLATION)  // O(log log n) avg
 ```
 
-Direct Algorithm Usage
+Direct Algorithm Usage (via Factory)
 ```kotlin
-import digital.tonima.search.algorithms.LinearSearch
+import digital.tonima.search.core.SearchFactory
+import digital.tonima.search.core.SearchAlgorithm
 
-val search = LinearSearch<Int>()
-val index = search.search(listOf(1, 2, 3), 2)  // Returns 1
+// Create searcher via factory
+val linearSearcher = SearchFactory.create<Int>(SearchAlgorithm.LINEAR)
+val binarySearcher = SearchFactory.create<Int>(SearchAlgorithm.BINARY)
+val interpolationSearcher = SearchFactory.create<Int>(SearchAlgorithm.INTERPOLATION)
+
+// Use the searcher
+val sortedList = listOf(1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
+val index = interpolationSearcher.search(sortedList, 21)  // Returns 6
 ```
 
 #### Benchmark System
@@ -939,11 +981,14 @@ Ready to Implement:
 | Search Algorithms | | | |
 | Linear Search | O(n) | O(1) | Sequential traversal |
 | Binary Search | O(log n) | O(1) | Divide and conquer (requires sorted list) |
+| Interpolation Search | O(log log n) avg, O(n) worst | O(1) | Estimates position based on data distribution (requires sorted list with uniform distribution) |
 | Search Benchmark | O(1) | O(k) | k = number of results stored |
 | Sorting Algorithms | | | |
 | Selection Sort | O(n²) | O(1) | In-place, minimal swaps, not stable |
 | Quick Sort | O(n log n) avg, O(n²) worst | O(log n) | Divide and conquer, not stable, fast in practice |
 | Sort Benchmark | O(1) | O(k) | k = number of results stored |
+| Dynamic Programming | | | |
+| Fibonacci (Tabulation) | O(n) | O(n) | Bottom-up DP with table |
 
 ## References and Concepts
 
@@ -983,7 +1028,12 @@ Ready to Implement:
 - Search Algorithms: Techniques for finding elements in collections
   - Linear Search: Sequential traversal, works on any list, O(n)
   - Binary Search: Divide and conquer, requires sorted list, O(log n)
-  - Scalability: Binary search is exponentially faster for large datasets
+  - Interpolation Search: Estimates position based on value distribution, requires sorted list with uniform distribution, O(log log n) average
+    - Uses interpolation formula: pos = low + ((target - arr[low]) / (arr[high] - arr[low])) * (high - low)
+    - Best for uniformly distributed data (like phone books, dictionaries)
+    - Degrades to O(n) for non-uniform distributions
+    - More efficient than binary search when data is uniformly distributed
+  - Scalability: Binary search is exponentially faster for large datasets, Interpolation search is even faster for uniform data
 - Design Patterns: Applied patterns in search module
   - Strategy Pattern: Defines a family of interchangeable algorithms
   - Factory Pattern: Centralizes object creation logic
@@ -1003,6 +1053,18 @@ Ready to Implement:
   - Time-Space Tradeoff: Balancing execution speed vs memory usage
   - Scalability: How algorithm performs as input size grows
   - Data Patterns: Random, sorted, reverse-sorted, nearly-sorted affect performance
+- Dynamic Programming: Optimization technique for solving complex problems by breaking them down into simpler subproblems
+  - Core Principles:
+    - Optimal Substructure: Optimal solution contains optimal solutions to subproblems
+    - Overlapping Subproblems: Same subproblems are solved multiple times
+  - Approaches:
+    - Top-Down (Memoization): Recursive with caching of computed results
+    - Bottom-Up (Tabulation): Iterative building from base cases
+  - Fibonacci Example:
+    - Naive recursion: O(2^n) due to repeated calculations
+    - DP solution: O(n) by storing intermediate results
+    - Space optimization: O(1) by keeping only last 2 values
+  - Applications: Fibonacci, Longest Common Subsequence, Knapsack, Edit Distance, Matrix Chain Multiplication
 
 ## LeetCode Problems
 
@@ -1018,6 +1080,7 @@ LeetCode problems implemented in this project:
 - #242: [Valid Anagram](https://leetcode.com/problems/valid-anagram/) - Easy
 - #344: [Reverse String](https://leetcode.com/problems/reverse-string/) - Easy
 - #347: [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) - Medium
+- #509: [Fibonacci Number](https://leetcode.com/problems/fibonacci-number/) - Easy
 - #876: [Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/) - Easy
 - #1290: [Convert Binary Number in a Linked List to Integer](https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/) - Easy
 

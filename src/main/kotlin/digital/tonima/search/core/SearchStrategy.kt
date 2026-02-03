@@ -1,26 +1,26 @@
 package digital.tonima.search.core
 
 /**
- * Interface que define o contrato para algoritmos de busca.
- * Implementa o padrão Strategy para permitir diferentes estratégias de busca.
+ * Interface that defines the contract for search algorithms.
+ * Implements the Strategy pattern to allow different search strategies.
  *
- * @param T Tipo genérico do elemento a ser buscado (deve ser comparável)
+ * @param T Generic type of the element to be searched (must be comparable)
  */
 internal interface SearchStrategy<T : Comparable<T>> {
 
     /**
-     * Realiza a busca de um elemento na coleção.
+     * Performs a search for an element in the collection.
      *
-     * @param collection Coleção onde buscar (deve estar ordenada quando necessário)
-     * @param target Elemento a ser buscado
-     * @return O índice do elemento se encontrado, -1 caso contrário
+     * @param collection Collection where to search (must be sorted when necessary)
+     * @param target Element to search for
+     * @return The index of the element if found, -1 otherwise
      */
     fun search(collection: List<T>, target: T): Int
 
     /**
-     * Retorna o nome descritivo do algoritmo de busca.
+     * Returns the descriptive name of the search algorithm.
      *
-     * @return String com o nome do algoritmo
+     * @return String with the algorithm name
      */
     fun name(): String
 }

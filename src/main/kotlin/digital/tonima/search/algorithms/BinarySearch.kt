@@ -3,21 +3,21 @@ package digital.tonima.search.algorithms
 import digital.tonima.search.core.SearchStrategy
 
 /**
- * Implementação da Busca Binária.
- * Requer que a coleção esteja ordenada.
- * Usa a estratégia "dividir para conquistar" para buscar o elemento.
+ * Implementation of Binary Search.
+ * Requires the collection to be sorted.
+ * Uses the "divide and conquer" strategy to search for the element.
  *
- * Complexidade:
- * - Melhor caso: O(1) - elemento no meio
- * - Caso médio: O(log n)
- * - Pior caso: O(log n)
+ * Complexity:
+ * - Best case: O(1) - element in the middle
+ * - Average case: O(log n)
+ * - Worst case: O(log n)
  *
- * Características:
- * - Requer lista ordenada
- * - Muito eficiente para listas grandes
- * - Ideal para múltiplas buscas
+ * Characteristics:
+ * - Requires sorted list
+ * - Very efficient for large lists
+ * - Ideal for multiple searches
  *
- * @throws IllegalStateException se a lista não estiver ordenada (opcional validação)
+ * @throws IllegalStateException if the list is not sorted (optional validation)
  */
 internal class BinarySearch<T : Comparable<T>> : SearchStrategy<T> {
 

@@ -3,18 +3,18 @@ package digital.tonima.search.algorithms
 import digital.tonima.search.core.SearchStrategy
 
 /**
- * Implementação da Busca Linear.
- * Percorre sequencialmente a coleção até encontrar o elemento.
+ * Implementation of Linear Search.
+ * Traverses the collection sequentially until the element is found.
  *
- * Complexidade:
- * - Melhor caso: O(1) - elemento na primeira posição
- * - Caso médio: O(n/2) ≈ O(n)
- * - Pior caso: O(n) - elemento no final ou não existe
+ * Complexity:
+ * - Best case: O(1) - element at the first position
+ * - Average case: O(n/2) ≈ O(n)
+ * - Worst case: O(n) - element at the end or doesn't exist
  *
- * Características:
- * - Funciona com listas ordenadas ou não ordenadas
- * - Simples de implementar
- * - Ideal para listas pequenas ou buscas únicas
+ * Characteristics:
+ * - Works with sorted or unsorted lists
+ * - Simple to implement
+ * - Ideal for small lists or single searches
  */
 internal class LinearSearch<T : Comparable<T>> : SearchStrategy<T> {
 

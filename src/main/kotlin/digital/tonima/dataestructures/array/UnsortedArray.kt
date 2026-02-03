@@ -7,7 +7,7 @@ class UnsortedArray<T>(
 
     init {
         require(maxSize > 0) {
-            "maxSize deve ser maior que 0"
+            "maxSize must be greater than 0"
         }
     }
 
@@ -36,7 +36,7 @@ class UnsortedArray<T>(
      */
     fun remove(index: Int): T? {
         require(index in 0 until size) {
-            "index não pode ser maior que o tamanho da lista nem negativo"
+            "index cannot be greater than list size or negative"
         }
         val value = array[index]
         array[index] = array[size - 1]

@@ -223,15 +223,15 @@ class LinkedList<T>() {
         var slow: Node? = head
         var fast: Node? = head
 
-        // 1. Move o ponteiro 'fast' k passos à frente
+        // 1. Move the 'fast' pointer k steps ahead
         repeat(k) {
-            // Se k for maior que o tamanho da lista, retorna null
+            // If k is greater than the list size, return null
             if (fast == null) return null
             fast = fast.next
         }
 
-        // 2. Move ambos os ponteiros até que 'fast' chegue ao fim
-        // Quando 'fast' chegar no null, 'slow' estará exatamente no k-ésimo do fim
+        // 2. Move both pointers until 'fast' reaches the end
+        // When 'fast' reaches null, 'slow' will be exactly at the k-th from the end
         while (fast != null) {
             slow = slow?.next
             fast = fast.next
@@ -256,7 +256,7 @@ class LinkedList<T>() {
             current = current.next
         }
 
-        // Atualiza tail caso o último elemento tenha sido removido
+        // Update tail in case the last element was removed
         tail = previous
     }
 
@@ -277,11 +277,11 @@ class LinkedList<T>() {
         var current = head
 
         while (current != null) {
-            // Multiplica o que já temos por 2 e soma o bit atual
+            // Multiply what we already have by 2 and add the current bit
             num = (num * 2) + current.value
 
 
-            // Move para o próximo nó (evita o loop infinito)
+            // Move to the next node (avoids infinite loop)
             current = current.next
         }
 

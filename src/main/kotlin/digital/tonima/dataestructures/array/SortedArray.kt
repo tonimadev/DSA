@@ -10,7 +10,7 @@ class SortedArray<T : Comparable<T>>(
 ) {
     init {
         require(maxSize > 0) {
-            "maxSize deve ser maior que 0"
+            "maxSize must be greater than 0"
         }
     }
 
