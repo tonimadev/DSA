@@ -12,35 +12,35 @@ package digital.tonima.search.core
  *
  * @param T Generic type of the element in the list (must be Comparable)
  * @param items Initial list of elements (default: empty)
- * @param defaultSearchType Default search type to use (default: LINEAR)
+ * @param defaultSearcher Default searcher to use (default: BINARY search)
  */
 class SearchableList<T : Comparable<T>>(
     items: List<T> = emptyList(),
-    private val defaultSearchType: SearchType = SearchType.LINEAR
+    private val defaultSearcher: Searcher<T> = SearchFactory.create(SearchAlgorithm.BINARY)
 ) {
 
     private val data: MutableList<T> = items.toMutableList()
 
     /**
-     * Searches for an element in the list using the default search type.
+     * Searches for an element in the list using the default searcher.
      *
      * @param item Element to search for
      * @return The index of the element if found, -1 otherwise
      */
     fun find(item: T): Int {
-        return find(item, defaultSearchType)
+        return defaultSearcher.search(data, item)
     }
 
     /**
-     * Searches for an element in the list using a specific search type.
+     * Searches for an element in the list using a specific search algorithm.
      *
      * @param item Element to search for
-     * @param searchType Type of search algorithm to use
+     * @param searchAlgorithm Type of search algorithm to use
      * @return The index of the element if found, -1 otherwise
      */
-    fun find(item: T, searchType: SearchType): Int {
-        val strategy = SearchFactory.create<T>(searchType)
-        return strategy.search(data, item)
+    fun find(item: T, searchAlgorithm: SearchAlgorithm): Int {
+        val searcher = SearchFactory.create<T>(searchAlgorithm)
+        return searcher.search(data, item)
     }
 
     /**

@@ -83,7 +83,9 @@ class HashTableTest {
     @Test
     @DisplayName("Custom key extraction function")
     fun testCustomKeyExtraction() {
-        data class Person(val id: Int, val name: String)
+        data class Person(val id: Int, val name: String) : Comparable<Person> {
+            override fun compareTo(other: Person): Int = this.id.compareTo(other.id)
+        }
 
         val hashTable = HashTable<Person>(16) { it.id }
 

@@ -19,7 +19,7 @@ import digital.tonima.search.core.SearchStrategy
  *
  * @throws IllegalStateException se a lista não estiver ordenada (opcional validação)
  */
-class BinarySearch<T : Comparable<T>> : SearchStrategy<T> {
+internal class BinarySearch<T : Comparable<T>> : SearchStrategy<T> {
 
     override fun search(collection: List<T>, target: T): Int {
         var lowIndex = 0

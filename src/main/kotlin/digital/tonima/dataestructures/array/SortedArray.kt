@@ -1,7 +1,12 @@
 package digital.tonima.dataestructures.array
 
+import digital.tonima.search.core.SearchFactory
+import digital.tonima.search.core.SearchAlgorithm
+import digital.tonima.search.core.Searcher
+
 class SortedArray<T : Comparable<T>>(
-    val maxSize: Int
+    val maxSize: Int,
+    private val searcher: Searcher<T> = SearchFactory.create(SearchAlgorithm.BINARY)
 ) {
     init {
         require(maxSize > 0) {
@@ -45,13 +50,17 @@ class SortedArray<T : Comparable<T>>(
      * Space Complexity: O(1)
      */
     fun delete(value: T) {
-        binarySearch(value)?.let { index ->
+        val index = searcher.search(array.take(size).map { it as T }, value)
+
+        if (index >= 0) {
             for (i in index until size - 1) {
                 array[i] = array[i + 1]
             }
             array[size - 1] = null
             size--
-        } ?: throw NoSuchElementException("value not found on the array")
+        } else {
+            throw NoSuchElementException("value not found on the array")
+        }
     }
 
     /**
@@ -71,26 +80,6 @@ class SortedArray<T : Comparable<T>>(
     }
 
 
-    /**
-     * Binary search for value (optimized for sorted array)
-     * Time Complexity: O(log n)
-     * Space Complexity: O(1)
-     */
-    fun binarySearch(value: T): Int? {
-        var left = 0
-        var right = size - 1
-        while (left <= right) {
-            val guessIndex = (left + right) / 2
-            val guess = array[guessIndex] as T
-            if (guess == value) return guessIndex
-            if (guess > value) {
-                right = guessIndex - 1
-            } else {
-                left = guessIndex + 1
-            }
-        }
-        return null
-    }
 
     /**
      * Get element by index

@@ -16,7 +16,7 @@ import digital.tonima.dataestructures.linkedlist.LinkedList
  *
  * Space Complexity: O(n + m) where n = elements, m = buckets
  */
-class HashTable<T>(
+class HashTable<T : Comparable<T>>(
     private val bucketCount: Int,
     private val extractKey: (T) -> Int = { it.hashCode() }
 ) {

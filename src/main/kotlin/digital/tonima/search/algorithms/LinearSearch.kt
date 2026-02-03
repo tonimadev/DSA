@@ -16,7 +16,7 @@ import digital.tonima.search.core.SearchStrategy
  * - Simples de implementar
  * - Ideal para listas pequenas ou buscas únicas
  */
-class LinearSearch<T : Comparable<T>> : SearchStrategy<T> {
+internal class LinearSearch<T : Comparable<T>> : SearchStrategy<T> {
 
     override fun search(collection: List<T>, target: T): Int {
         collection.forEachIndexed { index, t ->

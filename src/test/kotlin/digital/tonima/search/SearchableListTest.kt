@@ -1,7 +1,7 @@
 package digital.tonima.search
 
 import digital.tonima.search.core.SearchableList
-import digital.tonima.search.core.SearchType
+import digital.tonima.search.core.SearchAlgorithm
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -20,9 +20,9 @@ class SearchableListTest {
     fun testSearchableListWithBinarySearch() {
         // Example using binary search
         // For binary search, the list MUST be sorted
-        val sortedList = SearchableList(listOf(1, 2, 3, 5, 8, 9), SearchType.BINARY)
+        val sortedList = SearchableList(listOf(1, 2, 3, 5, 8, 9))
 
-        val result = sortedList.find(5)
+        val result = sortedList.find(5, SearchAlgorithm.BINARY)
         assertEquals(3, result)
     }
 

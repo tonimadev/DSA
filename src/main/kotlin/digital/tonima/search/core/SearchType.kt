@@ -7,7 +7,7 @@ package digital.tonima.search.core
  * - LINEAR: Busca sequencial, funciona em qualquer lista
  * - BINARY: Busca binária, requer lista ordenada
  */
-enum class SearchType {
+internal enum class SearchType {
     /**
      * Busca Linear - O(n)
      * Funciona com listas ordenadas ou não ordenadas.

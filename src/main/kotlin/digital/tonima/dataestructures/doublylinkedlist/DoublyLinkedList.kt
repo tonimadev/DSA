@@ -93,7 +93,7 @@ class DoublyLinkedList<T>() { // removed Number & Comparable bounds to allow bro
     // O(n) - linear operation, traverses from head to the target index
     // Optimization: traverses from the closest end (head or tail)
     fun get(index: Int): Node? {
-        if (index >= length || index < 0) return null
+        if (index !in 0..<length) return null
         var fetchNode: Node? = head
 
         if (index < length / 2) {

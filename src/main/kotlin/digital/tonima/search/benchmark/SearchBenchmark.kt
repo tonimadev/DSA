@@ -1,6 +1,7 @@
 package digital.tonima.search.benchmark
 
 import digital.tonima.search.core.SearchStrategy
+import digital.tonima.search.core.Searcher
 
 /**
  * Data class that encapsulates the results of a search benchmark.
@@ -34,14 +35,14 @@ class SearchBenchmark {
     private val results: MutableList<BenchmarkResult> = mutableListOf()
 
     /**
-     * Executes a benchmark for a specific algorithm.
+     * Executes a benchmark for a specific algorithm (internal SearchStrategy).
      *
-     * @param strategy Search strategy to test
+     * @param strategy Internal search strategy to test
      * @param collection List where to search
      * @param target Element to search for
      * @return BenchmarkResult with execution data
      */
-    fun <T : Comparable<T>> benchmark(
+    internal fun <T : Comparable<T>> benchmark(
         strategy: SearchStrategy<T>,
         collection: List<T>,
         target: T
@@ -63,14 +64,43 @@ class SearchBenchmark {
     }
 
     /**
+     * Executes a benchmark for a specific algorithm (public Searcher).
+     *
+     * @param searcher Public searcher to test
+     * @param collection List where to search
+     * @param target Element to search for
+     * @return BenchmarkResult with execution data
+     */
+    fun <T : Comparable<T>> benchmark(
+        searcher: Searcher<T>,
+        collection: List<T>,
+        target: T
+    ): BenchmarkResult {
+        val startTime = System.nanoTime()
+        val indexFound = searcher.search(collection, target)
+        val endTime = System.nanoTime()
+
+        val result = BenchmarkResult(
+            algorithmName = searcher.name(),
+            collectionSize = collection.size,
+            targetFound = indexFound != -1,
+            executionTimeNanos = endTime - startTime,
+            indexFound = indexFound
+        )
+
+        results.add(result)
+        return result
+    }
+
+    /**
      * Executes a benchmark for multiple strategies.
      *
-     * @param strategies List of strategies to test
+     * @param strategies List of internal strategies to test
      * @param collection List where to search
      * @param target Element to search for
      * @return List of BenchmarkResults
      */
-    fun <T : Comparable<T>> benchmarkAll(
+    internal fun <T : Comparable<T>> benchmarkAll(
         strategies: List<SearchStrategy<T>>,
         collection: List<T>,
         target: T
@@ -81,16 +111,34 @@ class SearchBenchmark {
     }
 
     /**
+     * Executes a benchmark for multiple searchers.
+     *
+     * @param searchers List of public searchers to test
+     * @param collection List where to search
+     * @param target Element to search for
+     * @return List of BenchmarkResults
+     */
+    fun <T : Comparable<T>> benchmarkAll(
+        searchers: List<Searcher<T>>,
+        collection: List<T>,
+        target: T
+    ): List<BenchmarkResult> {
+        return searchers.map { searcher ->
+            benchmark(searcher, collection, target)
+        }
+    }
+
+    /**
      * Executes a benchmark for different collection sizes.
      * Useful to visualize how the algorithm scales.
      *
-     * @param strategy Strategy to test
+     * @param strategy Internal strategy to test
      * @param sizeRange Size range (e.g., 1000..100000 step 10000)
      * @param targetProvider Function to provide target for given size
      * @param collectionProvider Function to provide collection for given size and target
      * @return List of BenchmarkResults for different sizes
      */
-    fun <T : Comparable<T>> benchmarkBySize(
+    internal fun <T : Comparable<T>> benchmarkBySize(
         strategy: SearchStrategy<T>,
         sizeRange: IntProgression,
         targetProvider: (Int) -> T,

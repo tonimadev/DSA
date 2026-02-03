@@ -6,7 +6,7 @@ package digital.tonima.search.core
  *
  * @param T Tipo genérico do elemento a ser buscado (deve ser comparável)
  */
-interface SearchStrategy<T : Comparable<T>> {
+internal interface SearchStrategy<T : Comparable<T>> {
 
     /**
      * Realiza a busca de um elemento na coleção.

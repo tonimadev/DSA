@@ -1,5 +1,7 @@
 package digital.tonima.dataestructures.array
 
+import digital.tonima.search.core.SearchFactory
+import digital.tonima.search.core.SearchAlgorithm
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -194,44 +196,6 @@ class SortedArrayTest {
         }
     }
 
-    @Test
-    fun `test binarySearch finds existing elements`() {
-        sortedArray.insert(1)
-        sortedArray.insert(3)
-        sortedArray.insert(5)
-        sortedArray.insert(7)
-        sortedArray.insert(9)
-
-        assertEquals(0, sortedArray.binarySearch(1))
-        assertEquals(1, sortedArray.binarySearch(3))
-        assertEquals(2, sortedArray.binarySearch(5))
-        assertEquals(3, sortedArray.binarySearch(7))
-        assertEquals(4, sortedArray.binarySearch(9))
-    }
-
-    @Test
-    fun `test binarySearch returns null for non-existing elements`() {
-        sortedArray.insert(1)
-        sortedArray.insert(3)
-        sortedArray.insert(5)
-
-        assertNull(sortedArray.binarySearch(0))
-        assertNull(sortedArray.binarySearch(2))
-        assertNull(sortedArray.binarySearch(4))
-        assertNull(sortedArray.binarySearch(6))
-    }
-
-    @Test
-    fun `test binarySearch on empty array`() {
-        assertNull(sortedArray.binarySearch(5))
-    }
-
-    @Test
-    fun `test binarySearch on single element`() {
-        sortedArray.insert(5)
-        assertEquals(0, sortedArray.binarySearch(5))
-        assertNull(sortedArray.binarySearch(3))
-    }
 
     @Test
     fun `test get returns correct element`() {
@@ -330,8 +294,59 @@ class SortedArrayTest {
         sortedArray.deleteByIndex(2)
         assertEquals(4, sortedArray.size)
         assertEquals("[1, 2, 8, 9]", sortedArray.toString())
+    }
 
-        assertEquals(1, sortedArray.binarySearch(2))
-        assertNull(sortedArray.binarySearch(5))
+    @Test
+    fun `test SortedArray with injected binary searcher`() {
+        val binarySearcher = SearchFactory.create<Int>(SearchAlgorithm.BINARY)
+        val customArray = SortedArray(10, binarySearcher)
+
+        customArray.insert(5)
+        customArray.insert(2)
+        customArray.insert(8)
+
+        assertEquals(3, customArray.size)
+        assertEquals("[2, 5, 8]", customArray.toString())
+
+        customArray.delete(5)
+        assertEquals(2, customArray.size)
+        assertEquals("[2, 8]", customArray.toString())
+    }
+
+    @Test
+    fun `test SortedArray delete uses injected searcher correctly`() {
+        val binarySearcher = SearchFactory.create<Int>(SearchAlgorithm.BINARY)
+        val customArray = SortedArray(10, binarySearcher)
+
+        customArray.insert(10)
+        customArray.insert(20)
+        customArray.insert(30)
+        customArray.insert(40)
+        customArray.insert(50)
+
+        customArray.delete(30)
+        assertEquals(4, customArray.size)
+        assertEquals("[10, 20, 40, 50]", customArray.toString())
+
+        customArray.delete(50)
+        assertEquals(3, customArray.size)
+        assertEquals("[10, 20, 40]", customArray.toString())
+    }
+
+    @Test
+    fun `test SortedArray with strings and custom searcher`() {
+        val binarySearcher = SearchFactory.create<String>(SearchAlgorithm.BINARY)
+        val stringArray = SortedArray<String>(5, binarySearcher)
+
+        stringArray.insert("banana")
+        stringArray.insert("apple")
+        stringArray.insert("cherry")
+
+        assertEquals(3, stringArray.size)
+        assertEquals("[apple, banana, cherry]", stringArray.toString())
+
+        stringArray.delete("banana")
+        assertEquals(2, stringArray.size)
+        assertEquals("[apple, cherry]", stringArray.toString())
     }
 }
