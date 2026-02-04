@@ -12,11 +12,8 @@ class ArrayConcatenationSolution {
     fun getConcatenation(nums: IntArray): IntArray {
         if (nums.isEmpty()) return intArrayOf()
         val nums2 = IntArray(nums.size * 2)
-        for (index in 0 until nums.size) {
-            nums2[index] = nums[index]
-        }
 
-        for (index in (0 + nums2.size) / 2 until nums2.size) {
+        for (index in 0 until nums2.size) {
             nums2[index] = nums[index % nums.size]
         }
 
