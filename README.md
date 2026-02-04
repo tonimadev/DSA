@@ -428,6 +428,11 @@ Key Features:
   - Uses HashMap for constant-time lookup
   - LeetCode #1
 
+- [Concatenation of Array](https://leetcode.com/problems/concatenation-of-array/) - Build an array formed by nums followed by nums
+  - Time: O(n), Space: O(n)
+  - Uses a second array and wrap-around indexing for the second half
+  - LeetCode #1929
+
 - [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) - Check if any value appears at least twice in an array
   - Time: O(n), Space: O(n)
   - Uses HashSet for O(1) lookups and insertions
@@ -681,7 +686,6 @@ Expected Performance
 - Generic Implementation: Works with any `Comparable<T>` type
 - Type-Safe: Full Kotlin type system support
 - Well-Documented: KDoc comments on all public APIs
-- Tested: Comprehensive test suite included
 - Extensible: Easy to add new search algorithms
 - Production-Ready: Clean architecture and error handling
 
@@ -1042,6 +1046,7 @@ Ready to Implement:
   - Measure execution time (nanoseconds precision)
   - Compare multiple algorithms on same dataset
   - Analyze scalability with varying input sizes
+  - Visual reports with comparative and statistical analysis
 - Sorting Algorithms: Techniques for ordering elements in collections
   - Selection Sort: Simple O(n²) algorithm, finds minimum and places it at the beginning
   - Quick Sort: Efficient O(n log n) average, uses divide and conquer with pivot partitioning
