@@ -467,6 +467,13 @@ Key Features:
   - Works with any string content including special characters and delimiters
   - LeetCode #271 (Premium) / NeetCode
 
+- [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) - Return array where each element is the product of all elements except itself
+  - Time: O(n), Space: O(1) excluding output array
+  - Uses prefix and suffix product approach
+  - Two-pass algorithm: first pass builds prefix products, second pass multiplies with suffix products
+  - Avoids division operation as required by the problem
+  - LeetCode #238
+
 #### Strings
 - [Valid Anagram](https://leetcode.com/problems/valid-anagram/) - Check if two strings are anagrams
   - Time: O(n), Space: O(1)

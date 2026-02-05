@@ -50,18 +50,10 @@ class ValidParenthesesSolution {
         )
 
         // Time: O(n) - iterate through each character once
-        s.forEach { char ->
-            // Check if current character is a closing bracket
-            // Lookup in map: O(1)
+        for (char in s) {
             if (char in closingToOpening) {
-                // If stack is empty or top doesn't match, invalid
-                // removeLast(): O(1) operation
-                if (stack.isEmpty() || stack.removeLast() != closingToOpening[char]) {
-                    return false
-                }
+                if (stack.isEmpty() || stack.removeLast() != closingToOpening[char]) return false
             } else {
-                // Current character is an opening bracket
-                // add(): O(1) operation
                 stack.add(char)
             }
         }
