@@ -480,6 +480,12 @@ Key Features:
   - Uses HashMap for character frequency count
   - LeetCode #242
 
+- [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) - Check if a string is a valid palindrome
+  - Time: O(n), Space: O(1)
+  - Uses two-pointers technique to compare characters from both ends
+  - Skips non-alphanumeric characters and compares case-insensitively
+  - LeetCode #125
+
 #### Linked List
 - [Binary Number to Decimal](https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/) - Convert binary number in a linked list to integer
   - Time: O(n), Space: O(1)
