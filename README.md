@@ -262,183 +262,58 @@ taskHeap.insert(Task("Task A", 5))
 taskHeap.insert(Task("Task B", 2))
 taskHeap.insert(Task("Task C", 8))
 // Task B has highest priority (earliest deadline)
-
-// Initialize with existing elements (heapify)
-val elements = mutableListOf(5, 10, 3, 8, 15, 1)
-val heap = Heap(elements) // O(n) heapify
-
-// Get k largest elements without modifying heap
-val top3 = heap.kLargestElements(3)  // Returns [15, 10, 8]
-println(heap.peek()) // Still 15, heap unchanged
-
-// Get all elements in descending order
-val all = heap.allElementsDescending()  // Returns [15, 10, 8, 5, 3, 1]
-println(heap.size()) // Still 6, heap unchanged
 ```
-
-Implementation Notes:
-- Uses `bubbleUp` to restore heap property after insertion
-- Uses `bubbleDown` to restore heap property after removal
-- Generic type `T` allows any data type
-- `elementPriority` function extracts comparable value from elements
-- Default priority is the element itself (for `Int`, `String`, etc.)
-- Heap property: `priority(parent) > priority(children)` for max-heap
-- `kLargestElements` and `allElementsDescending` are non-destructive (preserve original heap)
-
-#### HashTable
-Generic hash table with chaining collision resolution using Knuth's multiplicative hashing with golden ratio. Adapted from Python implementation.
-
-Operations:
-- `insert(value)` - O(1) average, O(n) worst case - Add element to hash table
-- `search(key)` - O(1) average, O(n) worst case - Find element by key
-- `contains(value)` - O(1) average, O(n) worst case - Check if value exists
-- `delete(value)` - O(1) average, O(n) worst case - Remove element
-- `isEmpty()` - O(1) - Check if hash table is empty
-- `size` - O(n) - Get number of elements
-
-Characteristics:
-- Hash function: `h(k) = floor(m * ((k * φ) mod 1))` where `φ = (√5 - 1) / 2`
-- Collision resolution: Chaining with LinkedList
-- Generic type `<T>` for any data type
-- Custom key extraction via lambda: `(T) -> Int`
-- Load factor: Unlimited (no resizing)
-- Dynamic scaling: Buckets count fixed at initialization
-
-Use Cases:
-- Fast lookup tables
-- Symbol tables in compilers
-- Caching systems
-- Database indexing
-- Associative arrays / Dictionaries
-- Remove duplicates from large datasets
-
-Example:
-```kotlin
-// Simple integer hash table
-val hashTable = HashTable<Int>(16)
-hashTable.insert(10)
-hashTable.insert(20)
-hashTable.insert(30)
-
-val value = hashTable.search(10)  // Returns 10
-hashTable.delete(20)
-
-// Custom objects with key extraction
-data class Person(val id: Int, val name: String)
-val peopleTable = HashTable<Person>(16) { it.id }
-peopleTable.insert(Person(1, "Alice"))
-peopleTable.insert(Person(2, "Bob"))
-
-val person = peopleTable.search(1)  // Returns Person(1, "Alice")
-if (peopleTable.contains(Person(2, "Bob"))) {
-    peopleTable.delete(Person(2, "Bob"))
-}
-
-// Handling collisions (automatic chaining)
-val smallTable = HashTable<String>(2)  // Small table forces collisions
-smallTable.insert("key1")
-smallTable.insert("key2")
-smallTable.insert("key3")  // Will chain with key1 or key2
-```
-
-Time and Space Complexity:
-
-| Operation | Average | Worst Case |
-|-----------|---------|-----------|
-| Insert | O(1) | O(n) |
-| Search | O(1) | O(n) |
-| Delete | O(1) | O(n) |
-| Iteration | O(n) | O(n) |
-
-Space Complexity: O(n + m) where n = elements, m = bucket count
-
-Implementation Notes:
-- Uses `BigDecimal` for precise golden ratio calculations
-- Chaining allows unlimited elements regardless of bucket count
-- Worst case (all collisions) degrades to O(n), but rare in practice
-- Custom `extractKey` lambda enables flexible key definition
-- Thread-unsafe (needs synchronization for concurrent access)
-
-#### Graph
-Generic Graph implementation with adjacency list representation.
-
-Operations:
-- `addEdge(source, destination, weight, bidirectional)` - O(1) - Add weighted edge between vertices
-- `breadthFirstSearch(startNode)` - O(V + E) - Traverse graph level by level
-- `dijkstra(startNode, endNode)` - O((V + E) log V) - Find shortest path in weighted graph
-- `printGraph()` - O(V + E) - Display graph structure
-
-Characteristics:
-- Supports both directed and undirected graphs
-- Supports weighted edges for shortest path algorithms
-- Efficient adjacency list representation using HashMap
-- BFS uses queue for level-order traversal
-- Cycle detection with visited set
-- Generic type support for vertices
-
-##### Dijkstra's Shortest Path Algorithm
-Finds the shortest path between two nodes in a weighted graph.
-
-Algorithm Steps:
-1. Initialize distances to all nodes as infinite, except start node (0)
-2. Use a priority queue to always process the node with minimum distance first
-3. For each node, explore all neighbors and update their costs if a shorter path is found
-4. Track parent nodes to reconstruct the shortest path
-
-Complexity Analysis:
-- Time: O((V + E) log V) where V = vertices, E = edges
-  - Each vertex is processed once: O(V)
-  - Each edge is relaxed once: O(E)
-  - Priority queue operations: O(log V)
-- Space: O(V) for costs, parents, visited set, and priority queue
-
-Use Cases:
-- GPS navigation and routing systems
-- Network routing protocols
-- Social network analysis (shortest connection path)
-- Game pathfinding with weighted terrain
-
-Example:
-```kotlin
-val graph = Graph<String>()
-graph.addEdge("A", "B", weight = 4)
-graph.addEdge("A", "C", weight = 2)
-graph.addEdge("B", "D", weight = 5)
-graph.addEdge("C", "D", weight = 8)
-graph.addEdge("C", "E", weight = 10)
-graph.addEdge("D", "E", weight = 2)
-
-graph.dijkstra("A", "E")
-// Output:
-// Custo Mínimo: 11
-// Caminho: A -> B -> D -> E
-```
-
-Key Features:
-- Greedy algorithm that always selects the node with minimum cost
-- Guarantees optimal solution for graphs with non-negative weights
-- Early termination when destination is reached
-- Path reconstruction using parent tracking
 
 ### Algorithms
 
 #### Arrays
 
-##### [Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)
+##### [Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
 
-This algorithm removes duplicate elements from a sorted array in-place, such that each unique element appears only once. The relative order of the elements is preserved.
+Finds two numbers in a sorted array that sum to a target using a two-pointer approach.
 
 **Complexity:**
-- Time: O(n) - The algorithm iterates through the array once.
-- Space: O(1) - The operation is performed in-place, without using extra space.
+- Time: O(n) - Single pass with left/right pointers converging
+- Space: O(1) - Constant extra space
+
+**Algorithm:**
+1. Initialize two pointers: `left` at start (0) and `right` at end (n-1)
+2. While `left < right`:
+   - Calculate `sum = numbers[left] + numbers[right]`
+   - If `sum == target`: return indices (1-based)
+   - If `sum < target`: increment `left` (need larger sum)
+   - If `sum > target`: decrement `right` (need smaller sum)
 
 **Example:**
 ```kotlin
-val nums = intArrayOf(0, 0, 1, 1, 1, 2, 2, 3, 3, 4)
-val solution = RemoveDuplicatesSolution()
-val newLength = solution.removeDuplicates(nums)
-// newLength is 5, and nums is modified to [0, 1, 2, 3, 4, _, _, _, _, _]
+val numbers = intArrayOf(2, 7, 11, 15)
+val solution = TwoSumIISolution()
+val result = solution.twoSum(numbers, 9)
+// result is [1, 2] (indices are 1-based)
 ```
 
-### Data Structures
-//... existing code...
+##### [Three Sum](https://leetcode.com/problems/3sum/)
+
+Finds all unique triplets in an array that sum to zero.
+
+**Complexity:**
+- Time: O(n²) - Sorting O(n log n) + nested loop with two pointers O(n²)
+- Space: O(1) - Excluding the output list, only constant extra space
+
+**Algorithm:**
+1. Sort the array
+2. For each element at index `i`:
+   - Skip duplicate values of `nums[i]`
+   - Use two pointers (`left = i+1`, `right = n-1`) to find pairs that sum to `-nums[i]`
+   - If sum is zero, add triplet and skip duplicates for both pointers
+   - If sum < 0, increment `left`
+   - If sum > 0, decrement `right`
+
+**Example:**
+```kotlin
+val nums = intArrayOf(-1, 0, 1, 2, -1, -4)
+val solution = ThreeSumSolution()
+val result = solution.threeSum(nums)
+// result is [[-1, -1, 2], [-1, 0, 1]]
+```
+
