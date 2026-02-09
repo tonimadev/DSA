@@ -184,6 +184,43 @@ Characteristics:
 - Efficiently implemented with a top pointer
 - Supports generic data types
 
+##### [Min Stack](https://leetcode.com/problems/min-stack/)
+
+A stack that efficiently tracks both the top element and the minimum element in the stack.
+
+**Operations:**
+- `push(value)` - O(1) - Add element to the top
+- `pop()` - O(1) - Remove the top element
+- `top()` - O(1) - Get the top element without removing it
+- `getMin()` - O(n) - Get the minimum value currently in the stack
+
+**Complexity:**
+- Time: 
+  - `push(value)`: O(1) - Constant time node creation and pointer update
+  - `pop()`: O(1) - Constant time pointer update
+  - `top()`: O(1) - Direct access to top node's value
+  - `getMin()`: O(n) - Must traverse entire stack to find minimum
+- Space: O(n) - Stores all n elements in linked list nodes
+
+**Implementation:**
+- Linked list-based stack with explicit tracking of top node
+- Node structure contains value and next pointer
+- getMin() traverses from top to bottom comparing all values
+
+**Note:** This implementation has O(n) getMin() complexity. An optimized version would maintain a separate stack or variable tracking minimum as elements are pushed, achieving O(1) getMin() at the cost of additional space.
+
+**Example:**
+```kotlin
+val minStack = MinStack()
+minStack.push(5)
+minStack.push(3)
+minStack.push(10)
+println(minStack.top())    // Output: 10
+println(minStack.getMin()) // Output: 3
+minStack.pop()
+println(minStack.getMin()) // Output: 3
+```
+
 #### Heap (Priority Queue)
 Generic binary heap implementation maintaining priority order. Implemented as a complete binary tree using array representation with customizable priority function.
 
