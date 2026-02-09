@@ -354,3 +354,44 @@ val result = solution.threeSum(nums)
 // result is [[-1, -1, 2], [-1, 0, 1]]
 ```
 
+#### Stack
+
+##### [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/)
+
+Evaluates an arithmetic expression in Reverse Polish Notation (RPN), also known as postfix notation.
+
+**Complexity:**
+- Time: O(n) - Single pass through all tokens
+- Space: O(n) - Stack can hold up to n/2 operands in worst case
+
+**Algorithm:**
+1. Iterate through each token in the array:
+   - If token is a number: push it onto the stack
+   - If token is an operator (+, -, *, /):
+     - Pop two operands from the stack (b first, then a)
+     - Apply the operation: result = a operator b
+     - Push the result back onto the stack
+2. Return the final value remaining in the stack
+
+**Key Points:**
+- Reverse Polish Notation places operators after operands (e.g., "3 4 +" instead of "3 + 4")
+- No parentheses needed - order of operations is explicit
+- Order matters for non-commutative operations (subtraction and division)
+- Division truncates toward zero
+
+**Example:**
+```kotlin
+val solution = ReversePolishNotationSolution()
+
+// Example 1: (2 + 1) * 3 = 9
+val tokens1 = arrayOf("2", "1", "+", "3", "*")
+val result1 = solution.evalRPN(tokens1)
+// result1 is 9
+
+// Example 2: 4 + (13 / 5) = 4 + 2 = 6
+val tokens2 = arrayOf("4", "13", "5", "/", "+")
+val result2 = solution.evalRPN(tokens2)
+// result2 is 6
+```
+
+
