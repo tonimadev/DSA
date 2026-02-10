@@ -14,30 +14,32 @@ This is a learning project covering fundamental computer science concepts. Each 
 
 Three array implementations optimized for different use cases:
 
-##### SortedArray
+<details>
+<summary><strong>SortedArray</strong></summary>
+
 Fixed-size array that maintains sorted order on insertion. Generic implementation with `Comparable<T>` constraint.
 
-Operations:
+**Operations:**
 - `insert(value)` - O(n) - Inserts value maintaining sorted order (requires shifting elements)
 - `delete(value)` - O(n) - Removes value using binary search + shifting
 - `deleteByIndex(index)` - O(n) - Removes element at index (requires shifting)
 - `binarySearch(value)` - O(log n) - Efficient search on sorted array
 - `get(index)` - O(1) - Direct access by index
 
-Characteristics:
+**Characteristics:**
 - Fixed capacity set at initialization
 - Always maintains sorted order
 - Optimized for search operations (binary search)
 - Slower insertions due to maintaining order
 - Space Complexity: O(n)
 
-Use Cases:
+**Use Cases:**
 - When data must be kept sorted at all times
 - Frequent search operations with fewer insertions
 - Small to medium datasets with known maximum size
 - Priority-based systems requiring ordered access
 
-Example:
+**Example:**
 ```kotlin
 val sortedArray = SortedArray<Int>(10)
 sortedArray.insert(5)
@@ -47,29 +49,33 @@ println(sortedArray) // Output: [2, 5, 8]
 sortedArray.binarySearch(5) // Returns index 1
 ```
 
-##### UnsortedArray
+</details>
+
+<details>
+<summary><strong>UnsortedArray</strong></summary>
+
 Fixed-size array with fast insertions and removals. Generic implementation supporting any data type.
 
-Operations:
+**Operations:**
 - `insert(value)` - O(1) - Appends to end of array
 - `remove(index)` - O(1) - Removes by replacing with last element (doesn't maintain order)
 - `get(target)` - O(n) - Linear search for element
 - `traverse(operation)` - O(n) - Applies operation to all elements
 
-Characteristics:
+**Characteristics:**
 - Fixed capacity set at initialization
 - No ordering guarantees
 - Removal replaces deleted element with last element (very fast)
 - Simple and efficient for basic operations
 - Space Complexity: O(n)
 
-Use Cases:
+**Use Cases:**
 - When order doesn't matter
 - Frequent insertions and deletions needed
 - Simple collection without search requirements
 - Temporary storage or buffers
 
-Example:
+**Example:**
 ```kotlin
 val unsortedArray = UnsortedArray<Int>(10)
 unsortedArray.insert(10)
@@ -79,40 +85,44 @@ unsortedArray.remove(1) // Replaces 20 with 30, size becomes 2
 println(unsortedArray) // Output:  10 30
 ```
 
-##### UnsortedDynamicArray
+</details>
+
+<details>
+<summary><strong>UnsortedDynamicArray</strong></summary>
+
 Self-resizing array that grows and shrinks automatically. Generic implementation supporting any data type.
 
-Operations:
+**Operations:**
 - `insert(value)` - O(1) amortized - Appends to end, doubles capacity when full
 - `remove(target)` - O(n) - Finds and removes element, halves capacity when size ≤ capacity/4
 - `find(target)` - O(n) - Linear search for element
 
-Resizing Strategy:
+**Resizing Strategy:**
 - Doubling: When `size == capacity`, doubles capacity to `capacity * 2`
 - Halving: When `size ≤ capacity / 4`, halves capacity to `capacity / 2`
 - Amortized O(1) insertions: While individual resize operations cost O(n), they happen infrequently enough that average cost per insertion is constant
 - Space efficiency: Shrinks to avoid wasting memory with sparse arrays
 
-Complexity Analysis:
+**Complexity Analysis:**
 - `insert(value)` - O(1) amortized, O(n) worst case when resizing
 - `remove(target)` - O(n) for search + shift, O(n) for potential resize
 - `find(target)` - O(n) linear search
 - Space Complexity: O(n), with capacity bounded by 2n
 
-Characteristics:
+**Characteristics:**
 - Automatic capacity management
 - No fixed size limit
 - Memory efficient with dynamic shrinking
 - Maintains insertion order
 - Prevents overflow errors
 
-Use Cases:
+**Use Cases:**
 - When size is unknown or highly variable
 - Need array performance without capacity planning
 - Long-lived collections that grow and shrink
 - General-purpose dynamic collections
 
-Example:
+**Example:**
 ```kotlin
 val dynamicArray = UnsortedDynamicArray<Int>(initialCapacity = 2)
 dynamicArray.insert(10)
@@ -127,7 +137,7 @@ dynamicArray.remove(20) // Triggers halving when size ≤ capacity/4
 // capacity = 2, size = 1
 ```
 
-Performance Comparison:
+**Performance Comparison:**
 
 | Operation | SortedArray | UnsortedArray | UnsortedDynamicArray |
 |-----------|-------------|---------------|----------------------|
@@ -138,13 +148,17 @@ Performance Comparison:
 | Space | O(n) fixed | O(n) fixed | O(n) dynamic |
 | Resizing | No | No | Yes |
 
+</details>
+
 #### Linked List
 Generic Linked List implementation supporting any data type. Operations include append, prepend, insert, remove, and search with optimized complexity.
 
-#### Doubly Linked List
+<details>
+<summary><strong>Doubly Linked List</strong></summary>
+
 Generic Doubly Linked List with bidirectional traversal.
 
-Operations:
+**Operations:**
 - `append(value)` - O(1) - Add element at the end
 - `prepend(value)` - O(1) - Add element at the beginning
 - `insert(index, value)` - O(n) - Insert at specific position (O(1) for index 0)
@@ -154,37 +168,48 @@ Operations:
 - `get(index)` - O(n/2) - Access element (optimized to traverse from closest end)
 - `set(index, value)` - O(n) - Update element value
 
-Optimizations:
-  - Bidirectional traversal (previous/next pointers)
-  - `get()` traverses from closest end (head or tail)
-  - Direct references to head and tail for O(1) operations
-  - Specialized methods for edge cases
+**Optimizations:**
+- Bidirectional traversal (previous/next pointers)
+- `get()` traverses from closest end (head or tail)
+- Direct references to head and tail for O(1) operations
+- Specialized methods for edge cases
 
-#### Queue
+</details>
+
+<details>
+<summary><strong>Queue</strong></summary>
+
 Generic Queue implementation (FIFO - First In, First Out).
 
-Operations:
+**Operations:**
 - `enqueue(value)` - O(1) - Add element to the end
 - `dequeue()` - O(1) - Remove and return the first element
 
-Characteristics:
+**Characteristics:**
 - FIFO order
 - Implemented with linked list for efficient O(1) operations
 - Supports generic data types
 
-#### Stack
+</details>
+
+<details>
+<summary><strong>Stack</strong></summary>
+
 Generic Stack implementation (LIFO - Last In, First Out).
 
-Operations:
+**Operations:**
 - `push(value)` - O(1) - Add element to the top
 - `pop()` - O(1) - Remove and return the top element
 
-Characteristics:
+**Characteristics:**
 - LIFO order
 - Efficiently implemented with a top pointer
 - Supports generic data types
 
-##### [Min Stack](https://leetcode.com/problems/min-stack/)
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/min-stack/">Min Stack</a></strong></summary>
 
 A stack that efficiently tracks both the top element and the minimum element in the stack.
 
@@ -221,10 +246,14 @@ minStack.pop()
 println(minStack.getMin()) // Output: 3
 ```
 
-#### Heap (Priority Queue)
+</details>
+
+<details>
+<summary><strong>Heap (Priority Queue)</strong></summary>
+
 Generic binary heap implementation maintaining priority order. Implemented as a complete binary tree using array representation with customizable priority function.
 
-Operations:
+**Operations:**
 - `insert(element)` - O(log n) - Add element and maintain heap property via bubble-up
 - `top()` - O(log n) - Remove and return highest priority element (root), bubble-down to restore heap property
 - `peek()` - O(1) - View highest priority element without removing it
@@ -234,14 +263,14 @@ Operations:
 - `allElementsDescending()` - O(n log n) - Get all elements in descending order (non-destructive)
 - `heapify(elements)` - O(n) - Convert arbitrary list into valid heap (more efficient than n insertions)
 
-Helper Methods:
+**Helper Methods:**
 - `hasHigherPriority(e1, e2)` - O(1) - Compare priorities of two elements
 - `hasLowerPriority(e1, e2)` - O(1) - Compare priorities of two elements
 - `parentIndex(i)` - O(1) - Calculate parent index: `(i - 1) / 2`
 - `leftChildIndex(i)` - O(1) - Calculate left child index: `2 * i + 1`
 - `rightChildIndex(i)` - O(1) - Calculate right child index: `2 * i + 2`
 
-Characteristics:
+**Characteristics:**
 - Heap Property: Parent nodes always have higher priority than their children
 - Complete Binary Tree: All levels filled except possibly the last, which fills left-to-right
 - Array Representation: Efficient memory usage, no need for node objects
@@ -251,7 +280,7 @@ Characteristics:
 - Flexible Priority: Custom `elementPriority` function allows min-heap, max-heap, or complex priorities
 - Space Complexity: O(n) for storing elements
 
-Complexity Analysis:
+**Complexity Analysis:**
 - Constructor: 
   - Empty: O(1)
   - With elements: O(n) via heapify (better than O(n log n) for n insertions)
@@ -265,7 +294,7 @@ Complexity Analysis:
 - Heapify: O(n) - bottom-up approach more efficient than n insertions
 - Space: O(n) - stores all elements in array
 
-Use Cases:
+**Use Cases:**
 - Priority queues (task scheduling, event simulation)
 - Dijkstra's shortest path algorithm
 - Heap sort algorithm
@@ -274,7 +303,7 @@ Use Cases:
 - Job scheduling systems
 - A* pathfinding algorithm
 
-Example:
+**Example:**
 ```kotlin
 // Max heap (default - higher values have higher priority)
 val maxHeap = Heap<Int>()
@@ -301,62 +330,240 @@ taskHeap.insert(Task("Task C", 8))
 // Task B has highest priority (earliest deadline)
 ```
 
+</details>
+
 ### Algorithms
 
 #### Arrays
 
-##### [Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
+<details>
+<summary><strong><a href="https://leetcode.com/problems/contains-duplicate/">Contains Duplicate</a></strong></summary>
 
-Finds two numbers in a sorted array that sum to a target using a two-pointer approach.
+Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
 
 **Complexity:**
-- Time: O(n) - Single pass with left/right pointers converging
+- Time: O(n) - Single pass through array with HashSet operations
+- Space: O(n) - HashSet stores all elements in worst case
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/HasDuplicates.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/valid-anagram/">Valid Anagram</a></strong></summary>
+
+Given two strings s and t, return true if t is an anagram of s, and false otherwise. An anagram is a word or phrase formed by rearranging the letters of another.
+
+**Complexity:**
+- Time: O(n) - Two passes through strings
+- Space: O(1) - At most 26 lowercase English letters in HashMap
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/IsAnagram.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/two-sum/">Two Sum</a></strong></summary>
+
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+**Complexity:**
+- Time: O(n) - Single pass through array with HashMap lookup O(1)
+- Space: O(n) - HashMap stores up to n numbers in worst case
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/TwoSum.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/group-anagrams/">Group Anagrams</a></strong></summary>
+
+Given an array of strings strs, group the anagrams together. Anagrams are words with the same character frequencies.
+
+**Complexity:**
+- Time: O(n * k) - where n is the number of strings and k is the maximum length of a string
+- Space: O(n * k) - for storing all strings in the result
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/GroupAnagrams.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/top-k-frequent-elements/">Top K Frequent Elements</a></strong></summary>
+
+Given an integer array nums and an integer k, return the k most frequent elements using bucket sort approach.
+
+**Complexity:**
+- Time: O(n) - Bucket sort approach
+- Space: O(n) - For frequency map and buckets
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/TopKFrequentElements.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/product-of-array-except-self/">Product of Array Except Self</a></strong></summary>
+
+Given an array nums, return an array where each element is the product of all elements except itself. Uses two-pass prefix/suffix approach without division.
+
+**Complexity:**
+- Time: O(n) - Two passes through the array
+- Space: O(1) - Excluding the output array
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/ProductExceptSelf.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://neetcode.io/problems/string-encode-and-decode">Encode and Decode Strings</a></strong></summary>
+
+Design an algorithm to encode a list of strings to a single string and decode it back using length prefix protocol.
+
+**Complexity:**
+- Time: O(n) - where n is the total number of characters
+- Space: O(n) - for the resulting encoded string
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/EncodeDecode.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/valid-palindrome/">Valid Palindrome</a></strong></summary>
+
+Checks if a string is a palindrome after converting to lowercase and removing non-alphanumeric characters using two-pointer approach.
+
+**Complexity:**
+- Time: O(n) - Single pass with two pointers
+- Space: O(1) - Only uses two pointer variables
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/IsValidPalindrome.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/3sum/">3Sum</a></strong></summary>
+
+Find all unique triplets in the array which gives the sum of zero using sorting and two-pointer technique.
+
+**Complexity:**
+- Time: O(n²) - Sorting O(n log n) + nested loop O(n²)
+- Space: O(1) - Excluding the output list
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/ThreeSum.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/">Two Sum II - Input Array Is Sorted</a></strong></summary>
+
+Given a sorted array, find two numbers that add up to a target using two pointers.
+
+**Complexity:**
+- Time: O(n) - Two pointers on sorted array
+- Space: O(1) - Constant space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/TwoSumII.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/concatenation-of-array/">Concatenation of Array</a></strong></summary>
+
+Returns a new array that is the concatenation of the input array with itself.
+
+**Complexity:**
+- Time: O(n) - Single iteration through result array
+- Space: O(n) - New array of size 2n
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/ArrayConcatenation.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/reverse-string/">Reverse String</a></strong></summary>
+
+Reverses a string in-place using two-pointer technique with O(1) extra memory.
+
+**Complexity:**
+- Time: O(n) - Iterates through half of the array
+- Space: O(1) - Only uses constant extra space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/ReverseString.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">Remove Duplicates from Sorted Array</a></strong></summary>
+
+Removes duplicates from a sorted array in-place and returns the new length.
+
+**Complexity:**
+- Time: O(n) - Single pass through array
+- Space: O(1) - Constant space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/RemoveDuplicates.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/majority-element/">#169 - Majority Element</a></strong></summary>
+
+Find the majority element (appears more than ⌊n/2⌋ times) using Boyer-Moore Voting Algorithm with early return optimization.
+
+**Complexity:**
+- Time: O(n) worst case, O(n/2) best case with early return
+- Space: O(1) - Only uses three variables
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/MajorityElement.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/binary-search/">Binary Search</a></strong></summary>
+
+Searches for a target value in a sorted array using the binary search algorithm.
+
+**Complexity:**
+- Time: O(log n) - Halves the search space with each step
 - Space: O(1) - Constant extra space
 
-**Algorithm:**
-1. Initialize two pointers: `left` at start (0) and `right` at end (n-1)
-2. While `left < right`:
-   - Calculate `sum = numbers[left] + numbers[right]`
-   - If `sum == target`: return indices (1-based)
-   - If `sum < target`: increment `left` (need larger sum)
-   - If `sum > target`: decrement `right` (need smaller sum)
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/BinarySearch.kt`
 
-**Example:**
-```kotlin
-val numbers = intArrayOf(2, 7, 11, 15)
-val solution = TwoSumIISolution()
-val result = solution.twoSum(numbers, 9)
-// result is [1, 2] (indices are 1-based)
-```
-
-##### [Three Sum](https://leetcode.com/problems/3sum/)
-
-Finds all unique triplets in an array that sum to zero.
-
-**Complexity:**
-- Time: O(n²) - Sorting O(n log n) + nested loop with two pointers O(n²)
-- Space: O(1) - Excluding the output list, only constant extra space
-
-**Algorithm:**
-1. Sort the array
-2. For each element at index `i`:
-   - Skip duplicate values of `nums[i]`
-   - Use two pointers (`left = i+1`, `right = n-1`) to find pairs that sum to `-nums[i]`
-   - If sum is zero, add triplet and skip duplicates for both pointers
-   - If sum < 0, increment `left`
-   - If sum > 0, decrement `right`
-
-**Example:**
-```kotlin
-val nums = intArrayOf(-1, 0, 1, 2, -1, -4)
-val solution = ThreeSumSolution()
-val result = solution.threeSum(nums)
-// result is [[-1, -1, 2], [-1, 0, 1]]
-```
+</details>
 
 #### Stack
 
-##### [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/)
+<details>
+<summary><strong><a href="https://leetcode.com/problems/valid-parentheses/">Valid Parentheses</a></strong></summary>
+
+Determines if a string containing parentheses '()', braces '{}', and brackets '[]' is valid. Open brackets must be closed by the same type in correct order.
+
+**Complexity:**
+- Time: O(n) - Single pass through string
+- Space: O(n) - Stack can hold up to n/2 opening brackets
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/stack/ValidParentheses.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/evaluate-reverse-polish-notation/">#150 - Evaluate Reverse Polish Notation</a></strong></summary>
 
 Evaluates an arithmetic expression in Reverse Polish Notation (RPN), also known as postfix notation.
 
@@ -394,4 +601,102 @@ val result2 = solution.evalRPN(tokens2)
 // result2 is 6
 ```
 
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/stack/ReversePolishNotation.kt`
+
+</details>
+
+#### Linked List
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/linked-list-cycle/">#141 - Linked List Cycle</a></strong></summary>
+
+Determine if a linked list has a cycle using Floyd's Cycle Detection Algorithm (tortoise and hare).
+
+**Complexity:**
+- Time: O(n) - where n is the number of nodes
+- Space: O(1) - Only using two pointers
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/HasCicle.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/middle-of-the-linked-list/">#876 - Middle of the Linked List</a></strong></summary>
+
+Return the middle node of a linked list. If there are two middle nodes, return the second middle node.
+
+**Complexity:**
+- Time: O(n) - Single pass with two pointers
+- Space: O(1) - Only using two pointers
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/FindMiddleNode.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/">#19 - Remove Nth Node From End of List</a></strong></summary>
+
+Remove the nth node from the end of a linked list using two-pointer technique.
+
+**Complexity:**
+- Time: O(n) - Single pass through the list
+- Space: O(1) - Constant space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/RemoveNthFromEnd.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/palindrome-linked-list/">#234 - Palindrome Linked List</a></strong></summary>
+
+Determine if a singly linked list is a palindrome by finding middle, reversing second half, and comparing.
+
+**Complexity:**
+- Time: O(n) - Three passes through the list
+- Space: O(1) - Constant space (in-place reversal)
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/PalindromeLinkedList.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/">#1290 - Convert Binary Number in Linked List to Integer</a></strong></summary>
+
+Given a linked list representing a binary number, return its decimal value.
+
+**Complexity:**
+- Time: O(n) - Single pass through the list
+- Space: O(1) - Constant space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/BinaryLinkedListToDecimal.kt`
+
+</details>
+
+#### Dynamic Programming
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/fibonacci-number/">#509 - Fibonacci Number</a></strong></summary>
+
+Calculate the nth Fibonacci number using Bottom-Up Dynamic Programming (Tabulation).
+
+**Complexity:**
+- Time: O(n) - Single pass from 2 to n
+- Space: O(n) - Array of size n+1
+
+**Alternative approaches:**
+- Recursive (naive): O(2^n) time, O(n) space
+- Memoization (Top-Down DP): O(n) time, O(n) space
+- Space-optimized: O(n) time, O(1) space
+- Matrix exponentiation: O(log n) time, O(1) space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/dinamicprograming/Fibonacci.kt`
+
+</details>
 
