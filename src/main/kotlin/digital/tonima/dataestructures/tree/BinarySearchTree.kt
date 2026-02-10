@@ -4,56 +4,62 @@ class BinarySearchTree<T : Comparable<T>>(
     var root: Node<T>? = null
 ) {
     data class Node<T : Comparable<T>>(
-        val value: T?,
+        val value: T,
         var left: Node<T>? = null,
         var right: Node<T>? = null,
     ) {
-        fun findMaxInTree(): Pair<Node<T>?, Node<T>?> {
+        private fun findExtreme(selector: (Node<T>) -> Node<T>?): Pair<Node<T>?, Node<T>?> {
             var parent: Node<T>? = null
             var node: Node<T>? = this
 
-            while (node?.right != null) {
+            while (selector(node!!) != null) {
                 parent = node
-                node = node.right
+                node = selector(node)
             }
             return node to parent
-
         }
 
-        fun findMinInTree(): Pair<Node<T>?, Node<T>?> {
-            var parent: Node<T>? = null
-            var node: Node<T>? = this
+        fun findMaxInTree(): Pair<Node<T>?, Node<T>?> = findExtreme { it.right }
 
-            while (node?.left != null) {
-                parent = node
-                node = node.left
+        fun findMinInTree(): Pair<Node<T>?, Node<T>?> = findExtreme { it.left }
+    }
+
+    fun insert(value: T): Boolean {
+        if (root == null) {
+            root = Node(value)
+            return true
+        }
+
+        var temp = root
+        while (temp != null) {
+            if (value == temp.value) return false
+
+            if (value < temp.value) {
+                if (temp.left == null) {
+                    temp.left = Node(value)
+                    return true
+                }
+                temp = temp.left
+            } else {
+                if (temp.right == null) {
+                    temp.right = Node(value)
+                    return true
+                }
+                temp = temp.right
             }
-
-            return node to parent
         }
+        return false
     }
 
-    /**
-     * Returns a new BinarySearchTree with the value inserted.
-     * Does not modify the original tree (immutable operation).
-     * Time Complexity: O(h) where h is the height of the tree
-     */
-    fun insert(value: T): BinarySearchTree<T> {
-        return BinarySearchTree(insertNode(root, value))
-    }
+    fun contains(value: T): Boolean {
+        if (root == null) return false
+        var temp = root
 
-    private fun insertNode(node: Node<T>?, value: T): Node<T> {
-        if (node == null) {
-            return Node(value)
+        while (temp != null) {
+            if (temp.value == value) return true
+            temp = if (value > temp.value) temp.right else temp.left
         }
-
-        return if (node.value?.let { value <= it } == true) {
-            // Create new node with updated left subtree
-            node.copy(left = insertNode(node.left, value))
-        } else {
-            // Create new node with updated right subtree
-            node.copy(right = insertNode(node.right, value))
-        }
+        return false
     }
 
     /**
@@ -92,7 +98,7 @@ class BinarySearchTree<T : Comparable<T>>(
 
         when {
             parent == null -> root = child  // Deleting root
-            value <= parent.value!! -> parent.left = child
+            value <= parent.value -> parent.left = child
             else -> parent.right = child
         }
     }
@@ -105,19 +111,17 @@ class BinarySearchTree<T : Comparable<T>>(
         val (maxNode, maxNodeParent) = node.left!!.findMaxInTree()
 
         val replacementNode = Node(
-            maxNode?.value,
+            maxNode!!.value,
             node.left,
             node.right
         )
 
-        // Adjust left pointer if maxNode was direct left child
         if (maxNodeParent == null) {
-            replacementNode.left = maxNode?.left
+            replacementNode.left = maxNode.left
         } else {
-            maxNodeParent.right = maxNode?.left
+            maxNodeParent.right = maxNode.left
         }
 
-        // Link replacement node to original parent
         linkNodeToParent(replacementNode, parent, value)
     }
 
@@ -127,7 +131,7 @@ class BinarySearchTree<T : Comparable<T>>(
     private fun linkNodeToParent(node: Node<T>, parent: Node<T>?, value: T) {
         when {
             parent == null -> root = node
-            value <= parent.value!! -> parent.left = node
+            value <= parent.value -> parent.left = node
             else -> parent.right = node
         }
     }
@@ -136,10 +140,9 @@ class BinarySearchTree<T : Comparable<T>>(
         var parent: Node<T>? = null
         var node = root
         while (node != null) {
-            val nodeVal = node.value ?: return null to null  // Invalid node
-            if (nodeVal == value) {
+            if (node.value == value) {
                 return node to parent
-            } else if (value < nodeVal) {
+            } else if (value < node.value) {
                 parent = node
                 node = node.left
             } else {
