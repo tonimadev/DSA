@@ -606,6 +606,55 @@ val result2 = solution.evalRPN(tokens2)
 
 </details>
 
+<details>
+<summary><strong><a href="https://leetcode.com/problems/car-fleet/">#853 - Car Fleet</a></strong></summary>
+
+Determine how many car fleets will arrive at the target destination. Cars starting closer to the target and traveling slower can block faster cars behind them, causing them to merge into fleets.
+
+**Complexity:**
+- Time: O(n log n) - Dominated by sorting cars by position
+- Space: O(n) - For storing the paired and sorted cars array
+
+**Algorithm:**
+1. Sort cars by position in descending order (closest to target first)
+2. For each car, calculate time to reach target: `time = (target - position) / speed`
+3. Track the current fleet's arrival time
+4. If a car's arrival time is strictly greater than the current fleet's time:
+   - It cannot catch up to the fleet ahead
+   - It forms a new fleet (increment fleet count)
+   - Update current fleet time to this car's time
+5. Otherwise, the car catches up and merges with the existing fleet
+
+**Key Points:**
+- Cars cannot pass each other - if a faster car catches a slower one, they travel together as a fleet
+- The slowest car in a fleet determines the fleet's speed
+- Cars already at the target (position == target) have time 0.0
+- Process cars from closest to target to farthest for correct fleet formation
+
+**Example:**
+```kotlin
+val solution = CarFleetSolution()
+
+// Example: target = 12, positions = [10,8,0,5,3], speeds = [2,4,1,1,3]
+val target = 12
+val position = intArrayOf(10, 8, 0, 5, 3)
+val speed = intArrayOf(2, 4, 1, 1, 3)
+val result = solution.carFleet(target, position, speed)
+// result is 3
+
+// Car at position 10 with speed 2: time = (12-10)/2 = 1.0 hour
+// Car at position 8 with speed 4: time = (12-8)/4 = 1.0 hour (merges with car at 10)
+// Car at position 5 with speed 1: time = (12-5)/1 = 7.0 hours (new fleet)
+// Car at position 3 with speed 3: time = (12-3)/3 = 3.0 hours (new fleet)
+// Car at position 0 with speed 1: time = (12-0)/1 = 12.0 hours (new fleet)
+// Total: 3 fleets
+```
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/stack/CarFleet.kt`
+
+</details>
+
 #### Linked List
 
 <details>
