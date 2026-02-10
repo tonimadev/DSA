@@ -332,12 +332,14 @@ taskHeap.insert(Task("Task C", 8))
 
 </details>
 
-### Algorithms
+## LeetCode Solutions
 
-#### Arrays
+This project contains solutions to various LeetCode problems organized by topic. Each solution includes detailed complexity analysis and comprehensive test coverage.
+
+### Arrays & Hashing
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/contains-duplicate/">Contains Duplicate</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/contains-duplicate/">#217 - Contains Duplicate</a></strong></summary>
 
 Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
 
@@ -351,7 +353,7 @@ Given an integer array nums, return true if any value appears at least twice in 
 </details>
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/valid-anagram/">Valid Anagram</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/valid-anagram/">#242 - Valid Anagram</a></strong></summary>
 
 Given two strings s and t, return true if t is an anagram of s, and false otherwise. An anagram is a word or phrase formed by rearranging the letters of another.
 
@@ -365,7 +367,7 @@ Given two strings s and t, return true if t is an anagram of s, and false otherw
 </details>
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/two-sum/">Two Sum</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/two-sum/">#1 - Two Sum</a></strong></summary>
 
 Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 
@@ -379,7 +381,7 @@ Given an array of integers nums and an integer target, return indices of the two
 </details>
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/group-anagrams/">Group Anagrams</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/group-anagrams/">#49 - Group Anagrams</a></strong></summary>
 
 Given an array of strings strs, group the anagrams together. Anagrams are words with the same character frequencies.
 
@@ -393,7 +395,7 @@ Given an array of strings strs, group the anagrams together. Anagrams are words 
 </details>
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/top-k-frequent-elements/">Top K Frequent Elements</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/top-k-frequent-elements/">#347 - Top K Frequent Elements</a></strong></summary>
 
 Given an integer array nums and an integer k, return the k most frequent elements using bucket sort approach.
 
@@ -407,7 +409,7 @@ Given an integer array nums and an integer k, return the k most frequent element
 </details>
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/product-of-array-except-self/">Product of Array Except Self</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/product-of-array-except-self/">#238 - Product of Array Except Self</a></strong></summary>
 
 Given an array nums, return an array where each element is the product of all elements except itself. Uses two-pass prefix/suffix approach without division.
 
@@ -421,9 +423,9 @@ Given an array nums, return an array where each element is the product of all el
 </details>
 
 <details>
-<summary><strong><a href="https://neetcode.io/problems/string-encode-and-decode">Encode and Decode Strings</a></strong></summary>
+<summary><strong><a href="https://neetcode.io/problems/string-encode-and-decode">#271 - Encode and Decode Strings</a></strong></summary>
 
-Design an algorithm to encode a list of strings to a single string and decode it back using length prefix protocol.
+Design an algorithm to encode a list of strings to a single string and decode it back using length prefix protocol. (LeetCode Premium)
 
 **Complexity:**
 - Time: O(n) - where n is the total number of characters
@@ -434,8 +436,10 @@ Design an algorithm to encode a list of strings to a single string and decode it
 
 </details>
 
+### Two Pointers
+
 <details>
-<summary><strong><a href="https://leetcode.com/problems/valid-palindrome/">Valid Palindrome</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/valid-palindrome/">#125 - Valid Palindrome</a></strong></summary>
 
 Checks if a string is a palindrome after converting to lowercase and removing non-alphanumeric characters using two-pointer approach.
 
@@ -449,21 +453,7 @@ Checks if a string is a palindrome after converting to lowercase and removing no
 </details>
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/3sum/">3Sum</a></strong></summary>
-
-Find all unique triplets in the array which gives the sum of zero using sorting and two-pointer technique.
-
-**Complexity:**
-- Time: O(n²) - Sorting O(n log n) + nested loop O(n²)
-- Space: O(1) - Excluding the output list
-
-**Source:**
-- `src/main/kotlin/digital/tonima/algorithms/arrays/ThreeSum.kt`
-
-</details>
-
-<details>
-<summary><strong><a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/">Two Sum II - Input Array Is Sorted</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/">#167 - Two Sum II - Input Array Is Sorted</a></strong></summary>
 
 Given a sorted array, find two numbers that add up to a target using two pointers.
 
@@ -477,7 +467,39 @@ Given a sorted array, find two numbers that add up to a target using two pointer
 </details>
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/concatenation-of-array/">Concatenation of Array</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/3sum/">#15 - 3Sum</a></strong></summary>
+
+Find all unique triplets in the array which gives the sum of zero using sorting and two-pointer technique.
+
+**Complexity:**
+- Time: O(n²) - Sorting O(n log n) + nested loop O(n²)
+- Space: O(1) - Excluding the output list
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/ThreeSum.kt`
+
+</details>
+
+### Search Algorithms
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/binary-search/">#704 - Binary Search</a></strong></summary>
+
+Searches for a target value in a sorted array using the binary search algorithm.
+
+**Complexity:**
+- Time: O(log n) - Halves the search space with each step
+- Space: O(1) - Constant extra space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/BinarySearch.kt`
+
+</details>
+
+### Array Manipulation
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/concatenation-of-array/">#1929 - Concatenation of Array</a></strong></summary>
 
 Returns a new array that is the concatenation of the input array with itself.
 
@@ -491,7 +513,7 @@ Returns a new array that is the concatenation of the input array with itself.
 </details>
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/reverse-string/">Reverse String</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/reverse-string/">#344 - Reverse String</a></strong></summary>
 
 Reverses a string in-place using two-pointer technique with O(1) extra memory.
 
@@ -505,7 +527,7 @@ Reverses a string in-place using two-pointer technique with O(1) extra memory.
 </details>
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">Remove Duplicates from Sorted Array</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">#26 - Remove Duplicates from Sorted Array</a></strong></summary>
 
 Removes duplicates from a sorted array in-place and returns the new length.
 
@@ -532,24 +554,10 @@ Find the majority element (appears more than ⌊n/2⌋ times) using Boyer-Moore 
 
 </details>
 
-<details>
-<summary><strong><a href="https://leetcode.com/problems/binary-search/">Binary Search</a></strong></summary>
-
-Searches for a target value in a sorted array using the binary search algorithm.
-
-**Complexity:**
-- Time: O(log n) - Halves the search space with each step
-- Space: O(1) - Constant extra space
-
-**Source:**
-- `src/main/kotlin/digital/tonima/algorithms/arrays/BinarySearch.kt`
-
-</details>
-
-#### Stack
+### Stack
 
 <details>
-<summary><strong><a href="https://leetcode.com/problems/valid-parentheses/">Valid Parentheses</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/valid-parentheses/">#20 - Valid Parentheses</a></strong></summary>
 
 Determines if a string containing parentheses '()', braces '{}', and brackets '[]' is valid. Open brackets must be closed by the same type in correct order.
 
@@ -559,6 +567,24 @@ Determines if a string containing parentheses '()', braces '{}', and brackets '[
 
 **Source:**
 - `src/main/kotlin/digital/tonima/algorithms/stack/ValidParentheses.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/min-stack/">#155 - Min Stack</a></strong></summary>
+
+A stack that efficiently tracks both the top element and the minimum element in the stack.
+
+**Complexity:**
+- Time: 
+  - `push(value)`: O(1) - Constant time node creation and pointer update
+  - `pop()`: O(1) - Constant time pointer update
+  - `top()`: O(1) - Direct access to top node's value
+  - `getMin()`: O(n) - Must traverse entire stack to find minimum
+- Space: O(n) - Stores all n elements in linked list nodes
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/stack/MinStack.kt`
 
 </details>
 
@@ -655,7 +681,7 @@ val result = solution.carFleet(target, position, speed)
 
 </details>
 
-#### Linked List
+### Linked List
 
 <details>
 <summary><strong><a href="https://leetcode.com/problems/linked-list-cycle/">#141 - Linked List Cycle</a></strong></summary>
@@ -727,7 +753,7 @@ Given a linked list representing a binary number, return its decimal value.
 
 </details>
 
-#### Dynamic Programming
+### Dynamic Programming
 
 <details>
 <summary><strong><a href="https://leetcode.com/problems/fibonacci-number/">#509 - Fibonacci Number</a></strong></summary>
