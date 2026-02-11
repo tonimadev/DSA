@@ -496,6 +496,34 @@ Searches for a target value in a sorted array using the binary search algorithm.
 
 </details>
 
+<details>
+<summary><strong><a href="https://leetcode.com/problems/first-bad-version/">#278 - First Bad Version</a></strong></summary>
+
+Find the first bad version in a sequence where all versions after a bad version are also bad. Uses binary search to minimize API calls.
+
+**Complexity:**
+- Time: O(log n) - Binary search halves the search space in each iteration
+- Space: O(1) - Only uses a constant amount of extra space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/BadVersion.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/guess-number-higher-or-lower/">#374 - Guess Number Higher or Lower</a></strong></summary>
+
+Guessing game where you need to find a picked number from 1 to n using an API that tells if your guess is higher, lower, or correct.
+
+**Complexity:**
+- Time: O(log n) - Binary search halves the search space in each iteration
+- Space: O(1) - Only uses a constant amount of extra space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/GuessNumberHigherOrLower.kt`
+
+</details>
+
 ### Array Manipulation
 
 <details>
