@@ -524,7 +524,20 @@ Guessing game where you need to find a picked number from 1 to n using an API th
 
 </details>
 
-### Array Manipulation
+<details>
+<summary><strong><a href="https://leetcode.com/problems/search-a-2d-matrix/">#74 - Search a 2D Matrix</a></strong></summary>
+
+Searches for a target value in a 2D sorted matrix. Finds the correct row first, then performs binary search on that row.
+
+**Complexity:**
+- Time: O(n + log m) - n rows iteration + binary search on m columns
+- Space: O(1) - Constant extra space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/Search2DMatrix.kt`
+- `src/main/kotlin/digital/tonima/algorithms/arrays/Search2DMatrixOptimal.kt` (Optimal: O(log(m * n)))
+
+</details>
 
 <details>
 <summary><strong><a href="https://leetcode.com/problems/concatenation-of-array/">#1929 - Concatenation of Array</a></strong></summary>
