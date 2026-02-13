@@ -30,9 +30,9 @@ class CarFleetSolution {
         var fleets = 0
         var currentFleetTime = 0.0
 
-        for ((pos, s) in cars) {
+        for ((position, speed) in cars) {
             // Calculate precise time to reach target
-            val time = (target - pos).toDouble() / s
+            val time = (target - position).toDouble() / speed
 
             // If this car's time is STRICTLY GREATER than the front fleet's time,
             // it cannot catch up and becomes the leader of a new fleet.

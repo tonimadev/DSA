@@ -334,9 +334,11 @@ taskHeap.insert(Task("Task C", 8))
 
 ## LeetCode Solutions
 
-This project contains solutions to various LeetCode problems organized by topic. Each solution includes detailed complexity analysis and comprehensive test coverage.
+This project contains solutions to various LeetCode problems organized by topic and difficulty level. Each solution includes detailed complexity analysis and comprehensive test coverage.
 
 ### Arrays & Hashing
+
+#### 🟢 Easy
 
 <details>
 <summary><strong><a href="https://leetcode.com/problems/contains-duplicate/">#217 - Contains Duplicate</a></strong></summary>
@@ -365,6 +367,22 @@ Given two strings s and t, return true if t is an anagram of s, and false otherw
 - `src/main/kotlin/digital/tonima/algorithms/arrays/IsAnagram.kt`
 
 </details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/concatenation-of-array/">#1929 - Concatenation of Array</a></strong></summary>
+
+Returns a new array that is the concatenation of the input array with itself.
+
+**Complexity:**
+- Time: O(n) - Single iteration through result array
+- Space: O(n) - New array of size 2n
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/ArrayConcatenation.kt`
+
+</details>
+
+#### 🟡 Medium
 
 <details>
 <summary><strong><a href="https://leetcode.com/problems/two-sum/">#1 - Two Sum</a></strong></summary>
@@ -438,6 +456,38 @@ Design an algorithm to encode a list of strings to a single string and decode it
 
 ### Two Pointers
 
+#### 🟢 Easy
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/reverse-string/">#344 - Reverse String</a></strong></summary>
+
+Reverses a string in-place using two-pointer technique with O(1) extra memory.
+
+**Complexity:**
+- Time: O(n) - Iterates through half of the array
+- Space: O(1) - Only uses constant extra space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/ReverseString.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">#26 - Remove Duplicates from Sorted Array</a></strong></summary>
+
+Removes duplicates from a sorted array in-place and returns the new length.
+
+**Complexity:**
+- Time: O(n) - Single pass through array
+- Space: O(1) - Constant space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/RemoveDuplicates.kt`
+
+</details>
+
+#### 🟡 Medium
+
 <details>
 <summary><strong><a href="https://leetcode.com/problems/valid-palindrome/">#125 - Valid Palindrome</a></strong></summary>
 
@@ -482,6 +532,8 @@ Find all unique triplets in the array which gives the sum of zero using sorting 
 
 ### Search Algorithms
 
+#### 🟢 Easy
+
 <details>
 <summary><strong><a href="https://leetcode.com/problems/binary-search/">#704 - Binary Search</a></strong></summary>
 
@@ -495,6 +547,8 @@ Searches for a target value in a sorted array using the binary search algorithm.
 - `src/main/kotlin/digital/tonima/algorithms/arrays/BinarySearch.kt`
 
 </details>
+
+#### 🟡 Medium
 
 <details>
 <summary><strong><a href="https://leetcode.com/problems/first-bad-version/">#278 - First Bad Version</a></strong></summary>
@@ -537,47 +591,6 @@ Searches for a target value in a 2D sorted matrix. Finds the correct row first, 
 - `src/main/kotlin/digital/tonima/algorithms/arrays/Search2DMatrix.kt`
 - `src/main/kotlin/digital/tonima/algorithms/arrays/Search2DMatrixOptimal.kt` (Optimal: O(log(m * n)))
 
-</details>
-
-<details>
-<summary><strong><a href="https://leetcode.com/problems/concatenation-of-array/">#1929 - Concatenation of Array</a></strong></summary>
-
-Returns a new array that is the concatenation of the input array with itself.
-
-**Complexity:**
-- Time: O(n) - Single iteration through result array
-- Space: O(n) - New array of size 2n
-
-**Source:**
-- `src/main/kotlin/digital/tonima/algorithms/arrays/ArrayConcatenation.kt`
-
-</details>
-
-<details>
-<summary><strong><a href="https://leetcode.com/problems/reverse-string/">#344 - Reverse String</a></strong></summary>
-
-Reverses a string in-place using two-pointer technique with O(1) extra memory.
-
-**Complexity:**
-- Time: O(n) - Iterates through half of the array
-- Space: O(1) - Only uses constant extra space
-
-**Source:**
-- `src/main/kotlin/digital/tonima/algorithms/arrays/ReverseString.kt`
-
-</details>
-
-<details>
-<summary><strong><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">#26 - Remove Duplicates from Sorted Array</a></strong></summary>
-
-Removes duplicates from a sorted array in-place and returns the new length.
-
-**Complexity:**
-- Time: O(n) - Single pass through array
-- Space: O(1) - Constant space
-
-**Source:**
-- `src/main/kotlin/digital/tonima/algorithms/arrays/RemoveDuplicates.kt`
 
 </details>
 
@@ -597,6 +610,8 @@ Find the majority element (appears more than ⌊n/2⌋ times) using Boyer-Moore 
 
 ### Stack
 
+#### 🟢 Easy
+
 <details>
 <summary><strong><a href="https://leetcode.com/problems/valid-parentheses/">#20 - Valid Parentheses</a></strong></summary>
 
@@ -610,6 +625,8 @@ Determines if a string containing parentheses '()', braces '{}', and brackets '[
 - `src/main/kotlin/digital/tonima/algorithms/stack/ValidParentheses.kt`
 
 </details>
+
+#### 🟡 Medium
 
 <details>
 <summary><strong><a href="https://leetcode.com/problems/min-stack/">#155 - Min Stack</a></strong></summary>
@@ -669,7 +686,7 @@ val result2 = solution.evalRPN(tokens2)
 ```
 
 **Source:**
-- `src/main/kotlin/digital/tonima/algorithms/stack/ReversePolishNotation.kt`
+- `src/main/kotlin/digital/tonima/algorithms/arrays/ReversePolishNotation.kt`
 
 </details>
 
@@ -724,6 +741,8 @@ val result = solution.carFleet(target, position, speed)
 
 ### Linked List
 
+#### 🟢 Easy
+
 <details>
 <summary><strong><a href="https://leetcode.com/problems/linked-list-cycle/">#141 - Linked List Cycle</a></strong></summary>
 
@@ -737,6 +756,52 @@ Determine if a linked list has a cycle using Floyd's Cycle Detection Algorithm (
 - `src/main/kotlin/digital/tonima/algorithms/linkedlist/HasCicle.kt`
 
 </details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/reverse-linked-list/">#206 - Reverse Linked List</a></strong></summary>
+
+Reverse a singly linked list iteratively using three-pointer approach.
+
+**Complexity:**
+- Time: O(n) - Single pass through the list, visiting each node once
+- Space: O(1) - Only using three pointers (previous, current, next)
+
+**Algorithm:**
+1. Initialize previous as null (will become the new tail)
+2. Iterate through the list:
+   - Save the next node before breaking the link
+   - Reverse the current node's pointer to point to previous
+   - Move previous to current (shift window forward)
+   - Move current to next (shift window forward)
+3. Return previous (which is now the new head)
+
+**Example visualization for [1,2,3]:**
+- Initial:     1 -> 2 -> 3 -> null
+- Step 1:      null <- 1    2 -> 3 -> null
+- Step 2:      null <- 1 <- 2    3 -> null
+- Step 3:      null <- 1 <- 2 <- 3
+- Return: 3 (new head)
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/ReverseLinkedList.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/">#1290 - Convert Binary Number in Linked List to Integer</a></strong></summary>
+
+Given a linked list representing a binary number, return its decimal value.
+
+**Complexity:**
+- Time: O(n) - Single pass through the list
+- Space: O(1) - Constant space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/BinaryLinkedListToDecimal.kt`
+
+</details>
+
+#### 🟡 Medium
 
 <details>
 <summary><strong><a href="https://leetcode.com/problems/middle-of-the-linked-list/">#876 - Middle of the Linked List</a></strong></summary>
@@ -778,19 +843,6 @@ Determine if a singly linked list is a palindrome by finding middle, reversing s
 **Source:**
 - `src/main/kotlin/digital/tonima/algorithms/linkedlist/PalindromeLinkedList.kt`
 
-</details>
-
-<details>
-<summary><strong><a href="https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/">#1290 - Convert Binary Number in Linked List to Integer</a></strong></summary>
-
-Given a linked list representing a binary number, return its decimal value.
-
-**Complexity:**
-- Time: O(n) - Single pass through the list
-- Space: O(1) - Constant space
-
-**Source:**
-- `src/main/kotlin/digital/tonima/algorithms/linkedlist/BinaryLinkedListToDecimal.kt`
 
 </details>
 

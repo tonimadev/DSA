@@ -31,20 +31,30 @@ class Search2DMatrixOptimalSolution {
         val rows = matrix.size
         val cols = matrix[0].size
         var left = 0
+        // right aponta para o último índice (índice total - 1)
+        // Example: matrix 3×4 → right = 3*4-1 = 11
         var right = rows * cols - 1
 
         while (left <= right) {
             val mid = (left + right) / 2
             // Convert 1D index to 2D coordinates
-            // row = mid / cols, col = mid % cols
+            // Matrix 3×4 example:
+            //   col: 0    1    2    3
+            // row 0: [1] [2] [3] [4]
+            // row 1: [5] [6] [7] [8]
+            // row 2: [9][10][11][12]
+            //
+            // Indices: 0,1,2,3,4,5,6,7,8,9,10,11
+            // mid=5  → row=5/4=1, col=5%4=1 → matrix[1][1]=6
+            // mid=10 → row=10/4=2, col=10%4=2 → matrix[2][2]=11 (target=10 → move LEFT)
             val row = mid / cols
             val col = mid % cols
             val guess = matrix[row][col]
 
             when {
                 guess == target -> return true
-                guess < target -> left = mid + 1
-                else -> right = mid - 1
+                guess < target -> left = mid + 1  // ▶ guess=6, target=10 → move RIGHT
+                else -> right = mid - 1  // ◀ guess=11, target=10 → move LEFT
             }
         }
 
