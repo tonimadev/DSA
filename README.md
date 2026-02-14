@@ -804,6 +804,20 @@ Given a linked list representing a binary number, return its decimal value.
 #### 🟡 Medium
 
 <details>
+<summary><strong><a href="https://leetcode.com/problems/merge-two-sorted-lists/">#21 - Merge Two Sorted Lists</a></strong></summary>
+
+Merge two sorted linked lists into a single sorted linked list using a two-pointer approach.
+
+**Complexity:**
+- Time: O(n + m) - where n and m are the lengths of list1 and list2
+- Space: O(1) - Only using pointers, no extra space needed
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/MergeTwoSortedLinkedLists.kt`
+
+</details>
+
+<details>
 <summary><strong><a href="https://leetcode.com/problems/middle-of-the-linked-list/">#876 - Middle of the Linked List</a></strong></summary>
 
 Return the middle node of a linked list. If there are two middle nodes, return the second middle node.
