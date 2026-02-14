@@ -28,7 +28,7 @@ package digital.tonima.algorithms.arrays
  * Space Complexity: O(n) - where n is the length of the array
  *   - In the worst case (no duplicates), we store all n elements in the HashSet
  */
-class HasDuplicatesSolution {
+class ConstainsDuplicatesSolution {
     fun hasDuplicate(nums: IntArray): Boolean {
         val set = mutableSetOf<Int>()
 

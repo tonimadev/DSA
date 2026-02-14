@@ -382,6 +382,34 @@ Returns a new array that is the concatenation of the input array with itself.
 
 </details>
 
+<details>
+<summary><strong><a href="https://leetcode.com/problems/contains-duplicate-ii/">#219 - Contains Duplicate II</a></strong></summary>
+
+Given an integer array nums and an integer k, return true if there are two distinct indices i and j such that nums[i] == nums[j] and abs(i - j) <= k.
+
+**Complexity:**
+- Time: O(n) - Single pass with hash map for last seen indices
+- Space: O(n) - Hash map stores last index for each value
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/ContainsDuplicateII.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/">#121 - Best Time to Buy and Sell Stock</a></strong></summary>
+
+Given an array of prices, return the maximum profit from buying once and selling once.
+
+**Complexity:**
+- Time: O(n) - Single pass tracking min price and max profit
+- Space: O(1) - Constant extra space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/BestTimeToBuyAndSellStock.kt`
+
+</details>
+
 #### 🟡 Medium
 
 <details>

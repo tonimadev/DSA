@@ -11,9 +11,9 @@ import kotlin.test.assertTrue
  * Given an integer array nums, return true if any value appears at least twice in the array,
  * and return false if every element is distinct.
  */
-class HasDuplicatesTest {
+class ContainsDuplicatesTest {
 
-    private val solution = HasDuplicatesSolution()
+    private val solution = ConstainsDuplicatesSolution()
 
     @Test
     fun `test hasDuplicate - LeetCode Example 1`() {
