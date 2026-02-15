@@ -469,7 +469,7 @@ Given an array nums, return an array where each element is the product of all el
 </details>
 
 <details>
-<summary><strong><a href="https://neetcode.io/problems/string-encode-and-decode">#271 - Encode and Decode Strings</a></strong></summary>
+<summary><strong><a href="https://leetcode.com/problems/encode-and-decode-strings/">#271 - Encode and Decode Strings</a></strong></summary>
 
 Design an algorithm to encode a list of strings to a single string and decode it back using length prefix protocol. (LeetCode Premium)
 
@@ -479,6 +479,37 @@ Design an algorithm to encode a list of strings to a single string and decode it
 
 **Source:**
 - `src/main/kotlin/digital/tonima/algorithms/arrays/EncodeDecode.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">#3 - Longest Substring Without Repeating Characters</a></strong></summary>
+
+Given a string s, find the length of the longest substring without repeating characters using the sliding window technique.
+
+**Complexity:**
+- Time: O(n) - Single pass through the string with HashMap operations
+- Space: O(min(m, n)) - HashMap stores at most min(charset size, string length) characters
+
+**Algorithm:**
+1. Use a sliding window with left and right pointers
+2. Maintain a HashMap to track the last seen index of each character
+3. When a character is found in the current window (index >= left):
+   - Move left pointer to the position after the previous occurrence
+4. Update the character's last seen index
+5. Track the maximum window size encountered
+
+**Example:**
+```kotlin
+val solution = LongestSubstringWithoutRepeatingCharactersSolution()
+solution.lengthOfLongestSubstring("abcabcbb") // Returns 3 ("abc")
+solution.lengthOfLongestSubstring("bbbbb")   // Returns 1 ("b")
+solution.lengthOfLongestSubstring("pwwkew")  // Returns 3 ("wke")
+solution.lengthOfLongestSubstring("au")      // Returns 2 ("au")
+```
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/LongestSubstringWithoutRepeatingCharacters.kt`
 
 </details>
 
