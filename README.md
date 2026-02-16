@@ -877,6 +877,20 @@ Merge two sorted linked lists into a single sorted linked list using a two-point
 </details>
 
 <details>
+<summary><strong><a href="https://leetcode.com/problems/design-linked-list/">#707 - Design Linked List</a></strong></summary>
+
+Implement a linked list with operations to get, add, and delete nodes by index.
+
+**Complexity:**
+- Time: O(1) for add at head/tail, O(n) for get/add/delete by index
+- Space: O(1) extra space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/DesignLinkedList.kt`
+
+</details>
+
+<details>
 <summary><strong><a href="https://leetcode.com/problems/middle-of-the-linked-list/">#876 - Middle of the Linked List</a></strong></summary>
 
 Return the middle node of a linked list. If there are two middle nodes, return the second middle node.
