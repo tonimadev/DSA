@@ -863,6 +863,20 @@ Given a linked list representing a binary number, return its decimal value.
 #### 🟡 Medium
 
 <details>
+<summary><strong><a href="https://leetcode.com/problems/add-two-numbers/">#2 - Add Two Numbers</a></strong></summary>
+
+Add two numbers represented as reversed linked lists using digit-by-digit addition with carry.
+
+**Complexity:**
+- Time: O(max(n, m)) - where n and m are the lengths of the two linked lists
+- Space: O(max(n, m)) - for the result linked list
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/AddTwoNumbers.kt`
+
+</details>
+
+<details>
 <summary><strong><a href="https://leetcode.com/problems/merge-two-sorted-lists/">#21 - Merge Two Sorted Lists</a></strong></summary>
 
 Merge two sorted linked lists into a single sorted linked list using a two-pointer approach.
