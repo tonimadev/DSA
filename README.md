@@ -944,6 +944,50 @@ Determine if a singly linked list is a palindrome by finding middle, reversing s
 **Source:**
 - `src/main/kotlin/digital/tonima/algorithms/linkedlist/PalindromeLinkedList.kt`
 
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/lru-cache/">#146 - LRU Cache</a></strong></summary>
+
+Implement a Least Recently Used (LRU) Cache with O(1) get and put operations using LinkedHashMap with access-order.
+
+**Complexity:**
+- Time: O(1) for both get() and put() operations
+- Space: O(capacity) - Stores up to capacity key-value pairs
+
+**Algorithm:**
+- LinkedHashMap with `accessOrder=true`: Maintains insertion/access order while providing O(1) lookups
+- Override `removeEldestEntry()`: Automatically removes least recently used entry when capacity exceeded
+- On get(): Access via HashMap O(1), LinkedHashMap automatically moves accessed key to end (most recent)
+- On put(): Insert/update via HashMap O(1), LinkedHashMap automatically evicts oldest if over capacity
+
+**Why LinkedHashMap?**
+- Immutable order tracking without manual list manipulation
+- Built-in access-order tracking (no O(n) remove operations)
+- True O(1) performance for both operations
+- Cleaner and more efficient than HashMap + ArrayDeque
+
+**Features:**
+- Automatic eviction of least recently used item when capacity exceeded
+- Accessing a key updates its recency (accessOrder=true)
+- Updating a key's value also updates its recency
+
+**Example:**
+```kotlin
+val cache = LRUCache(2)
+cache.put(1, 1)
+cache.put(2, 2)
+cache.get(1)        // Returns 1, moves key 1 to most recent
+cache.put(3, 3)     // Evicts key 2 (least recently used)
+cache.get(2)        // Returns -1 (key 2 was evicted)
+cache.put(4, 4)     // Evicts key 1
+cache.get(1)        // Returns -1 (key 1 was evicted)
+cache.get(3)        // Returns 3
+cache.get(4)        // Returns 4
+```
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/linkedlist/LRUCache.kt`
 
 </details>
 
