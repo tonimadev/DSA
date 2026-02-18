@@ -410,6 +410,37 @@ Given an array of prices, return the maximum profit from buying once and selling
 
 </details>
 
+<details>
+<summary><strong><a href="https://leetcode.com/problems/monotonic-array/">#896 - Monotonic Array</a></strong></summary>
+
+Determine if an array is monotonic (either entirely non-increasing or non-decreasing). An array is monotonic if for all i <= j, either nums[i] <= nums[j] or nums[i] >= nums[j].
+
+**Complexity:**
+- Time: O(n) - Single pass through array with early termination when both flags become false
+- Space: O(1) - Only uses two boolean flags
+
+**Algorithm:**
+1. Initialize two flags: `increasing` (true) and `decreasing` (true)
+2. Iterate through consecutive pairs:
+   - If nums[i] > nums[i+1]: set increasing = false
+   - If nums[i] < nums[i+1]: set decreasing = false
+   - Early return if both flags are false (array is not monotonic)
+3. Return true if either flag remains true
+
+**Example:**
+```kotlin
+val solution = IsMonotonicSolution()
+solution.isMonotonic(intArrayOf(1, 2, 2, 3))    // Returns true (non-decreasing)
+solution.isMonotonic(intArrayOf(6, 5, 4, 4))    // Returns true (non-increasing)
+solution.isMonotonic(intArrayOf(1, 3, 2))       // Returns false (neither)
+solution.isMonotonic(intArrayOf(5, 5, 5, 5))    // Returns true (both)
+```
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/IsMonotonic.kt`
+
+</details>
+
 #### 🟡 Medium
 
 <details>
