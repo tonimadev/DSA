@@ -355,6 +355,20 @@ Given an integer array nums, return true if any value appears at least twice in 
 </details>
 
 <details>
+<summary><strong><a href="https://leetcode.com/problems/find-pivot-index/">#724 - Find Pivot Index</a></strong></summary>
+
+Given an integer array nums, return the leftmost pivot index where the sum of the numbers strictly to the left equals the sum of the numbers strictly to the right.
+
+**Complexity:**
+- Time: O(n) - Single pass with running sums
+- Space: O(1) - Constant extra space
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/arrays/FindPivotIndex.kt`
+
+</details>
+
+<details>
 <summary><strong><a href="https://leetcode.com/problems/valid-anagram/">#242 - Valid Anagram</a></strong></summary>
 
 Given two strings s and t, return true if t is an anagram of s, and false otherwise. An anagram is a word or phrase formed by rearranging the letters of another.
