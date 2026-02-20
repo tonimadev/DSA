@@ -1041,6 +1041,28 @@ cache.get(4)        // Returns 4
 #### 🟢 Easy
 
 <details>
+<summary><strong><a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/">#104 - Maximum Depth of Binary Tree</a></strong></summary>
+
+Given the root of a binary tree, return its maximum depth.
+
+**Complexity:**
+- Time: O(n) - Single pass visiting each node exactly once
+- Space: O(h) - where h is the height of the tree due to recursive call stack
+  - Worst case: O(n) for skewed tree
+  - Best case: O(log n) for balanced tree
+
+**Algorithm:**
+1. Base case: if root is null, return 0
+2. Recursively find max depth of left subtree
+3. Recursively find max depth of right subtree
+4. Return 1 + max of left and right depths
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/tree/MaxDepth.kt`
+
+</details>
+
+<details>
 <summary><strong><a href="https://leetcode.com/problems/invert-binary-tree/">#226 - Invert Binary Tree</a></strong></summary>
 
 Given the root of a binary tree, invert the tree and return its root (mirror the tree horizontally).
@@ -1077,6 +1099,26 @@ Output:
 
 **Source:**
 - `src/main/kotlin/digital/tonima/algorithms/tree/InvertBinaryTree.kt`
+
+</details>
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/diameter-of-binary-tree/">#543 - Diameter of Binary Tree</a></strong></summary>
+
+Given the root of a binary tree, return the length of the diameter of the tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
+
+**Complexity:**
+- Time: O(n) - where n is the number of nodes in the tree
+- Space: O(h) - where h is the height of the tree due to recursive call stack
+
+**Algorithm:**
+1. Recursively calculate the height of each subtree.
+2. At each node, calculate the diameter passing through it (left_height + right_height).
+3. Track the maximum diameter found across all nodes.
+4. Return 1 + max(left_height, right_height) to represent the height of the current node to its parent.
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/tree/DiameterOfBinaryTree.kt`
 
 </details>
 
