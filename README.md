@@ -1036,6 +1036,50 @@ cache.get(4)        // Returns 4
 
 </details>
 
+### Binary Tree
+
+#### 🟢 Easy
+
+<details>
+<summary><strong><a href="https://leetcode.com/problems/invert-binary-tree/">#226 - Invert Binary Tree</a></strong></summary>
+
+Given the root of a binary tree, invert the tree and return its root (mirror the tree horizontally).
+
+**Complexity:**
+- Time: O(n) - where n is the number of nodes in the tree (visit each node exactly once)
+- Space: O(h) - where h is the height of the tree due to recursive call stack
+  - Worst case: O(n) for skewed tree
+  - Best case: O(log n) for balanced tree
+
+**Algorithm:**
+1. Base case: if root is null, return null
+2. Recursively invert left subtree
+3. Recursively invert right subtree
+4. Swap the left and right children of the current node
+5. Return the root
+
+**Example:**
+```
+Input:
+       4
+     /   \
+    2     7
+   / \   / \
+  1   3 6   9
+
+Output:
+       4
+     /   \
+    7     2
+   / \   / \
+  9   6 3   1
+```
+
+**Source:**
+- `src/main/kotlin/digital/tonima/algorithms/tree/InvertBinaryTree.kt`
+
+</details>
+
 ### Dynamic Programming
 
 <details>
